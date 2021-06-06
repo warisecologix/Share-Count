@@ -28,6 +28,22 @@ class AJAXController extends Controller
 
     }
 
+    public function check_phone_number(Request $request)
+    {
+        $user = User::where('phone_no', $request->phone_no)->get()->first();
+        if ($user) {
+            return response()->json([
+                'user' => $user,
+                'message' => "user_exists"
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => "user_not_exists"
+            ], 200);
+        }
+
+    }
+
     public function email_verification_code(Request $request)
     {
         return response()->json([
