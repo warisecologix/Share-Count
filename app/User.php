@@ -29,6 +29,7 @@ class User extends Authenticatable
         'brokage_name',
         'stock_id',
         'country_id',
+        'image',
     ];
 
     /**

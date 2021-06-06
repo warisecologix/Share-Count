@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('user_name')->unique();
+            $table->string('user_name')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->text('brokage_name');
             $table->bigInteger('stock_id');
             $table->bigInteger('country_id');
+            $table->text('image');
             $table->rememberToken();
             $table->timestamps();
         });

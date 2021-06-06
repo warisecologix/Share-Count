@@ -8,7 +8,8 @@
                     <div class="card-header text-center">{{ __('Register Your Account') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+
+                        <form method="POST" action="{{ route('register.post') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -83,7 +84,7 @@
 
                             <div class="form-group row">
                                 <label for="share_own"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Own Share') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Own Share') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="share_own" type="number"
@@ -138,7 +139,7 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Select Stock') }}</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" id="stock_id">
+                                    <select class="form-control" id="stock_id" name="stock_id">
                                         @foreach($stocks as $stock)
                                             <option value="{{$stock->id}}">{{$stock->name}}</option>
                                         @endforeach
@@ -157,12 +158,30 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Select Country') }}</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" id="country_id">
+                                    <select class="form-control" id="country_id" name="country_id">
                                         @foreach($countries as $country)
                                             <option value="{{$country->id}}">{{$country->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('country_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label for="image"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Image of Your Brokage App ') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="image" type="file"
+                                           class="form-control @error('image') is-invalid @enderror"
+                                           name="image" value="{{ old('image') }}" required>
+
+                                    @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
