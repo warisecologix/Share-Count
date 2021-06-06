@@ -3,26 +3,39 @@
 namespace App\Http\Traits;
 
 use Illuminate\Support\Carbon;
+use Twilio\Rest\Client;
 use Zend\Diactoros\Request;
 
-trait Generic
+trait Twilio
 {
-    public function getCustomizeDate($date)
+    public function sendTwillioSMS($cell_number)
     {
-        $timestamp = strtotime($date);
-        $day = date('F d, Y', $timestamp);
-        return $day;
+        $token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_sid = getenv("TWILIO_SID");
+        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+        $twilio = new Client($twilio_sid, $token);
+        $twilio->verify->v2->services($twilio_verify_sid)
+            ->verifications
+            ->create($cell_number, "sms");
     }
 
-    public function uploadMediaFile($file, $input_name, $location)
+    public function verify( $phone_number, $verfication_code)
     {
-        if ($file->hasFile($input_name)) {
-            ini_set('memory_limit', '-1');
-            $file = $file->file($input_name);
-            $file_name = time() . '.' . $file->getClientOriginalName();
-            $file->move($location, $file_name);
-            return $file_name;
+        $token = getenv("TWILIO_AUTH_TOKEN");
+        $twilio_sid = getenv("TWILIO_SID");
+        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+        $twilio = new Client($twilio_sid, $token);
+
+
+        $verification = $twilio->verify->v2->services($twilio_verify_sid)
+            ->verificationChecks
+            ->create($verfication_code, array('to' => $phone_number));
+
+        if ($verification->valid) {
+            return true;
+        } else {
+            return false;
         }
-    }
 
+    }
 }

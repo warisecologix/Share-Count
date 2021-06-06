@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Stock;
 use App\User;
+use http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -21,11 +22,14 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
+            'verify_email_code' => 'required',
             'phone_number' => 'required',
+            'verify_phone_number_code' => 'required',
             'share_own' => 'required|integer',
             'brokage_name' => 'required',
             'stock_id' => 'required|integer',
@@ -39,9 +43,12 @@ class RegisterController extends Controller
                 $validator->errors()->add('email', 'Email already exists');
             }
             $cell_count = User::where('phone_number', $request->phone_number)->where('stock_id', $request->stock_id)->get()->count();
-            if ($cell_count != 0) {
-                $validator->errors()->add('phone_number', 'Phone no already exists');
-            }
+//            if ($cell_count != 0) {
+//                $validator->errors()->add('phone_number', 'Phone no already exists');
+//            }
+//            if(!$this->verify($request->phone_number, $request->verify_phone_number_code)){
+//                $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
+//            }
         });
 
         if ($validator->fails()) {
@@ -58,43 +65,11 @@ class RegisterController extends Controller
             $user->brokage_name = $request->brokage_name;
             $user->stock_id = $request->stock_id;
             $user->country_id = $request->country_id;
-            $user->image = $image;
+            $user->image = $image ?? "No Image";
             $user->save();
-            return redirect()->route('register')->with('success_message', 'Account successfully created.');
+
 
         }
     }
 
-    /**
-     * @throws \Facade\FlareClient\Http\Exceptions\MissingParameter
-     */
-    private function sendTwillioSMS($cell_number)
-    {
-        $token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_sid = getenv("TWILIO_SID");
-        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
-        $twilio = new Client($twilio_sid, $token);
-        $twilio->verify->v2->services($twilio_verify_sid)
-            ->verifications
-            ->create($cell_number, "sms");
-    }
-
-    protected function verify($verfication_code, $phone_number)
-    {
-        $token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_sid = getenv("TWILIO_SID");
-        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
-        $twilio = new Client($twilio_sid, $token);
-
-        $verification = $twilio->verify->v2->services($twilio_verify_sid)
-            ->verificationChecks
-            ->create($verfication_code, array('to' => $phone_number));
-
-        if ($verification->valid) {
-
-        } else {
-
-        }
-
-    }
 }
