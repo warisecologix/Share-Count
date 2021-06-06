@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+use http\Exception;
 use Illuminate\Support\Carbon;
 use Twilio\Rest\Client;
 use Zend\Diactoros\Request;
@@ -25,8 +26,6 @@ trait Twilio
         $twilio_sid = getenv("TWILIO_SID");
         $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
         $twilio = new Client($twilio_sid, $token);
-
-
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verificationChecks
             ->create($verfication_code, array('to' => $phone_number));

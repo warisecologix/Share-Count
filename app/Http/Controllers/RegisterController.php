@@ -53,21 +53,20 @@ class RegisterController extends Controller
         $validator->after(function () use ($request, $validator) {
             $user_cell = User::where('phone_no', $request->phone_no)->get()->first();
             if ($user_cell) {
-                $cell_count = Stock::where('user_id', $user_cell->id)->where('company_id', $request->company_id)->get()->count();
-                if ($cell_count != 0) {
-                    $validator->errors()->add('phone_number', 'Phone no already exists');
-                }
+//                $cell_count = Stock::where('user_id', $user_cell->id)->where('company_id', $request->company_id)->get()->count();
+//                if ($cell_count != 0) {
+//                    $validator->errors()->add('phone_number', 'Phone no already exists');
+//                }
             }
             $user_email = User::where('email', $request->email)->get()->first();
             if ($user_email) {
-                $email_count = Stock::where('user_id', $user_email->id)->where('company_id', $request->company_id)->get()->count();
-                if ($email_count != 0) {
-                    $validator->errors()->add('email', 'Email already exists');
-                }
+//                $email_count = Stock::where('user_id', $user_email->id)->where('company_id', $request->company_id)->get()->count();
+//                if ($email_count != 0) {
+//                    $validator->errors()->add('email', 'Email already exists');
+//                }
             }
 
-
-//            if(!$this->verify($request->phone_number, $request->verify_phone_number_code)){
+//            if (!$this->verify($request->phone_no, $request->verify_phone_number_code)) {
 //                $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
 //            }
         });
@@ -101,6 +100,9 @@ class RegisterController extends Controller
                 $user->first_name = $request->first_name;
                 $user->last_name = $request->last_name;
                 $user->email = $request->email;
+                if ($request->verify_phone_number_code != null) {
+                    $user->phone_no_verify = 1;
+                }
                 $user->phone_no = $request->phone_no;
                 $user->image = $imageName ?? "Image";
                 $user->save();

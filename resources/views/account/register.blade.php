@@ -26,7 +26,7 @@
                         <form method="POST" enctype="multipart/form-data" id="register_form"
                               action="javascript:void(0)">
                             @csrf
-                            <div id="error_messge"></div>
+                            <div id="error_message"></div>
                             <div class="form-group row">
                                 <label for="first_name"
                                        class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
@@ -63,13 +63,13 @@
 
                                         <div class="input-group-append">
                                             <button type="button" id="phone_number_send_verify_code"
-                                                    class="btn btn-primary input-group-text">Send Code
+                                                    class="btn btn-primary input-group-text">Verify Phone
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row" id="div_phone_number_verification">
+                            <div class="form-group row div-hidden" id="div_phone_number_verification">
                                 <label for="verify_phone_number_code"
                                        class="col-md-4 col-form-label text-md-right">{{ __('SMS Verification Code') }}</label>
                                 <div class="col-md-6">
@@ -90,13 +90,13 @@
                                                class="form-control @error('email') is-invalid @enderror" name="email"
                                                value="{{ old('email') }}" autocomplete="email">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-primary input-group-text">Send Code
+                                            <button type="submit" class="btn btn-primary input-group-text">Verify Email
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row" id="div_email_verification">
+                            <div class="form-group row div-hidden" id="div_email_verification">
                                 <label for="verify_email_code"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
 
@@ -228,8 +228,8 @@
                     dataType: 'json',
                     success: function (data) {
                         var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>User Created<div>';
-                        $("#error_messge").empty();
-                        $("#error_messge").append(successMessage);
+                        $("#error_message").empty();
+                        $("#error_message").append(successMessage);
                         setTimeout(() => {
                             window.location.href = window.location.href
                         }, 3000)
@@ -242,7 +242,7 @@
                                 errorString += '<li>' + value[0] + '</li>';
                             });
                             errorString += '</ul><div>';
-                            $("#error_messge").append(errorString);
+                            $("#error_message").append(errorString);
                         }
                     },
 
@@ -269,18 +269,23 @@
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
-                        } else {
-                            $("#div_phone_number_verification").show();
-                            $("#div_email_verification").show();
+                            if(data.user.phone_no_verify == 0){
+                                $("#div_phone_number_verification").removeClass('div-hidden');
+                                var errorString = '<div class="alert success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
+                                $("#error_message").empty();
+                                $("#error_message").append(errorString);
+                            }
+                        } else if(data.message == "code") {
+                            $("#div_phone_number_verification").removeClass('div-hidden');
+                            var errorString = '<div class="alert success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
+                            $("#error_message").empty();
+                            $("#error_message").append(errorString);
                         }
                     },
                     error: function (reject) {
-                        if (reject.status === 422) {
-                            var errors = $.parseJSON(reject.responseText);
-                            $.each(errors, function (key, val) {
-                                $("#" + key + "_error").text(val[0]);
-                            });
-                        }
+                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
+                        $("#error_message").empty();
+                        $("#error_message").append(errorString);
                     }
                 });
             });
