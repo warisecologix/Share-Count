@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('cell_number_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('phone_number');
             $table->bigInteger('share_own');
             $table->date('purchase_date')->nullable();
