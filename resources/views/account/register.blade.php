@@ -230,6 +230,7 @@
                                         <input id="image" type="file"
                                                class="form-control @error('image') is-invalid @enderror"
                                                name="image" value="{{ old('image') }}">
+                                        <input id="image_base_64" type="hidden">
 
                                         @error('image')
                                         <span class="invalid-feedback" role="alert">
@@ -256,6 +257,8 @@
     </div>
 @endsection
 @section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
     <script>
 
         $(document).ready(function (e) {
@@ -264,6 +267,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+
             $('#register_form').submit(function (e) {
                 e.preventDefault();
                 var formData = {
@@ -277,20 +281,26 @@
                     brokage_name: $("#brokage_name").val(),
                     stock_id: $("#stock_id").val(),
                     country_id: $("#country_id").val(),
-                    image: $("#image").val(),
+                    image: $("#image_base_64").val(),
                     phone_number: $('#phone_number').val(),
                     purchase_date: $('#purchase_date').val(),
                     "_token": "{{ csrf_token() }}",
                 };
+
                 var type = "POST";
                 $.ajax({
                     type: type,
                     url: "{{route('register_post')}}",
+                    method: "POST",
                     data: formData,
                     dataType: 'json',
-                    processing: true,
-                    serverSide: true,
                     success: function (data) {
+                        var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>User Created<div>';
+                        $("#error_messge").empty();
+                        $("#error_messge").append(successMessage);
+                        setTimeout(() => {
+                            window.location.href = window.location.href
+                        }, 3000)
                     },
                     error: function (reject) {
                         if (reject.status === 400) {
@@ -306,8 +316,47 @@
 
                 });
             });
+
+            $("#email_send_verify_code").click(function (e) {
+                e.preventDefault();
+                var formData = {
+                    phone_number: $('#phone_number').val(),
+                    "_token": "{{ csrf_token() }}",
+                };
+                var type = "POST";
+                $.ajax({
+                    type: type,
+                    url: "{{route('phone_number_verification_code')}}",
+                    data: formData,
+                    dataType: 'json',
+
+                    success: function (data) {
+
+                    },
+                    error: function (reject) {
+                        if (reject.status === 422) {
+                            var errors = $.parseJSON(reject.responseText);
+                            $.each(errors, function (key, val) {
+                                $("#" + key + "_error").text(val[0]);
+                            });
+                        }
+                    }
+                });
+            });
         });
 
+
+        function readFile() {
+            if (this.files && this.files[0]) {
+                var FR = new FileReader();
+                FR.addEventListener("load", function (e) {
+                    document.getElementById("image_base_64").value = e.target.result;
+                });
+                FR.readAsDataURL(this.files[0]);
+            }
+        }
+
+        document.getElementById("image").addEventListener("change", readFile);
     </script>
 
 @endsection
