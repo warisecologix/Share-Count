@@ -20,16 +20,10 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
-        'email_verified_at',
-        'cell_number_verified_at',
         'password',
-        'phone_number',
-        'share_own',
-        'purchase_date',
-        'brokage_name',
-        'stock_id',
-        'country_id',
+        'phone_no',
         'image',
+        'phone_otp',
     ];
 
     /**

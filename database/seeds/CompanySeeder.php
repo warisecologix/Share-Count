@@ -1,9 +1,9 @@
 <?php
 
-use App\Stock;
+use App\Company;
 use Illuminate\Database\Seeder;
 
-class StockSeeder extends Seeder
+class CompanySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,12 +12,12 @@ class StockSeeder extends Seeder
      */
     public function run()
     {
-        Stock::insert([
+        Company::insert([
             [
-                'name'=>'GME',
+                'company_name'=>'GME',
             ],
             [
-                'name'=>'AMC',
+                'company_name'=>'AMC',
             ]
         ]);
     }

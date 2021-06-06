@@ -6,7 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
 {
-    public function user(){
+    protected $fillable = [
+        'company_id',
+        'user_id',
+        'no_shares_own',
+        'country_list',
+        'brokage_name',
+        'date_purchase'
+    ];
+
+    public function user()
+    {
         return $this->hasMany(User::class);
     }
 }

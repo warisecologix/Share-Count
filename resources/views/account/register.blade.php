@@ -12,7 +12,6 @@
                         <form method="POST" enctype="multipart/form-data" id="register_form"
                               action="javascript:void(0)">
                             @csrf
-
                             <div id="error_messge"></div>
                             <div class="form-group row">
                                 <label for="first_name"
@@ -24,14 +23,8 @@
                                            name="first_name" value="{{ old('first_name') }}"
                                            autocomplete="first_name" autofocus>
 
-                                    @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
-
                             <div class="form-group row">
                                 <label for="last_name"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
@@ -42,14 +35,38 @@
                                            name="last_name" value="{{ old('last_name') }}"
                                            autocomplete="last_name">
 
-                                    @error('last_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
+                            <div class="form-group row" id="div_phone_number">
+                                <label for="email"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input id="phone_no" type="text"
+                                               class="form-control @error('phone_no') is-invalid @enderror"
+                                               name="phone_no"
+                                               value="{{ old('phone_no') }}" autocomplete="phone_no">
 
+                                        <div class="input-group-append">
+                                            <button type="button" id="phone_number_send_verify_code"
+                                                    class="btn btn-primary input-group-text">Send Code
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" id="div_phone_number_verification">
+                                <label for="verify_phone_number_code"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('SMS Verification Code') }}</label>
+                                <div class="col-md-6">
+                                    <input id="verify_phone_number_code" type="text"
+                                           class="form-control @error('verify_phone_number_code') is-invalid @enderror"
+                                           name="verify_phone_number_code"
+                                           value="{{ old('verify_phone_number_code') }}"
+                                           autocomplete="verify_phone_number_code">
+
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="email"
                                        class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -58,12 +75,6 @@
                                         <input id="email" type="email"
                                                class="form-control @error('email') is-invalid @enderror" name="email"
                                                value="{{ old('email') }}" autocomplete="email">
-
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-primary input-group-text">Send Code
                                             </button>
@@ -71,8 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row div-hidden" id="div_email_verification">
+                            <div class="form-group row" id="div_email_verification">
                                 <label for="verify_email_code"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
 
@@ -82,170 +92,80 @@
                                            name="verify_email_code" value="{{ old('verify_email_code') }}"
                                            autocomplete="verify_email_code">
 
-                                    @error('verify_email_code')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="no_shares_own"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Own Share') }}</label>
 
-                            <div class="form-group row div-hidden" id="div_phone_number">
-                                <label for="email"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
                                 <div class="col-md-6">
-                                    <div class="input-group mb-3">
-                                        <input id="phone_number" type="text"
-                                               class="form-control @error('phone_number') is-invalid @enderror"
-                                               name="phone_number"
-                                               value="{{ old('phone_number') }}" autocomplete="phone_number">
-
-                                        @error('phone_number')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                        <div class="input-group-append">
-                                            <button type="button" id="email_send_verify_code"
-                                                    class="btn btn-primary input-group-text">Send Code
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <input id="no_shares_own" type="number"
+                                           class="form-control @error('no_shares_own') is-invalid @enderror"
+                                           name="no_shares_own" value="{{ old('no_shares_own') }}">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="date_purchase"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Purchase Date') }}</label>
 
-                            <div class="div-hidden" id="div_phone_number_verification">
-                                <div class="form-group row" id="div_phone_number_verification">
-                                    <label for="verify_phone_number_code"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('SMS Verification Code') }}</label>
+                                <div class="col-md-6">
+                                    <input id="date_purchase" type="date"
+                                           class="form-control @error('date_purchase') is-invalid @enderror"
+                                           name="date_purchase" value="{{ old('date_purchase') }}">
 
-                                    <div class="col-md-6">
-                                        <input id="verify_phone_number_code" type="text"
-                                               class="form-control @error('verify_phone_number_code') is-invalid @enderror"
-                                               name="verify_phone_number_code"
-                                               value="{{ old('verify_phone_number_code') }}"
-
-                                               autocomplete="verify_phone_number_code">
-
-                                        @error('verify_phone_number_code')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="brokage_name"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}</label>
 
-                                <div class="form-group row">
-                                    <label for="share_own"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('No of Own Share') }}</label>
+                                <div class="col-md-6">
+                                    <input id="brokage_name" type="text"
+                                           class="form-control @error('brokage_name') is-invalid @enderror"
+                                           name="brokage_name" value="{{ old('brokage_name') }}">
 
-                                    <div class="col-md-6">
-                                        <input id="share_own" type="number"
-                                               class="form-control @error('share_own') is-invalid @enderror"
-                                               name="share_own" value="{{ old('share_own') }}">
-
-                                        @error('share_own')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="company_id"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Select Stock') }}</label>
 
-                                <div class="form-group row">
-                                    <label for="purchase_date"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Purchase Date') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="purchase_date" type="date"
-                                               class="form-control @error('purchase_date') is-invalid @enderror"
-                                               name="purchase_date" value="{{ old('purchase_date') }}">
-
-                                        @error('purchase_date')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="company_id" name="company_id">
+                                        @foreach($companies as $company)
+                                            <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="country_list"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Select Country') }}</label>
 
-                                <div class="form-group row">
-                                    <label for="brokage_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="brokage_name" type="text"
-                                               class="form-control @error('brokage_name') is-invalid @enderror"
-                                               name="brokage_name" value="{{ old('brokage_name') }}">
-
-                                        @error('brokage_name')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="country_list" name="country_list">
+                                        @foreach($countries as $country)
+                                            <option value="{{$country->name}}">{{$country->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="image"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Image of Your Brokage App ') }}</label>
 
-                                <div class="form-group row">
-                                    <label for="stock_id"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Select Stock') }}</label>
-
-                                    <div class="col-md-6">
-                                        <select class="form-control" id="stock_id" name="stock_id">
-                                            @foreach($stocks as $stock)
-                                                <option value="{{$stock->id}}">{{$stock->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('stock_id')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
+                                <div class="col-md-6">
+                                    <input id="image" type="file"
+                                           class="form-control @error('image') is-invalid @enderror"
+                                           name="image" value="{{ old('image') }}">
+                                    <input id="image_base_64" type="hidden">
                                 </div>
-
-                                <div class="form-group row">
-                                    <label for="country_id"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Select Country') }}</label>
-
-                                    <div class="col-md-6">
-                                        <select class="form-control" id="country_id" name="country_id">
-                                            @foreach($countries as $country)
-                                                <option value="{{$country->id}}">{{$country->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('country_id')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="image"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Image of Your Brokage App ') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="image" type="file"
-                                               class="form-control @error('image') is-invalid @enderror"
-                                               name="image" value="{{ old('image') }}">
-                                        <input id="image_base_64" type="hidden">
-
-                                        @error('image')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-6">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Register') }}
-                                        </button>
-                                    </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-6">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Register') }}
+                                    </button>
                                 </div>
                             </div>
 
@@ -260,14 +180,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
     <script>
-
         $(document).ready(function (e) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
+            /* Register User AJAX Call */
             $('#register_form').submit(function (e) {
                 e.preventDefault();
                 var formData = {
@@ -275,15 +194,14 @@
                     last_name: $("#last_name").val(),
                     email: $("#email").val(),
                     verify_email_code: $("#verify_email_code").val(),
-                    phone_number: $("#phone_number").val(),
+                    phone_no: $("#phone_no").val(),
                     verify_phone_number_code: $("#verify_phone_number_code").val(),
-                    share_own: $("#share_own").val(),
+                    no_shares_own: $("#no_shares_own").val(),
                     brokage_name: $("#brokage_name").val(),
-                    stock_id: $("#stock_id").val(),
-                    country_id: $("#country_id").val(),
+                    company_id: $("#company_id").val(),
+                    country_list: $("#country_list").val(),
                     image: $("#image_base_64").val(),
-                    phone_number: $('#phone_number').val(),
-                    purchase_date: $('#purchase_date').val(),
+                    date_purchase: $('#date_purchase').val(),
                     "_token": "{{ csrf_token() }}",
                 };
 
@@ -317,10 +235,11 @@
                 });
             });
 
-            $("#email_send_verify_code").click(function (e) {
+            /* Phone No Send Verification Code AJAX Call */
+            $("#phone_number_send_verify_code").click(function (e) {
                 e.preventDefault();
                 var formData = {
-                    phone_number: $('#phone_number').val(),
+                    phone_no: $('#phone_no').val(),
                     "_token": "{{ csrf_token() }}",
                 };
                 var type = "POST";
@@ -329,9 +248,17 @@
                     url: "{{route('phone_number_verification_code')}}",
                     data: formData,
                     dataType: 'json',
-
                     success: function (data) {
-
+                        if (data.message == "user") {
+                            $("#div_phone_number_verification").hide();
+                            $("#div_email_verification").hide();
+                            $("#email").val(data.user.email);
+                            $("#first_name").val(data.user.first_name);
+                            $("#last_name").val(data.user.last_name);
+                        } else {
+                            $("#div_phone_number_verification").show();
+                            $("#div_email_verification").show();
+                        }
                     },
                     error: function (reject) {
                         if (reject.status === 422) {
