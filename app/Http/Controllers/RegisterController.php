@@ -35,17 +35,17 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
             $email_count = User::where('email', $request->email)->where('stock_id', $request->stock_id)->get()->count();
-            if ($email_count > 0) {
+            if ($email_count != 0) {
                 $validator->errors()->add('email', 'Email already exists');
             }
             $cell_count = User::where('phone_number', $request->phone_number)->where('stock_id', $request->stock_id)->get()->count();
-            if ($cell_count > 0) {
+            if ($cell_count != 0) {
                 $validator->errors()->add('phone_number', 'Phone no already exists');
             }
         });
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator);
+            return Redirect::back()->withErrors($validator)->withInput($request->all());
         } else {
             $image = $this->uploadMediaFile($request,'image', 'brokage_app');
             $user = new User();
