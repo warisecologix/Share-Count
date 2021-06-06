@@ -51,13 +51,36 @@
                             <div class="form-group row">
                                 <label for="email"
                                        class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input id="email" type="email"
+                                               class="form-control @error('email') is-invalid @enderror" name="email"
+                                               value="{{ old('email') }}" required autocomplete="email">
+
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary input-group-text">Send Code
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="verify_email_code"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email"
-                                           class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email">
+                                    <input id="verify_email_code" type="text"
+                                           class="form-control @error('verify_email_code') is-invalid @enderror"
+                                           name="verify_email_code" value="{{ old('verify_email_code') }}" required
+                                           autocomplete="verify_email_code">
 
-                                    @error('email')
+                                    @error('verify_email_code')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -65,16 +88,40 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="div_phone_number">
-                                <label for="phone_number"
+                            <div class="form-group row">
+                                <label for="email"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input id="phone_number" type="text"
+                                               class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
+                                               value="{{ old('phone_number') }}" required autocomplete="phone_number">
+
+                                        @error('phone_number')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary input-group-text">Send Code
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label for="verify_phone_number_code"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('SMS Verification Code') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="phone_number" type="text"
-                                           class="form-control @error('phone_number') is-invalid @enderror"
-                                           name="phone_number" value="{{ old('phone_number') }}" required>
+                                    <input id="verify_phone_number_code" type="text"
+                                           class="form-control @error('verify_phone_number_code') is-invalid @enderror"
+                                           name="verify_phone_number_code" value="{{ old('verify_phone_number_code') }}" required
+                                           autocomplete="verify_phone_number_code">
 
-                                    @error('phone_number')
+                                    @error('verify_phone_number_code')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
