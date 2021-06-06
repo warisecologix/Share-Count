@@ -2,8 +2,22 @@
 
 @section('content')
     <div class="container">
+        <div class="row justify-content-center mb-5">
+            @foreach($data as $item)
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><b>Company Name: </b> <span> {{$item->company_name}} </span></p>
+                            <p><b>Shareholder Count: </b> <span> {{$item->Shareholder_Count}} </span></p>
+                            <p><b>Verified Members: </b> <span> {{$item->verified_count}} </span></p>
+                            <p><b>Total Shares: </b> <span> {{$item->Total_Share}} </span></p>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header text-center">{{ __('Register Your Account') }}</div>
 

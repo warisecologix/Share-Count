@@ -6,8 +6,8 @@ use App\Company;
 use App\Country;
 use App\Stock;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -16,9 +16,24 @@ class RegisterController extends Controller
 {
     public function register()
     {
+
+        $data = DB::select("SELECT
+        com.company_name,
+            COUNT(st.user_id) AS 'Shareholder_Count',
+            SUM(st.no_shares_own) AS 'Total_Share',
+            sum(CASE
+                WHEN us.verified_user = 1 THEN 1
+                ELSE 0
+            END) AS 'verified_count'
+    FROM
+        stocks st
+    INNER JOIN companies com ON st.company_id = com.id
+    INNER JOIN users us ON st.user_id = us.id
+    GROUP BY com.company_name");
+
         $companies = Company::all();
         $countries = Country::all();
-        return view('account.register', compact('companies', 'countries'));
+        return view('account.register', compact('companies', 'countries', 'data'));
     }
 
     public function store(Request $request)
