@@ -65,7 +65,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row" id="div_phone_number">
                                 <label for="phone_number"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
@@ -133,7 +133,6 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
                                 <label for="stock_id"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Select Stock') }}</label>
@@ -152,7 +151,6 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
                                 <label for="country_id"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Select Country') }}</label>
@@ -170,7 +168,6 @@
                                     @enderror
                                 </div>
                             </div>
-
 
                             <div class="form-group row">
                                 <label for="image"
@@ -196,6 +193,7 @@
                                     </button>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
