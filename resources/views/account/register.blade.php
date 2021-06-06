@@ -9,9 +9,11 @@
 
                     <div class="card-body">
 
-                        <form onsubmit="return submit_form()" method="post" enctype="multipart/form-data">
+                        <form method="POST" enctype="multipart/form-data" id="register_form"
+                              action="javascript:void(0)">
                             @csrf
 
+                            <div id="error_messge"></div>
                             <div class="form-group row">
                                 <label for="first_name"
                                        class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
@@ -19,7 +21,7 @@
                                 <div class="col-md-6">
                                     <input id="first_name" type="text"
                                            class="form-control @error('first_name') is-invalid @enderror"
-                                           name="first_name" value="{{ old('first_name') }}" required
+                                           name="first_name" value="{{ old('first_name') }}"
                                            autocomplete="first_name" autofocus>
 
                                     @error('first_name')
@@ -37,7 +39,7 @@
                                 <div class="col-md-6">
                                     <input id="last_name" type="text"
                                            class="form-control @error('last_name') is-invalid @enderror"
-                                           name="last_name" value="{{ old('last_name') }}" required
+                                           name="last_name" value="{{ old('last_name') }}"
                                            autocomplete="last_name">
 
                                     @error('last_name')
@@ -55,7 +57,7 @@
                                     <div class="input-group mb-3">
                                         <input id="email" type="email"
                                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                               value="{{ old('email') }}" required autocomplete="email">
+                                               value="{{ old('email') }}" autocomplete="email">
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -77,7 +79,7 @@
                                 <div class="col-md-6">
                                     <input id="verify_email_code" type="text"
                                            class="form-control @error('verify_email_code') is-invalid @enderror"
-                                           name="verify_email_code" value="{{ old('verify_email_code') }}" required
+                                           name="verify_email_code" value="{{ old('verify_email_code') }}"
                                            autocomplete="verify_email_code">
 
                                     @error('verify_email_code')
@@ -96,7 +98,7 @@
                                         <input id="phone_number" type="text"
                                                class="form-control @error('phone_number') is-invalid @enderror"
                                                name="phone_number"
-                                               value="{{ old('phone_number') }}" required autocomplete="phone_number">
+                                               value="{{ old('phone_number') }}" autocomplete="phone_number">
 
                                         @error('phone_number')
                                         <span class="invalid-feedback" role="alert">
@@ -122,7 +124,7 @@
                                                class="form-control @error('verify_phone_number_code') is-invalid @enderror"
                                                name="verify_phone_number_code"
                                                value="{{ old('verify_phone_number_code') }}"
-                                               required
+
                                                autocomplete="verify_phone_number_code">
 
                                         @error('verify_phone_number_code')
@@ -140,7 +142,7 @@
                                     <div class="col-md-6">
                                         <input id="share_own" type="number"
                                                class="form-control @error('share_own') is-invalid @enderror"
-                                               name="share_own" value="{{ old('share_own') }}" required>
+                                               name="share_own" value="{{ old('share_own') }}">
 
                                         @error('share_own')
                                         <span class="invalid-feedback" role="alert">
@@ -174,7 +176,7 @@
                                     <div class="col-md-6">
                                         <input id="brokage_name" type="text"
                                                class="form-control @error('brokage_name') is-invalid @enderror"
-                                               name="brokage_name" value="{{ old('brokage_name') }}" required>
+                                               name="brokage_name" value="{{ old('brokage_name') }}">
 
                                         @error('brokage_name')
                                         <span class="invalid-feedback" role="alert">
@@ -227,7 +229,7 @@
                                     <div class="col-md-6">
                                         <input id="image" type="file"
                                                class="form-control @error('image') is-invalid @enderror"
-                                               name="image" value="{{ old('image') }}" required>
+                                               name="image" value="{{ old('image') }}">
 
                                         @error('image')
                                         <span class="invalid-feedback" role="alert">
@@ -255,67 +257,57 @@
 @endsection
 @section('js')
     <script>
-        $("#email_send_verify_code").click(function (e) {
-            e.preventDefault();
-            var formData = {
-                phone_number: $('#phone_number').val(),
-                "_token": "{{ csrf_token() }}",
-            };
-            var type = "POST";
-            $.ajax({
-                type: type,
-                url: "{{route('phone_number_verification_code')}}",
-                data: formData,
-                dataType: 'json',
-                success: function (data) {
 
+        $(document).ready(function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
+            });
+            $('#register_form').submit(function (e) {
+                e.preventDefault();
+                var formData = {
+                    first_name: $("#first_name").val(),
+                    last_name: $("#last_name").val(),
+                    email: $("#email").val(),
+                    verify_email_code: $("#verify_email_code").val(),
+                    phone_number: $("#phone_number").val(),
+                    verify_phone_number_code: $("#verify_phone_number_code").val(),
+                    share_own: $("#share_own").val(),
+                    brokage_name: $("#brokage_name").val(),
+                    stock_id: $("#stock_id").val(),
+                    country_id: $("#country_id").val(),
+                    image: $("#image").val(),
+                    phone_number: $('#phone_number').val(),
+                    purchase_date: $('#purchase_date').val(),
+                    "_token": "{{ csrf_token() }}",
+                };
+                var type = "POST";
+                $.ajax({
+                    type: type,
+                    url: "{{route('register_post')}}",
+                    data: formData,
+                    dataType: 'json',
+                    processing: true,
+                    serverSide: true,
+                    success: function (data) {
+                    },
+                    error: function (reject) {
+                        if (reject.status === 400) {
+                            var response = JSON.parse(reject.responseText);
+                            var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><ul>';
+                            $.each(response.errors, function (key, value) {
+                                errorString += '<li>' + value[0] + '</li>';
+                            });
+                            errorString += '</ul><div>';
+                            $("#error_messge").append(errorString);
+                        }
+                    },
+
+                });
             });
         });
-    </script>
-    <script>
-        function submit_form() {
-            var formData = {
-                first_name: $("#first_name").val(),
-                last_name: $("#last_name").val(),
-                email: $("#email").val(),
-                verify_email_code: $("#verify_email_code").val(),
-                phone_number: $("#phone_number").val(),
-                verify_phone_number_code: $("#verify_phone_number_code").val(),
-                share_own: $("#share_own").val(),
-                brokage_name: $("#brokage_name").val(),
-                stock_id: $("#stock_id").val(),
-                country_id: $("#country_id").val(),
-                image: $("#image").val(),
-                phone_number: $('#phone_number').val(),
-                purchase_date: $('#purchase_date').val(),
-                "_token": "{{ csrf_token() }}",
-            };
-            var type = "POST";
-            $.ajax({
-                url: "{{route('register_post')}}",
-                data: JSON.parse(formData),
-                cache: false,
-                contentType: false,
-                processData: false,
-                method: 'POST',
-                type: type,
-                success: function (data) {
 
-                    debugger
-                    console.log("-*-*-*-*-*-*-*-*-")
-                    console.log(data)
-                },
-                error: function (reject) {
-                    if (reject.status === 422) {
-                        var errors = $.parseJSON(reject.responseText);
-                        $.each(errors, function (key, val) {
-                            $("#" + key + "_error").text(val[0]);
-                        });
-                    }
-                }
-            });
-        }
     </script>
 
 @endsection

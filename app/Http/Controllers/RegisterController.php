@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Country;
 use App\Stock;
 use App\User;
-use http\Client\Response;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Twilio\Rest\Client;
 
 class RegisterController extends Controller
 {
@@ -22,7 +20,6 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-
         $rules = [
             'first_name' => 'required',
             'last_name' => 'required',
@@ -34,7 +31,7 @@ class RegisterController extends Controller
             'brokage_name' => 'required',
             'stock_id' => 'required|integer',
             'country_id' => 'required|integer',
-            'image' => 'required|mimes:jpg,jpeg,png,bmp|max:4096',
+//            'image' => 'required|mimes:jpg,jpeg,png,bmp|max:4096',
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
@@ -52,8 +49,11 @@ class RegisterController extends Controller
         });
 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput($request->all());
+            return response()->json([
+                'errors' => $validator->getMessageBag()->toArray()
+            ], 400);
         } else {
+
             $image = $this->uploadMediaFile($request, 'image', 'brokage_app');
             $user = new User();
             $user->first_name = $request->first_name;
@@ -66,8 +66,6 @@ class RegisterController extends Controller
             $user->stock_id = $request->stock_id;
             $user->country_id = $request->country_id;
             $user->image = $image ?? "No Image";
-            $user->save();
-
 
         }
     }
