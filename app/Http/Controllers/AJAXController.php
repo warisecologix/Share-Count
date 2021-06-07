@@ -21,6 +21,10 @@ class AJAXController extends Controller
                     return response()->json([
                         'message' => "phone_format"
                     ], 200);
+                } else if ($code == 200) {
+                    return response()->json([
+                        'message' => "sms_code_send"
+                    ], 200);
                 }
             }
             return response()->json([
@@ -33,6 +37,10 @@ class AJAXController extends Controller
                 return response()->json([
                     'message' => "phone_format"
                 ], 200);
+            } else if ($code == 200) {
+                return response()->json([
+                    'message' => "sms_code_send"
+                ], 200);
             }
         }
 
@@ -43,8 +51,8 @@ class AJAXController extends Controller
         $session_id = Session::getId();
         $random_number = mt_rand(1000, 9999);
         Mail::to($request->email)->send(new VerifyUser($random_number));
-        $collection =  EmailVerify::where('session_id', $session_id)->get();
-        foreach($collection as $c) {
+        $collection = EmailVerify::where('session_id', $session_id)->get();
+        foreach ($collection as $c) {
             $c->delete();
         }
         $emailVerify = new EmailVerify();

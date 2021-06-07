@@ -270,7 +270,15 @@
                             var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid phone number<div>';
                             $("#error_message").empty();
                             $("#error_message").append(errorString);
-                        } else {
+                        }
+                        else if(data.message == "sms_code_send"){
+                            $("#div_phone_number_verification").removeClass('div-hidden');
+
+                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>please write otp code to verify phone number<div>';
+                            $("#error_message").empty();
+                            $("#error_message").append(errorString);
+                        }
+                        else {
                             $("#phone_no").prop("readonly", true);
                             if (data.message == "user") {
                                 $("#div_phone_number_verification").hide();
