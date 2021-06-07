@@ -19,7 +19,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header text-center">{{ __('Register Your Account') }}</div>
+                    <div class="card-header text-center">{{ __('Register your count') }}</div>
 
                     <div class="card-body">
 
@@ -47,9 +47,10 @@
                                 </div>
                             </div>
                             <div class="form-group row div-hidden" id="div_phone_number_verification">
-                                <label for="verify_phone_number_code" class="col-md-4 col-form-label text-md-right">{{ __('SMS Verification Code') }}</label>
+                                <label for="verify_phone_number_code"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Verification Code') }}</label>
                                 <div class="col-md-6">
-                                    <input id="verify_phone_number_code" type="text"
+                                    <input id="verify_phone_number_code" type="number"
                                            class="form-control @error('verify_phone_number_code') is-invalid @enderror"
                                            name="verify_phone_number_code"
                                            value="{{ old('verify_phone_number_code') }}"
@@ -90,7 +91,8 @@
                                                class="form-control @error('email') is-invalid @enderror" name="email"
                                                value="{{ old('email') }}" autocomplete="email">
                                         <div class="input-group-append">
-                                            <button type="button" id="email_send_verify_code" class="btn btn-primary input-group-text">Verify Email
+                                            <button type="button" id="email_send_verify_code"
+                                                    class="btn btn-primary input-group-text">Verify Email
                                             </button>
                                         </div>
                                     </div>
@@ -100,7 +102,7 @@
                                 <label for="verify_email_code"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
                                 <div class="col-md-6">
-                                    <input id="verify_email_code" type="text"
+                                    <input id="verify_email_code" type="number"
                                            class="form-control @error('verify_email_code') is-invalid @enderror"
                                            name="verify_email_code" value="{{ old('verify_email_code') }}"
                                            autocomplete="verify_email_code">
@@ -225,7 +227,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>User Created<div>';
+                        var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Your stock has been added<div>';
                         $("#error_message").empty();
                         $("#error_message").append(successMessage);
                         setTimeout(() => {
@@ -265,7 +267,7 @@
                     dataType: 'json',
                     success: function (data) {
 
-                        $("#phone_no").prop("readonly",true);
+                        $("#phone_no").prop("readonly", true);
                         if (data.message == "user") {
                             $("#div_phone_number_verification").hide();
 
@@ -273,23 +275,22 @@
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
 
-                            $("#email").prop("readonly",true);
-                            $("#first_name").prop("readonly",true);
-                            $("#last_name").prop("readonly",true);
+                            $("#email").prop("readonly", true);
+                            $("#first_name").prop("readonly", true);
+                            $("#last_name").prop("readonly", true);
 
 
                             if (data.user.phone_no_verify == 0) {
                                 $("#div_phone_number_verification").removeClass('div-hidden');
-                                var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write otp code to verify phone number <div>';
+                                var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
                                 $("#error_message").empty();
                                 $("#error_message").append(errorString);
-                            }
-                            else {
+                            } else {
                                 $("#phone_number_send_verify_code").addClass('div-hidden');
                             }
                         } else if (data.message == "code") {
                             $("#div_phone_number_verification").removeClass('div-hidden');
-                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write otp code to verify phone number <div>';
+                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
                             $("#error_message").empty();
                             $("#error_message").append(errorString);
                         }
@@ -318,7 +319,9 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-
+                        var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please check your email for otp<div>';
+                        $("#error_message").empty();
+                        $("#error_message").append(successMessage);
                     },
                 });
             });
@@ -341,20 +344,19 @@
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
-                            $("#email").prop("readonly",true);
-                            $("#first_name").prop("readonly",true);
-                            $("#last_name").prop("readonly",true);
-                            $("#phone_no").prop("readonly",true);
+                            $("#email").prop("readonly", true);
+                            $("#first_name").prop("readonly", true);
+                            $("#last_name").prop("readonly", true);
+                            $("#phone_no").prop("readonly", true);
                             if (data.user.phone_no_verify == "0") {
                                 $("#div_phone_number_verification").removeClass('div-hidden');
                                 $("#div_phone_number_verification").css('display', '');
-                                var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>User found <div>';
-                                $("#error_message").empty();
-                                $("#error_message").append(errorString);
-                            }
-                            else {
+                            } else {
                                 $("#phone_number_send_verify_code").addClass('div-hidden');
                             }
+                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>User found <div>';
+                            $("#error_message").empty();
+                            $("#error_message").append(errorString);
                         }
                     }
                 });

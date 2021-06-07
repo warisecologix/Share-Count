@@ -38,6 +38,10 @@ class AJAXController extends Controller
         $session_id = Session::getId();
         $random_number = mt_rand(1000, 9999);
         Mail::to($request->email)->send(new VerifyUser($random_number));
+        $collection =  EmailVerify::where('session_id', $session_id)->get();
+        foreach($collection as $c) {
+            $c->delete();
+        }
         $emailVerify = new EmailVerify();
         $emailVerify->otp_code = $random_number;
         $emailVerify->session_id = $session_id;
@@ -52,9 +56,6 @@ class AJAXController extends Controller
     {
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
-            if ($user->phone_no_verify == 0) {
-//                $this->sendTwillioSMS($request->phone_no);
-            }
             return response()->json([
                 'user' => $user,
                 'message' => "user_exists"

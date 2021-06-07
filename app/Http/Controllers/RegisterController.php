@@ -61,10 +61,13 @@ class RegisterController extends Controller
                     $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
                 }
             }
+            if (empty($request->verify_email_code)) {
+                $validator->errors()->add('verify_email_code', 'Email verification code field required');
+            }
             $session_id = Session::getId();
             $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->get()->first();
             if (!$emailVerify) {
-                $validator->errors()->add('verify_email_code', 'Email code is invalid');
+                $validator->errors()->add('verify_email_code', 'Invalid code');
             }
         });
 
