@@ -42,8 +42,6 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-
-        $status = false;
         $rules = [
             'phone_no' => 'required',
             'first_name' => 'required',
@@ -58,31 +56,13 @@ class RegisterController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
-            $user_cell = User::where('phone_no', $request->phone_no)->get()->first();
-            if ($user_cell) {
-//                $cell_count = Stock::where('user_id', $user_cell->id)->where('company_id', $request->company_id)->get()->count();
-//                if ($cell_count != 0) {
-//                    $validator->errors()->add('phone_number', 'Phone no already exists');
-//                }
-            }
-            $user_email = User::where('email', $request->email)->get()->first();
-            if ($user_email) {
-//                $email_count = Stock::where('user_id', $user_email->id)->where('company_id', $request->company_id)->get()->count();
-//                if ($email_count != 0) {
-//                    $validator->errors()->add('email', 'Email already exists');
-//                }
-            }
-//
             if ($request->verify_phone_number_code) {
                 if (!$this->verify($request->phone_no, $request->verify_phone_number_code)) {
                     $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
                 }
             }
-
-
             $session_id = Session::getId();
             $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->get()->first();
-
             if (!$emailVerify) {
                 $validator->errors()->add('verify_email_code', 'Email code is invalid');
             }
