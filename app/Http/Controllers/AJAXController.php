@@ -57,12 +57,12 @@ class AJAXController extends Controller
         //Mail::to($request->email)->send(new VerifyUser($random_number));
         $from = "verification@trackshortage.com";
         $to = $request->email;
-        $subject = "Checking PHP mail";
-        $message = "This is your OTP Code" . $random_number;
+        $subject = "Verification mail";
+        $message = "Your OTP code is " . $random_number;
         $headers = "Reply-To: Count <verification@trackshortage.com>\r\n";
-        $headers .= "Return-Path: The Sender <verification@trackshortage.com>\r\n";
-        $headers .= "From: The Sender <verification@trackshortage.com>\r\n";
-        $headers .= "Organization: Sender Organization\r\n";
+        $headers .= "Return-Path:  Verification Email <verification@trackshortage.com>\r\n";
+        $headers .= "From: Verification Email <verification@trackshortage.com>\r\n";
+        $headers .= "Organization: trackshortage\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
         $headers .= "X-Priority: 3\r\n";
@@ -89,7 +89,24 @@ class AJAXController extends Controller
     {
         $session_id = Session::getId();
         $random_number = Str::random(10);
-        Mail::to($request->email)->send(new VerifyUser($random_number));
+
+        //Mail::to($request->email)->send(new VerifyUser($random_number));
+
+        $from = "verification@trackshortage.com";
+        $to = $request->email;
+        $subject = "Verification mail";
+        $message = "Your OTP code is " . $random_number;
+        $headers = "Reply-To: Count <verification@trackshortage.com>\r\n";
+        $headers .= "Return-Path:  Verification Email <verification@trackshortage.com>\r\n";
+        $headers .= "From: Verification Email <verification@trackshortage.com>\r\n";
+        $headers .= "Organization: trackshortage\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
+        $headers .= "X-Priority: 3\r\n";
+        $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
+        mail($to, $subject, $message, $headers);
+
+
         $collection = EmailVerify::where('session_id', $session_id)->where('type' ,1)->get();
         foreach ($collection as $c) {
             $c->delete();
