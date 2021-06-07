@@ -9,6 +9,7 @@ class AJAXController extends Controller
 {
     public function phone_number_verification_code(Request $request)
     {
+
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
             if (!$user->phone_no_verify) {

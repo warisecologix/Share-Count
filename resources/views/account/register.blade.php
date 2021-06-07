@@ -275,6 +275,9 @@
                                 $("#error_message").empty();
                                 $("#error_message").append(errorString);
                             }
+                            else {
+                                $("#phone_number_send_verify_code").addClass('div-hidden');
+                            }
                         } else if (data.message == "code") {
                             $("#div_phone_number_verification").removeClass('div-hidden');
                             var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
@@ -316,6 +319,9 @@
                                 var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
                                 $("#error_message").empty();
                                 $("#error_message").append(errorString);
+                            }
+                            else {
+                                $("#phone_number_send_verify_code").addClass('div-hidden');
                             }
                         } else if (data.message == "code") {
                             $("#div_phone_number_verification").removeClass('div-hidden');

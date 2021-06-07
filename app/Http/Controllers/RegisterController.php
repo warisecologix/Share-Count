@@ -17,9 +17,6 @@ class RegisterController extends Controller
     public function register()
     {
 
-        $this->sendTwillioEmail("waris.zargar123@gmail.com");
-        echo "Okokok";
-        die();
         $data = DB::select("SELECT
         com.company_name,
             COUNT(st.user_id) AS 'Shareholder_Count',
