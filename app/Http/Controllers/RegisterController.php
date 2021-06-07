@@ -135,7 +135,7 @@ class RegisterController extends Controller
 
             $emailVerify->delete();
             return response()->json([
-                'success' => 'User Created'
+                'success' => 'Stock Added'
             ], 200);
         }
     }

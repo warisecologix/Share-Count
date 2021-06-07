@@ -191,7 +191,6 @@
 @endsection
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
     <script>
         $(document).ready(function (e) {
             $.ajaxSetup({
@@ -271,6 +270,12 @@
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
+
+                            $("#email").prop("readonly",true);
+                            $("#first_name").prop("readonly",true);
+                            $("#last_name").prop("readonly",true);
+
+
                             if (data.user.phone_no_verify == 0) {
                                 $("#div_phone_number_verification").removeClass('div-hidden');
                                 var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
@@ -334,6 +339,12 @@
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
+
+                            $("#email").prop("readonly",true);
+                            $("#first_name").prop("readonly",true);
+                            $("#last_name").prop("readonly",true);
+
+
                             if (data.user.phone_no_verify == "0") {
                                 $("#div_phone_number_verification").removeClass('div-hidden');
                                 $("#div_phone_number_verification").css('display', '');
@@ -364,5 +375,4 @@
         document.getElementById("image").addEventListener("change", readFile);
 
     </script>
-
 @endsection
