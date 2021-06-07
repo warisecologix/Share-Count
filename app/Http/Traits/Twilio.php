@@ -13,9 +13,9 @@ trait Twilio
 {
     public function sendTwillioSMS($cell_number)
     {
-        $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
-        $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
-        $twilio_verify_sid = "VA4461c7af8711ba1fccc48850f6cc4524";
+        $token = "178acce54f2866d23c83d95a3a7f40af";
+        $twilio_sid = "ACaa40d46ee008345dfa4a0da2eb35b6a3";
+        $twilio_verify_sid = "VA22bdec3cc683aedd9a8eb3ab5eeabd94";
         try {
             $twilio = new Client($twilio_sid, $token);
             $twilio->verify->v2->services($twilio_verify_sid)
@@ -25,9 +25,9 @@ trait Twilio
             return 200;
 
         } catch (TwilioException $e) {
-             echo "<pre>";
-            print_r($e->getMessage( ) );
-            die();
+            //  echo "<pre>";
+            // print_r($e->getMessage( ) );
+            // die();
             return $e->getCode();
         }
 
@@ -36,9 +36,9 @@ trait Twilio
 
     public function verify($phone_number, $verfication_code)
     {
-        $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
-        $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
-        $twilio_verify_sid = "VA4461c7af8711ba1fccc48850f6cc4524";
+        $token = "178acce54f2866d23c83d95a3a7f40af";
+        $twilio_sid = "ACaa40d46ee008345dfa4a0da2eb35b6a3";
+        $twilio_verify_sid = "VA22bdec3cc683aedd9a8eb3ab5eeabd94";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verificationChecks
@@ -52,9 +52,9 @@ trait Twilio
 
     public function sendTwillioEmail($email)
     {
-        $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
-        $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
-        $twilio_verify_sid = "VA4461c7af8711ba1fccc48850f6cc4524";
+        $token = "178acce54f2866d23c83d95a3a7f40af";
+        $twilio_sid = "ACaa40d46ee008345dfa4a0da2eb35b6a3";
+        $twilio_verify_sid = "VA22bdec3cc683aedd9a8eb3ab5eeabd94";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
