@@ -34,8 +34,9 @@
                                 <div class="col-md-6">
                                     <div class="input-group mb-3">
                                         <input id="phone_no" type="text"
-                                               class="form-control @error('phone_no') is-invalid @enderror"
+                                               class="form-control "
                                                name="phone_no"
+                                               placeholder="Enter valid phone no"
                                                value="{{ old('phone_no') }}" autocomplete="phone_no" autofocus>
 
                                         <div class="input-group-append">
@@ -51,8 +52,9 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Verification Code') }}</label>
                                 <div class="col-md-6">
                                     <input id="verify_phone_number_code" type="number"
-                                           class="form-control @error('verify_phone_number_code') is-invalid @enderror"
+                                           class="form-control "
                                            name="verify_phone_number_code"
+                                           placeholder="Enter verification code"
                                            value="{{ old('verify_phone_number_code') }}"
                                            autocomplete="verify_phone_number_code">
 
@@ -64,7 +66,8 @@
 
                                 <div class="col-md-6">
                                     <input id="first_name" type="text"
-                                           class="form-control @error('first_name') is-invalid @enderror"
+                                           class="form-control "
+                                           placeholder="Enter first name"
                                            name="first_name" value="{{ old('first_name') }}"
                                            autocomplete="first_name">
 
@@ -76,7 +79,8 @@
 
                                 <div class="col-md-6">
                                     <input id="last_name" type="text"
-                                           class="form-control @error('last_name') is-invalid @enderror"
+                                           class="form-control"
+                                           placeholder="Enter last name"
                                            name="last_name" value="{{ old('last_name') }}"
                                            autocomplete="last_name">
 
@@ -88,7 +92,8 @@
                                 <div class="col-md-6">
                                     <div class="input-group mb-3">
                                         <input id="email" type="email"
-                                               class="form-control @error('email') is-invalid @enderror" name="email"
+                                               class="form-control " name="email"
+                                               placeholder="Enter valid email address"
                                                value="{{ old('email') }}" autocomplete="email">
                                         <div class="input-group-append">
                                             <button type="button" id="email_send_verify_code"
@@ -103,7 +108,8 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
                                 <div class="col-md-6">
                                     <input id="verify_email_code" type="number"
-                                           class="form-control @error('verify_email_code') is-invalid @enderror"
+                                           class="form-control"
+                                           placeholder="Enter verification code"
                                            name="verify_email_code" value="{{ old('verify_email_code') }}"
                                            autocomplete="verify_email_code">
 
@@ -111,11 +117,12 @@
                             </div>
                             <div class="form-group row">
                                 <label for="no_shares_own"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Own Share') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="no_shares_own" type="number"
-                                           class="form-control @error('no_shares_own') is-invalid @enderror"
+                                           class="form-control "
+                                           placeholder="Enter No of Share Own"
                                            name="no_shares_own" value="{{ old('no_shares_own') }}">
                                 </div>
                             </div>
@@ -125,7 +132,7 @@
 
                                 <div class="col-md-6">
                                     <input id="date_purchase" type="date"
-                                           class="form-control @error('date_purchase') is-invalid @enderror"
+                                           class="form-control "
                                            name="date_purchase" value="{{ old('date_purchase') }}">
 
                                 </div>
@@ -136,7 +143,8 @@
 
                                 <div class="col-md-6">
                                     <input id="brokage_name" type="text"
-                                           class="form-control @error('brokage_name') is-invalid @enderror"
+                                           class="form-control "
+                                           placeholder="Enter brokage name"
                                            name="brokage_name" value="{{ old('brokage_name') }}">
 
                                 </div>
@@ -171,7 +179,7 @@
 
                                 <div class="col-md-6">
                                     <input id="image" type="file"
-                                           class="form-control @error('image') is-invalid @enderror"
+                                           class="form-control "
                                            name="image" value="{{ old('image') }}">
                                     <input id="image_base_64" type="hidden">
                                 </div>
