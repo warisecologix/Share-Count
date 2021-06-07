@@ -12,9 +12,9 @@ trait Twilio
 {
     public function sendTwillioSMS($cell_number)
     {
-        $token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_sid = getenv("TWILIO_SID");
-        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+        $token = "c734a4b941cdee7ddc8b727c457673e9";
+        $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
+        $twilio_verify_sid = "VAfc2fbe34e571b79bb607cc9c71af2683";
         $twilio = new Client($twilio_sid, $token);
         $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
@@ -23,9 +23,9 @@ trait Twilio
 
     public function verify($phone_number, $verfication_code)
     {
-        $token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_sid = getenv("TWILIO_SID");
-        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
+        $token = "c734a4b941cdee7ddc8b727c457673e9";
+        $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
+        $twilio_verify_sid = "VAfc2fbe34e571b79bb607cc9c71af2683";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verificationChecks
@@ -39,10 +39,10 @@ trait Twilio
 
     public function sendTwillioEmail($email)
     {
-        $sid = getenv("TWILIO_ACCOUNT_SID");
-        $token = getenv("TWILIO_AUTH_TOKEN");
-        $twilio_verify_sid = getenv("TWILIO_VERIFY_SID");
-        $twilio = new Client($sid, $token);
+        $token = "c734a4b941cdee7ddc8b727c457673e9";
+        $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
+        $twilio_verify_sid = "VAfc2fbe34e571b79bb607cc9c71af2683";
+        $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
             ->create($email, "email");
