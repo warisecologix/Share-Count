@@ -249,6 +249,9 @@
             });
 
             /* Phone No Send Verification Code AJAX Call */
+
+
+            /* Phone No Send Verification Code AJAX Call */
             $("#phone_number_send_verify_code").click(function (e) {
                 e.preventDefault();
                 var formData = {
@@ -264,50 +267,6 @@
                     success: function (data) {
                         if (data.message == "user") {
                             $("#div_phone_number_verification").hide();
-                            $("#email").val(data.user.email);
-                            $("#first_name").val(data.user.first_name);
-                            $("#last_name").val(data.user.last_name);
-                            if (data.user.phone_no_verify == 0) {
-                                $("#div_phone_number_verification").removeClass('div-hidden');
-                                var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
-                                $("#error_message").empty();
-                                $("#error_message").append(errorString);
-                            }
-                            else {
-                                $("#phone_number_send_verify_code").addClass('div-hidden');
-                            }
-                        } else if (data.message == "code") {
-                            $("#div_phone_number_verification").removeClass('div-hidden');
-                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code <div>';
-                            $("#error_message").empty();
-                            $("#error_message").append(errorString);
-                        }
-                    },
-                    error: function (reject) {
-                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
-                        $("#error_message").empty();
-                        $("#error_message").append(errorString);
-                    }
-                });
-            });
-
-
-            /* Phone No Send Verification Code AJAX Call */
-            $("#phone_number_send_verify_code").click(function (e) {
-                e.preventDefault();
-                var formData = {
-                    phone_no: $('#phone_no').val(),
-                    "_token": "{{ csrf_token() }}",
-                };
-                var type = "POST";
-                $.ajax({
-                    type: type,
-                    url: "{{route('email_verification_code')}}",
-                    data: formData,
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.message == "user") {
-                            $("#div_phone_number_verification").hide();
 
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
@@ -329,9 +288,9 @@
                         }
                     },
                     error: function (reject) {
-                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
-                        $("#error_message").empty();
-                        $("#error_message").append(errorString);
+                        // var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
+                        // $("#error_message").empty();
+                        // $("#error_message").append(errorString);
                     }
                 });
             });
