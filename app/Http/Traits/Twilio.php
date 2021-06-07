@@ -13,9 +13,9 @@ trait Twilio
 {
     public function sendTwillioSMS($cell_number)
     {
-        $token = "6a810ef558b4da6f465a62236ed496a1";
-        $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
-        $twilio_verify_sid = "VAdf6cbd828eee8a2b60575af81e6a5408";
+        $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
+        $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
+        $twilio_verify_sid = "VA27c3032c0b1a38818f4178fbd4410e2f";
         try {
             $twilio = new Client($twilio_sid, $token);
             $twilio->verify->v2->services($twilio_verify_sid)
@@ -31,9 +31,9 @@ trait Twilio
 
     public function verify($phone_number, $verfication_code)
     {
-        $token = "6a810ef558b4da6f465a62236ed496a1";
-        $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
-        $twilio_verify_sid = "VAdf6cbd828eee8a2b60575af81e6a5408";
+        $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
+        $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
+        $twilio_verify_sid = "VA27c3032c0b1a38818f4178fbd4410e2f";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verificationChecks
@@ -47,9 +47,9 @@ trait Twilio
 
     public function sendTwillioEmail($email)
     {
-        $token = "6a810ef558b4da6f465a62236ed496a1";
-        $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
-        $twilio_verify_sid = "VAdf6cbd828eee8a2b60575af81e6a5408";
+        $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
+        $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
+        $twilio_verify_sid = "VA27c3032c0b1a38818f4178fbd4410e2f";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
