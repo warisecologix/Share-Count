@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Country;
+use App\EmailVerify;
 use App\Mail\VerifyUser;
 use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -40,6 +42,7 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+
         $status = false;
         $rules = [
             'first_name' => 'required',
@@ -67,10 +70,20 @@ class RegisterController extends Controller
 //                    $validator->errors()->add('email', 'Email already exists');
 //                }
             }
+//
+            if ($request->verify_phone_number_code) {
+                if (!$this->verify($request->phone_no, $request->verify_phone_number_code)) {
+                    $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
+                }
+            }
 
-//            if (!$this->verify($request->phone_no, $request->verify_phone_number_code)) {
-//                $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
-//            }
+
+            $session_id = Session::getId();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->get()->first();
+
+            if (!$emailVerify) {
+                $validator->errors()->add('verify_email_code', 'Email code is invalid');
+            }
         });
 
         if ($validator->fails()) {
@@ -78,7 +91,6 @@ class RegisterController extends Controller
                 'errors' => $validator->getMessageBag()->toArray()
             ], 400);
         } else {
-
             $user = User::where('phone_no', $request->phone_no)->get()->first();
             if ($user) {
                 $stock = new Stock();
@@ -90,7 +102,6 @@ class RegisterController extends Controller
                 $stock->date_purchase = $request->date_purchase;
                 $stock->save();
             } else {
-
                 $user = new User();
                 $image_64 = $request->image;
                 $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
@@ -119,7 +130,10 @@ class RegisterController extends Controller
                 $stock->save();
 
             }
+            $session_id = Session::getId();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->orderBy('created_at', 'DESC')->get()->first();
 
+            $emailVerify->delete();
             return response()->json([
                 'success' => 'User Created'
             ], 200);

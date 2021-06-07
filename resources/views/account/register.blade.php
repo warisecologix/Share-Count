@@ -99,7 +99,6 @@
                             <div class="form-group row " id="div_email_verification">
                                 <label for="verify_email_code"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
-
                                 <div class="col-md-6">
                                     <input id="verify_email_code" type="text"
                                            class="form-control @error('verify_email_code') is-invalid @enderror"
@@ -265,7 +264,6 @@
                     success: function (data) {
                         if (data.message == "user") {
                             $("#div_phone_number_verification").hide();
-                            $("#div_email_verification").hide();
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
@@ -310,7 +308,7 @@
                     success: function (data) {
                         if (data.message == "user") {
                             $("#div_phone_number_verification").hide();
-                            $("#div_email_verification").hide();
+
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);
@@ -374,7 +372,6 @@
                     success: function (data) {
                         if (data.message == "user_exists") {
                             $("#div_phone_number_verification").hide();
-                            $("#div_email_verification").hide();
                             $("#email").val(data.user.email);
                             $("#first_name").val(data.user.first_name);
                             $("#last_name").val(data.user.last_name);

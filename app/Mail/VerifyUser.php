@@ -11,6 +11,13 @@ class VerifyUser extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $random_number;
+
+    public function __construct($rand)
+    {
+        $this->random_number = $rand;
+    }
+
     /**
      * Build the message.
      *
@@ -18,8 +25,6 @@ class VerifyUser extends Mailable
      */
     public function build()
     {
-        $random_number = mt_rand(1000, 9999);
-
-        return $this->markdown('email.sendtoken',compact('random_number'));
+        return $this->markdown('email.sendtoken', compact('random_number'));
     }
 }

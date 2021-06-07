@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\EmailVerify;
 use App\Mail\VerifyUser;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class AJAXController extends Controller
 {
@@ -33,7 +35,13 @@ class AJAXController extends Controller
 
     public function email_verification_code(Request $request)
     {
-        Mail::to($request->email)->send(new VerifyUser());
+        $session_id = Session::getId();
+        $random_number = mt_rand(1000, 9999);
+        Mail::to($request->email)->send(new VerifyUser($random_number));
+        $emailVerify = new EmailVerify();
+        $emailVerify->otp_code = $random_number;
+        $emailVerify->session_id = $session_id;
+        $emailVerify->save();
         return response()->json([
             'message' => "ok"
         ], 200);
