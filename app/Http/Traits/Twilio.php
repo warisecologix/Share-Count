@@ -15,14 +15,19 @@ trait Twilio
     {
         $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
         $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
-        $twilio_verify_sid = "VA27c3032c0b1a38818f4178fbd4410e2f";
+        $twilio_verify_sid = "VA4461c7af8711ba1fccc48850f6cc4524";
         try {
             $twilio = new Client($twilio_sid, $token);
             $twilio->verify->v2->services($twilio_verify_sid)
                 ->verifications
                 ->create($cell_number, "sms");
+
             return 200;
+
         } catch (TwilioException $e) {
+             echo "<pre>";
+            print_r($e->getMessage( ) );
+            die();
             return $e->getCode();
         }
 
@@ -33,7 +38,7 @@ trait Twilio
     {
         $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
         $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
-        $twilio_verify_sid = "VA27c3032c0b1a38818f4178fbd4410e2f";
+        $twilio_verify_sid = "VA4461c7af8711ba1fccc48850f6cc4524";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verificationChecks
@@ -49,7 +54,7 @@ trait Twilio
     {
         $token = "b93a8fe26e4ea1a5a3d1207bf7ff3168";
         $twilio_sid = "AC8e518cb8b8ecdda7a912198659957091";
-        $twilio_verify_sid = "VA27c3032c0b1a38818f4178fbd4410e2f";
+        $twilio_verify_sid = "VA4461c7af8711ba1fccc48850f6cc4524";
         $twilio = new Client($twilio_sid, $token);
         $verification = $twilio->verify->v2->services($twilio_verify_sid)
             ->verifications
