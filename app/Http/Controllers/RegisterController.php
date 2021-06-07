@@ -23,7 +23,7 @@ class RegisterController extends Controller
 
         $data = DB::select("SELECT
         com.company_name,
-            COUNT(st.user_id) AS 'Shareholder_Count',
+            COUNT(distinct st.user_id) AS 'Shareholder_Count',
             SUM(st.no_shares_own) AS 'Total_Share',
             sum(CASE
                 WHEN us.verified_user = 1 THEN 1
