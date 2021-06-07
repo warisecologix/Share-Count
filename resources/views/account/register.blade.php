@@ -364,6 +364,9 @@
                                 $("#error_message").empty();
                                 $("#error_message").append(errorString);
                             }
+                            else {
+                                $("#phone_number_send_verify_code").addClass('div-hidden');
+                            }
                         }
                     }
                 });
