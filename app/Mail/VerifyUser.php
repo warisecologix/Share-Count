@@ -17,7 +17,7 @@ class VerifyUser extends Mailable
     {
         $this->random_number = $rand;
     }
-
+ 
     /**
      * Build the message.
      *
