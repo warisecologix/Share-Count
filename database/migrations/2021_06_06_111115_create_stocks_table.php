@@ -21,6 +21,8 @@ class CreateStocksTable extends Migration
             $table->string('country_list');
             $table->string('brokage_name');
             $table->date('date_purchase')->nullable();
+            $table->bigInteger('stock_verified')->default(0);
+            $table->text('verified_string')->nullable();
             $table->timestamps();
         });
     }

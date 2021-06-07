@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class AJAXController extends Controller
 {
@@ -48,16 +49,38 @@ class AJAXController extends Controller
 
     public function email_verification_code(Request $request)
     {
+
         $session_id = Session::getId();
         $random_number = mt_rand(1000, 9999);
         Mail::to($request->email)->send(new VerifyUser($random_number));
-        $collection = EmailVerify::where('session_id', $session_id)->get();
+        $collection = EmailVerify::where('session_id', $session_id)->where('type' , 0)->get();
         foreach ($collection as $c) {
             $c->delete();
         }
         $emailVerify = new EmailVerify();
         $emailVerify->otp_code = $random_number;
         $emailVerify->session_id = $session_id;
+        $emailVerify->type = 0;
+        $emailVerify->save();
+        return response()->json([
+            'message' => "ok"
+        ], 200);
+
+    }
+
+    public function shares_own_verification_code(Request $request)
+    {
+        $session_id = Session::getId();
+        $random_number = Str::random(10);
+        Mail::to($request->email)->send(new VerifyUser($random_number));
+        $collection = EmailVerify::where('session_id', $session_id)->where('type' ,1)->get();
+        foreach ($collection as $c) {
+            $c->delete();
+        }
+        $emailVerify = new EmailVerify();
+        $emailVerify->otp_code = $random_number;
+        $emailVerify->session_id = $session_id;
+        $emailVerify->type = 1;
         $emailVerify->save();
         return response()->json([
             'message' => "ok"

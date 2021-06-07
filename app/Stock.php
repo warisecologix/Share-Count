@@ -12,7 +12,9 @@ class Stock extends Model
         'no_shares_own',
         'country_list',
         'brokage_name',
-        'date_purchase'
+        'date_purchase',
+        'stock_verified',
+        'verified_string',
     ];
 
     public function user()

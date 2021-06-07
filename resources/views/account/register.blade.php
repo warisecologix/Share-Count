@@ -41,12 +41,14 @@
 
                                         <div class="input-group-append">
                                             <button type="button" id="phone_number_send_verify_code"
-                                                    class="btn btn-primary input-group-text">Verify Phone
+                                                    class="btn btn-primary input-group-text">Send OTP
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="form-group row div-hidden" id="div_phone_number_verification">
                                 <label for="verify_phone_number_code"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Verification Code') }}</label>
@@ -97,7 +99,7 @@
                                                value="{{ old('email') }}" autocomplete="email">
                                         <div class="input-group-append">
                                             <button type="button" id="email_send_verify_code"
-                                                    class="btn btn-primary input-group-text">Verify Email
+                                                    class="btn btn-primary input-group-text">Send OTP
                                             </button>
                                         </div>
                                     </div>
@@ -116,16 +118,35 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="no_shares_own"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
-
-                                <div class="col-md-6">
+                                <label for="no_shares_own" class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
+                                <div class="col-md-6 input-group mb-3">
                                     <input id="no_shares_own" type="number"
                                            class="form-control "
                                            placeholder="Enter No of Share Own"
                                            name="no_shares_own" value="{{ old('no_shares_own') }}">
+
+                                    <div class="input-group-append">
+                                        <button type="button" id="no_shares_own_send_verify_code"
+                                                class="btn btn-primary input-group-text">Send OTP
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+
+
+                            <div class="form-group row " id="div_share_own_verification">
+                                <label for="own_verify"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Verify shares') }}</label>
+                                <div class="col-md-6">
+                                    <input id="own_verify" type="text"
+                                           class="form-control"
+                                           placeholder="Enter OTP to verify share "
+                                           name="own_verify" value="{{ old('own_verify') }}"
+                                           autocomplete="own_verify">
+
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="date_purchase"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Purchase Date') }}</label>
@@ -224,6 +245,7 @@
                     country_list: $("#country_list").val(),
                     image: $("#image_base_64").val(),
                     date_purchase: $('#date_purchase').val(),
+                    own_verify: $('#own_verify').val(),
                     "_token": "{{ csrf_token() }}",
                 };
 
@@ -327,8 +349,6 @@
             });
 
             /* Email Send Verification Code AJAX Call */
-
-            /* Phone No Send Verification Code AJAX Call */
             $("#email_send_verify_code").click(function (e) {
                 e.preventDefault();
                 var formData = {
@@ -339,6 +359,27 @@
                 $.ajax({
                     type: type,
                     url: "{{route('email_verification_code')}}",
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please check your email for otp<div>';
+                        $("#error_message").empty();
+                        $("#error_message").append(successMessage);
+                    },
+                });
+            });
+
+            /* no_shares_own_send_verify_code AJAX Call */
+            $("#no_shares_own_send_verify_code").click(function (e) {
+                e.preventDefault();
+                var formData = {
+                    email: $('#email').val(),
+                    "_token": "{{ csrf_token() }}",
+                };
+                var type = "POST";
+                $.ajax({
+                    type: type,
+                    url: "{{route('shares_own_verification_code')}}",
                     data: formData,
                     dataType: 'json',
                     success: function (data) {

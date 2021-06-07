@@ -42,6 +42,7 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
+
         $rules = [
             'phone_no' => 'required',
             'first_name' => 'required',
@@ -61,13 +62,26 @@ class RegisterController extends Controller
                     $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
                 }
             }
+
+
             if (empty($request->verify_email_code)) {
                 $validator->errors()->add('verify_email_code', 'Email verification code field required');
+            } else {
+                $session_id = Session::getId();
+                $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 0)->where('otp_code', $request->verify_email_code)->get()->first();
+                if (!$emailVerify) {
+                    $validator->errors()->add('verify_email_code', 'Invalid code');
+                }
             }
-            $session_id = Session::getId();
-            $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->get()->first();
-            if (!$emailVerify) {
-                $validator->errors()->add('verify_email_code', 'Invalid code');
+
+            if (empty($request->own_verify)) {
+                $validator->errors()->add('own_verify', 'Verification share code field required');
+            } else {
+                $session_id = Session::getId();
+                $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->own_verify)->where('type', 1)->get()->first();
+                if (!$ownVerify) {
+                    $validator->errors()->add('own_verify', 'Invalid verify shared own code');
+                }
             }
         });
 
@@ -85,6 +99,7 @@ class RegisterController extends Controller
                 $stock->country_list = $request->country_list;
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
+                $stock->verified_string = $request->own_verify;
                 $stock->save();
             } else {
                 $user = new User();
@@ -112,13 +127,21 @@ class RegisterController extends Controller
                 $stock->country_list = $request->country_list;
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
+                $stock->verified_string = $request->own_verify;
+
                 $stock->save();
 
             }
             $session_id = Session::getId();
-            $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->orderBy('created_at', 'DESC')->get()->first();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 0)->where('otp_code', $request->verify_email_code)->get();
+            foreach ($emailVerify as $c) {
+                $c->delete();
+            }
 
-            $emailVerify->delete();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 1)->where('otp_code', $request->own_verify)->get();
+            foreach ($emailVerify as $c) {
+                $c->delete();
+            }
             return response()->json([
                 'success' => 'Stock Added'
             ], 200);

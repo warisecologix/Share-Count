@@ -17,6 +17,7 @@ class CreateEmailVerifiesTable extends Migration
             $table->id();
             $table->string('otp_code');
             $table->text('session_id');
+            $table->string('type');
             $table->timestamps();
         });
     }
