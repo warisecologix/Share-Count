@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyUser;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AJAXController extends Controller
 {
@@ -31,21 +33,10 @@ class AJAXController extends Controller
 
     public function email_verification_code(Request $request)
     {
-        $user = User::where('email', $request->email)->get()->first();
-        if ($user) {
-            if (!$user->phone_no_verify) {
-                $this->sendTwillioSMS($request->phone_no);
-            }
-            return response()->json([
-                'user' => $user,
-                'message' => "user"
-            ], 200);
-        } else {
-            $this->sendTwillioSMS($request->phone_no);
-            return response()->json([
-                'message' => "code"
-            ], 200);
-        }
+        Mail::to($request->email)->send(new VerifyUser());
+        return response()->json([
+            'message' => "ok"
+        ], 200);
 
     }
 

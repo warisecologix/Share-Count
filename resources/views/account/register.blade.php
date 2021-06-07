@@ -294,17 +294,17 @@
             });
 
 
-            /* Email Send Verification Code AJAX Call */
-            $("#email_send_verify_code").click(function (e) {
+            /* Phone No Send Verification Code AJAX Call */
+            $("#phone_number_send_verify_code").click(function (e) {
                 e.preventDefault();
                 var formData = {
-                    phone_no: $('#email').val(),
+                    phone_no: $('#phone_no').val(),
                     "_token": "{{ csrf_token() }}",
                 };
                 var type = "POST";
                 $.ajax({
                     type: type,
-                    url: "{{route('phone_number_verification_code')}}",
+                    url: "{{route('email_verification_code')}}",
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
@@ -335,6 +335,27 @@
                         $("#error_message").empty();
                         $("#error_message").append(errorString);
                     }
+                });
+            });
+
+            /* Email Send Verification Code AJAX Call */
+
+            /* Phone No Send Verification Code AJAX Call */
+            $("#email_send_verify_code").click(function (e) {
+                e.preventDefault();
+                var formData = {
+                    email: $('#email').val(),
+                    "_token": "{{ csrf_token() }}",
+                };
+                var type = "POST";
+                $.ajax({
+                    type: type,
+                    url: "{{route('email_verification_code')}}",
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+
+                    },
                 });
             });
 

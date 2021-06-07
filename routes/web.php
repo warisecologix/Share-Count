@@ -27,3 +27,5 @@ Route::post('/email_verification_code', 'AJAXController@email_verification_code'
 Route::post('/phone_number_verification_code', 'AJAXController@phone_number_verification_code')->name('phone_number_verification_code');
 Route::post('/email_verification_code', 'AJAXController@email_verification_code')->name('email_verification_code');
 Route::post('/check_phone_number', 'AJAXController@check_phone_number')->name('check_phone_number');
+
+

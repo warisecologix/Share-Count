@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Country;
+use App\Mail\VerifyUser;
 use App\Stock;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
