@@ -45,14 +45,16 @@ class RegisterController extends Controller
 
         $status = false;
         $rules = [
+            'phone_no' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
-            'phone_no' => 'required',
+            'verify_email_code' => 'required',
             'no_shares_own' => 'required|integer',
             'brokage_name' => 'required',
             'company_id' => 'required',
             'country_list' => 'required',
+            'image' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
