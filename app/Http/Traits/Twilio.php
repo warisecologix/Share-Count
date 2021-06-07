@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\User;
 use http\Exception;
 use Illuminate\Support\Carbon;
+use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client;
 use Zend\Diactoros\Request;
 
@@ -15,10 +16,17 @@ trait Twilio
         $token = "6a810ef558b4da6f465a62236ed496a1";
         $twilio_sid = "ACbabb2f4738eb24d6a04422af30f8cbba";
         $twilio_verify_sid = "VAdf6cbd828eee8a2b60575af81e6a5408";
-        $twilio = new Client($twilio_sid, $token);
-        $twilio->verify->v2->services($twilio_verify_sid)
-            ->verifications
-            ->create($cell_number, "sms");
+        try {
+            $twilio = new Client($twilio_sid, $token);
+            $twilio->verify->v2->services($twilio_verify_sid)
+                ->verifications
+                ->create($cell_number, "sms");
+            return 200;
+        } catch (TwilioException $e) {
+            return $e->getCode();
+        }
+
+
     }
 
     public function verify($phone_number, $verfication_code)
@@ -33,7 +41,7 @@ trait Twilio
         if ($verification->valid) {
             return true;
         } else {
-            return  false;
+            return false;
         }
     }
 

@@ -13,22 +13,27 @@ class AJAXController extends Controller
 {
     public function phone_number_verification_code(Request $request)
     {
-
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
             if (!$user->phone_no_verify) {
-                $this->sendTwillioSMS($request->phone_no);
-
+                echo $code = $this->sendTwillioSMS($request->phone_no);
+                if ($code == 20429 || $code == 60200) {
+                    return response()->json([
+                        'message' => "phone_format"
+                    ], 200);
+                }
             }
             return response()->json([
                 'user' => $user,
                 'message' => "user"
             ], 200);
         } else {
-            $this->sendTwillioSMS($request->phone_no);
-            return response()->json([
-                'message' => "code"
-            ], 200);
+            $code = $this->sendTwillioSMS($request->phone_no);
+            if ($code == 20429 || $code == 60200) {
+                return response()->json([
+                    'message' => "phone_format"
+                ], 200);
+            }
         }
 
     }

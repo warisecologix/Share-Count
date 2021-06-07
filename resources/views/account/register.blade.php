@@ -266,34 +266,41 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
+                        if (data.message == "phone_format") {
+                            var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid phone number<div>';
+                            $("#error_message").empty();
+                            $("#error_message").append(errorString);
+                        } else {
+                            $("#phone_no").prop("readonly", true);
+                            if (data.message == "user") {
+                                $("#div_phone_number_verification").hide();
 
-                        $("#phone_no").prop("readonly", true);
-                        if (data.message == "user") {
-                            $("#div_phone_number_verification").hide();
+                                $("#email").val(data.user.email);
+                                $("#first_name").val(data.user.first_name);
+                                $("#last_name").val(data.user.last_name);
 
-                            $("#email").val(data.user.email);
-                            $("#first_name").val(data.user.first_name);
-                            $("#last_name").val(data.user.last_name);
-
-                            $("#email").prop("readonly", true);
-                            $("#first_name").prop("readonly", true);
-                            $("#last_name").prop("readonly", true);
+                                $("#email").prop("readonly", true);
+                                $("#first_name").prop("readonly", true);
+                                $("#last_name").prop("readonly", true);
 
 
-                            if (data.user.phone_no_verify == 0) {
+                                if (data.user.phone_no_verify == 0) {
+                                    $("#div_phone_number_verification").removeClass('div-hidden');
+                                    var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
+                                    $("#error_message").empty();
+                                    $("#error_message").append(errorString);
+                                } else {
+                                    $("#phone_number_send_verify_code").addClass('div-hidden');
+                                }
+                            } else if (data.message == "code") {
                                 $("#div_phone_number_verification").removeClass('div-hidden');
                                 var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
                                 $("#error_message").empty();
                                 $("#error_message").append(errorString);
-                            } else {
-                                $("#phone_number_send_verify_code").addClass('div-hidden');
                             }
-                        } else if (data.message == "code") {
-                            $("#div_phone_number_verification").removeClass('div-hidden');
-                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
-                            $("#error_message").empty();
-                            $("#error_message").append(errorString);
                         }
+
+
                     },
                     error: function (reject) {
                         // var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
