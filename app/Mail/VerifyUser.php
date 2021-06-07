@@ -25,6 +25,7 @@ class VerifyUser extends Mailable
      */
     public function build()
     {
-        return $this->markdown('email.sendtoken', compact('random_number'));
+        //return $this->markdown('email.sendtoken', compact('random_number'));
+        return $this->markdown('email.sendtoken')->with('random_number',$this->random_number);
     }
 }
