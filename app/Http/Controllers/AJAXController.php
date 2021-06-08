@@ -17,7 +17,7 @@ class AJAXController extends Controller
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
             if (!$user->phone_no_verify) {
-                echo $code = $this->sendTwillioSMS($request->phone_no);
+                $code = $this->sendTwilioSMS($request->phone_no);
                 if ($code == 20429 || $code == 60200) {
                     return response()->json([
                         'message' => "phone_format"
@@ -33,18 +33,13 @@ class AJAXController extends Controller
                 'message' => "user"
             ], 200);
         } else {
-            $code = $this->sendTwillioSMS($request->phone_no);
-            if ($code == 20429 || $code == 60200) {
-                return response()->json([
-                    'message' => "phone_format"
-                ], 200);
-            } else if ($code == 200) {
-                return response()->json([
-                    'message' => "sms_code_send"
-                ], 200);
+            $code = $this->sendTwilioSMS($request->phone_no);
+            if ($code == 200) {
+                return $this->successResponse('OTP code send successfully');
+            } else {
+                return $this->errorResponse('OTP code not send successfully', $code);
             }
         }
-
     }
 
     public function email_verification_code(Request $request)
@@ -70,7 +65,7 @@ class AJAXController extends Controller
         mail($to, $subject, $message, $headers);
 
 
-        $collection = EmailVerify::where('session_id', $session_id)->where('type' , 0)->get();
+        $collection = EmailVerify::where('session_id', $session_id)->where('type', 0)->get();
         foreach ($collection as $c) {
             $c->delete();
         }
@@ -107,7 +102,7 @@ class AJAXController extends Controller
         mail($to, $subject, $message, $headers);
 
 
-        $collection = EmailVerify::where('session_id', $session_id)->where('type' ,1)->get();
+        $collection = EmailVerify::where('session_id', $session_id)->where('type', 1)->get();
         foreach ($collection as $c) {
             $c->delete();
         }

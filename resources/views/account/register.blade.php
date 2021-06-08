@@ -26,7 +26,8 @@
                         <form method="POST" enctype="multipart/form-data" id="register_form"
                               action="javascript:void(0)">
                             @csrf
-                            <div id="error_message"></div>
+                            <div id="show_response_message">
+                            </div>
 
                             <div class="form-group row" id="div_phone_number">
                                 <label for="email"
@@ -118,7 +119,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="no_shares_own" class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
+                                <label for="no_shares_own"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
                                 <div class="col-md-6 input-group mb-3">
                                     <input id="no_shares_own" type="number"
                                            class="form-control "
@@ -258,21 +260,22 @@
                     dataType: 'json',
                     success: function (data) {
                         var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Your stock has been added<div>';
-                        $("#error_message").empty();
-                        $("#error_message").append(successMessage);
+                        $("#show_response_message").empty();
+                        $("#show_response_message").append(successMessage);
                         setTimeout(() => {
                             window.location.href = window.location.href
                         }, 3000)
                     },
                     error: function (reject) {
                         if (reject.status === 400) {
+                            $("#show_response_message").empty();
                             var response = JSON.parse(reject.responseText);
                             var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><ul>';
                             $.each(response.errors, function (key, value) {
                                 errorString += '<li>' + value[0] + '</li>';
                             });
                             errorString += '</ul><div>';
-                            $("#error_message").append(errorString);
+                            $("#show_response_message").append(errorString);
                         }
                     },
 
@@ -296,19 +299,17 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
+                        if (data.status_code == 200) {
+                            $("#div_phone_number_verification").removeClass('div-hidden');
+                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>please write otp code to verify phone number<div>';
+                            $("#show_response_message").empty();
+                            $("#show_response_message").append(errorString);
+                        }
                         if (data.message == "phone_format") {
                             var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid phone number<div>';
-                            $("#error_message").empty();
-                            $("#error_message").append(errorString);
-                        }
-                        else if(data.message == "sms_code_send"){
-                            $("#div_phone_number_verification").removeClass('div-hidden');
-
-                            var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>please write otp code to verify phone number<div>';
-                            $("#error_message").empty();
-                            $("#error_message").append(errorString);
-                        }
-                        else {
+                            $("#show_response_message").empty();
+                            $("#show_response_message").append(errorString);
+                        } else {
                             $("#phone_no").prop("readonly", true);
                             if (data.message == "user") {
                                 $("#div_phone_number_verification").hide();
@@ -325,25 +326,25 @@
                                 if (data.user.phone_no_verify == 0) {
                                     $("#div_phone_number_verification").removeClass('div-hidden');
                                     var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
-                                    $("#error_message").empty();
-                                    $("#error_message").append(errorString);
+                                    $("#show_response_message").empty();
+                                    $("#show_response_message").append(errorString);
                                 } else {
                                     $("#phone_number_send_verify_code").addClass('div-hidden');
                                 }
                             } else if (data.message == "code") {
                                 $("#div_phone_number_verification").removeClass('div-hidden');
                                 var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
-                                $("#error_message").empty();
-                                $("#error_message").append(errorString);
+                                $("#show_response_message").empty();
+                                $("#show_response_message").append(errorString);
                             }
                         }
 
 
                     },
                     error: function (reject) {
-                        // var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
-                        // $("#error_message").empty();
-                        // $("#error_message").append(errorString);
+                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
+                        $("#show_response_message").empty();
+                        $("#show_response_message").append(errorString);
                     }
                 });
             });
@@ -363,8 +364,8 @@
                     dataType: 'json',
                     success: function (data) {
                         var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please check your email for otp<div>';
-                        $("#error_message").empty();
-                        $("#error_message").append(successMessage);
+                        $("#show_response_message").empty();
+                        $("#show_response_message").append(successMessage);
                     },
                 });
             });
@@ -384,8 +385,8 @@
                     dataType: 'json',
                     success: function (data) {
                         var successMessage = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please check your email for otp<div>';
-                        $("#error_message").empty();
-                        $("#error_message").append(successMessage);
+                        $("#show_response_message").empty();
+                        $("#show_response_message").append(successMessage);
                     },
                 });
             });
@@ -419,10 +420,11 @@
                                 $("#phone_number_send_verify_code").addClass('div-hidden');
                             }
                             var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>User found <div>';
-                            $("#error_message").empty();
-                            $("#error_message").append(errorString);
+                            $("#show_response_message").empty();
+                            $("#show_response_message").append(errorString);
                         }
                     }
+
                 });
             });
         });
