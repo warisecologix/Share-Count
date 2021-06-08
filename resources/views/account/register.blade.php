@@ -159,14 +159,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row div-hidden " id="div_for_own_otp_verify">
-                                    <label for="own_verify"
+                                    <label for="Verify_Share"
                                            class="col-md-4 col-form-label  text-md-right">{{ __('Verify Shares') }}</label>
                                     <div class="col-md-6">
-                                        <input id="own_verify" type="text"
+                                        <input id="Verify_Share" type="text"
                                                class="form-control bg-info"
                                                placeholder="Enter OTP to verify share "
-                                               name="own_verify" value="{{ old('own_verify') }}"
-                                               autocomplete="own_verify">
+                                               name="Verify_Share" value="{{ old('Verify_Share') }}"
+                                               autocomplete="Verify_Share">
 
                                     </div>
                                 </div>
@@ -463,7 +463,7 @@
                     email: $("#email").val(),
                     phone_no: $("#phone_no").val(),
                     no_shares_own: $("#no_shares_own").val(),
-                    own_verify: $('#own_verify').val(),
+                    Verify_Share: $('#Verify_Share').val(),
                     brokage_name: $("#brokage_name").val(),
                     company_id: $("#company_id").val(),
                     country_list: $("#country_list").val(),

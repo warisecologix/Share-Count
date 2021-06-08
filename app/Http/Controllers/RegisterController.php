@@ -48,7 +48,7 @@ class RegisterController extends Controller
             'last_name' => 'required',
             'email' => 'required',
             'no_shares_own' => 'required|integer',
-            'own_verify' => 'required',
+            'Verify_Share' => 'required',
             'brokage_name' => 'required',
             'company_id' => 'required',
             'country_list' => 'required',
@@ -57,9 +57,9 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
             $session_id = Session::getId();
-            $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->own_verify)->where('type', 1)->get()->first();
+            $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->Verify_Share)->where('type', 1)->get()->first();
             if (!$ownVerify) {
-                $validator->errors()->add('own_verify', 'Invalid verify shared own code');
+                $validator->errors()->add('Verify_Share', 'Invalid verify shared own code');
             }
         });
 
@@ -77,7 +77,7 @@ class RegisterController extends Controller
                 $stock->country_list = $request->country_list;
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
-                $stock->verified_string = $request->own_verify;
+                $stock->verified_string = $request->Verify_Share;
                 $stock->image = $imageName ?? "Image";
 
                 $stock->save();
@@ -106,7 +106,7 @@ class RegisterController extends Controller
                 $stock->country_list = $request->country_list;
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
-                $stock->verified_string = $request->own_verify;
+                $stock->verified_string = $request->Verify_Share;
                 $stock->image = $imageName ?? "Image";
 
                 $stock->save();
