@@ -27,5 +27,7 @@ Route::post('/email_verification_code', 'AJAXController@email_verification_code'
 Route::post('/phone_number_verification_code', 'AJAXController@phone_number_verification_code')->name('phone_number_verification_code');
 Route::post('/check_phone_number', 'AJAXController@check_phone_number')->name('check_phone_number');
 Route::post('/shares_own_verification_code', 'AJAXController@shares_own_verification_code')->name('shares_own_verification_code');
+Route::post('/verify/phone/otp', 'AJAXController@verify_phone_otp')->name('verify_phone_otp');
+Route::post('/verify/email/otp', 'AJAXController@verify_email_otp')->name('verify_email_otp');
 
 

@@ -63,7 +63,6 @@ class RegisterController extends Controller
                 }
             }
 
-
             if (empty($request->verify_email_code)) {
                 $validator->errors()->add('verify_email_code', 'Email verification code field required');
             } else {

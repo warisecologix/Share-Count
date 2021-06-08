@@ -128,5 +128,25 @@ class AJAXController extends Controller
         }
     }
 
+    public function verify_phone_otp(Request $request)
+    {
+        $code = $this->verify($request->phone_number, $request->verification_code);
+        if ($code == 200) {
+            return $this->successResponse("OTP verify");
+        } else {
+            return $this->errorResponse("OTP is invalid", $code);
+        }
+    }
+
+    public function verify_email_otp(Request $request)
+    {
+        $session_id = Session::getId();
+        $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 0)->where('otp_code', $request->otp)->get()->first();
+        if (!$emailVerify) {
+            return $this->errorResponse('Invalid OTP code');
+        } else {
+            return $this->successResponse('OTP verify');
+        }
+    }
 
 }

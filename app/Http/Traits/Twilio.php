@@ -22,29 +22,27 @@ trait Twilio
     public function sendTwilioSMS($cell_number)
     {
         try {
-            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN);
-            $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
-                ->verifications
-                ->create($cell_number, "sms");
+//            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN);
+//            $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
+//                ->verifications
+//                ->create($cell_number, "sms");
             return 200;
         } catch (TwilioException $e) {
-//            echo "Get code " . $e->getCode() ."<br>";
-//            echo "Get Message ". $e->getMessage() ;
-//            die();
             return $e->getCode();
         }
     }
 
     public function verify($phone_number, $verfication_code)
     {
-        $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN);
-        $verification = $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
-            ->verificationChecks
-            ->create($verfication_code, array('to' => $phone_number));
-        if ($verification->valid) {
-            return true;
-        } else {
-            return false;
+        try {
+//            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN);
+//            $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
+//                ->verificationChecks
+//                ->create($verfication_code, array('to' => $phone_number));
+            return 200;
+        } catch (TwilioException $e) {
+            return $e->getCode();
         }
+
     }
 }
