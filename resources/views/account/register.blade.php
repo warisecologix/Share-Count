@@ -118,7 +118,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="no_shares_own" class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
+                                <label for="no_shares_own"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
                                 <div class="col-md-6 input-group mb-3">
                                     <input id="no_shares_own" type="number"
                                            class="form-control "
@@ -300,15 +301,13 @@
                             var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Invalid phone number<div>';
                             $("#error_message").empty();
                             $("#error_message").append(errorString);
-                        }
-                        else if(data.message == "sms_code_send"){
+                        } else if (data.message == "sms_code_send") {
                             $("#div_phone_number_verification").removeClass('div-hidden');
 
                             var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>please write otp code to verify phone number<div>';
                             $("#error_message").empty();
                             $("#error_message").append(errorString);
-                        }
-                        else {
+                        } else {
                             $("#phone_no").prop("readonly", true);
                             if (data.message == "user") {
                                 $("#div_phone_number_verification").hide();
@@ -341,9 +340,9 @@
 
                     },
                     error: function (reject) {
-                        // var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
-                        // $("#error_message").empty();
-                        // $("#error_message").append(errorString);
+                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
+                        $("#error_message").empty();
+                        $("#error_message").append(errorString);
                     }
                 });
             });
@@ -423,6 +422,7 @@
                             $("#error_message").append(errorString);
                         }
                     }
+
                 });
             });
         });
