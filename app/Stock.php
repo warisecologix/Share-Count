@@ -15,6 +15,7 @@ class Stock extends Model
         'date_purchase',
         'stock_verified',
         'verified_string',
+        'image',
     ];
 
     public function user()

@@ -126,6 +126,11 @@ class AJAXController extends Controller
                 'message' => "user_exists"
             ], 200);
         }
+        else{
+            return response()->json([
+                'message' => "User not found"
+            ], 404);
+        }
     }
 
     public function verify_phone_otp(Request $request)

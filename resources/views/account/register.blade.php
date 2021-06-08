@@ -41,33 +41,38 @@
 
                                             <div class="input-group-append">
                                                 <button type="button" id="phone_number_send_verify_code"
-                                                        class="btn btn-primary input-group-text">Send OTP
+                                                        class="btn btn-primary input-group-text">Verify number
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <div id="div_phone_number_verification" class="div-hidden">
-                                    <div class="form-group row">
+
+
+                                    <div class="form-group row" id="div_phone_number">
                                         <label for="verify_phone_number_code"
                                                class="col-md-4 col-form-label text-md-right">{{ __('Verification Code') }}</label>
                                         <div class="col-md-6">
-                                            <input id="verify_phone_number_code" type="number"
-                                                   class="form-control "
-                                                   name="verify_phone_number_code"
-                                                   placeholder="Enter verification code"
-                                                   value="{{ old('verify_phone_number_code') }}"
-                                                   autocomplete="verify_phone_number_code">
+                                            <div class="input-group mb-3">
+                                                <input id="verify_phone_number_code" type="number"
+                                                       class="form-control bg-info "
+                                                       name="verify_phone_number_code"
+                                                       placeholder="Enter verification code"
+                                                       value="{{ old('verify_phone_number_code') }}"
+                                                       autocomplete="verify_phone_number_code">
 
+                                                <div class="input-group-append">
+                                                    <button type="button" id="verify_phone_otp"
+                                                            class="btn btn-primary input-group-text">Verify OTP
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row mb-0">
-                                        <div class="col-md-6 offset-md-6">
-                                            <button type="button" id="verify_phone_otp" class="btn btn-primary">
-                                                {{ __('Verify OTP') }}
-                                            </button>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="form-group row">
                                     <label for="first_name"
@@ -103,35 +108,35 @@
                                     <div class="col-md-6">
                                         <div class="input-group mb-3">
                                             <input id="email" type="email"
-                                                   class="form-control " name="email"
+                                                   class="form-control" name="email"
                                                    placeholder="Enter valid email address"
                                                    value="{{ old('email') }}" autocomplete="email">
                                             <div class="input-group-append">
                                                 <button type="button" id="email_send_verify_code"
-                                                        class="btn btn-primary input-group-text">Send OTP
+                                                        class="btn btn-primary input-group-text">Verify email
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="div-hidden" id="div_email_verification">
-                                    <div class="form-group row ">
+
+                                    <div class="form-group row">
                                         <label for="verify_email_code"
                                                class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
                                         <div class="col-md-6">
-                                            <input id="verify_email_code" type="number"
-                                                   class="form-control"
-                                                   placeholder="Enter verification code"
-                                                   name="verify_email_code" value="{{ old('verify_email_code') }}"
-                                                   autocomplete="verify_email_code">
-
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-0">
-                                        <div class="col-md-6 offset-md-6">
-                                            <button type="button" id="verify_email_otp" class="btn btn-primary">
-                                                {{ __('Verify Email OTP') }}
-                                            </button>
+                                            <div class="input-group mb-3">
+                                                <input id="verify_email_code" type="number"
+                                                       class="form-control  bg-info"
+                                                       placeholder="Enter verification code"
+                                                       name="verify_email_code" value="{{ old('verify_email_code') }}"
+                                                       autocomplete="verify_email_code">
+                                                <div class="input-group-append">
+                                                    <button type="button" id="verify_email_otp"
+                                                            class="btn btn-primary input-group-text">Verify OTP
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -143,22 +148,22 @@
                                     <div class="col-md-6 input-group mb-3">
                                         <input id="no_shares_own" type="number"
                                                class="form-control "
-                                               placeholder="Enter No of Share Own"
+                                               placeholder="Enter No of Shares Own"
                                                name="no_shares_own" value="{{ old('no_shares_own') }}">
 
                                         <div class="input-group-append">
                                             <button type="button" id="no_shares_own_send_verify_code"
-                                                    class="btn btn-primary input-group-text">Send OTP
+                                                    class="btn btn-primary input-group-text">Verify shares
                                             </button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row div-hidden " id="div_for_own_otp_verify">
                                     <label for="own_verify"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Verify OTP shares') }}</label>
+                                           class="col-md-4 col-form-label  text-md-right">{{ __('Verify Shares') }}</label>
                                     <div class="col-md-6">
                                         <input id="own_verify" type="text"
-                                               class="form-control"
+                                               class="form-control bg-info"
                                                placeholder="Enter OTP to verify share "
                                                name="own_verify" value="{{ old('own_verify') }}"
                                                autocomplete="own_verify">
@@ -449,7 +454,6 @@
                 enable_button("no_shares_own_send_verify_code")
             });
 
-
             /* Register User AJAX Call */
             $('#register_form').submit(function (e) {
                 e.preventDefault();
@@ -497,7 +501,44 @@
                 });
             });
 
+            /* Phone No On Change AJAX Call */
+            $('#phone_no').change(function () {
+                var formData = {
+                    phone_no: $('#phone_no').val(),
+                    "_token": "{{ csrf_token() }}",
+                };
+                var type = "POST";
+                $.ajax({
+                    type: type,
+                    url: "{{route('check_phone_number')}}",
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.message == "user_exists") {
+                            $("#div_phone_number_verification").hide();
+                            $("#email").val(data.user.email);
+                            $("#first_name").val(data.user.first_name);
+                            $("#last_name").val(data.user.last_name);
+                            input_read_only("email")
+                            input_read_only("first_name")
+                            input_read_only("last_name")
+                            input_read_only("phone_no")
 
+                            if (data.user.phone_no_verify == "0") {
+                                hide_fields('div_phone_number_verification')
+                            } else {
+                                show_fields('phone_number_send_verify_code')
+                            }
+                            hide_fields('phone_number_send_verify_code')
+                            hide_fields('email_send_verify_code')
+                            show_response_message('User found',1)
+                            show_fields("step2")
+                            show_fields("step3")
+                        }
+                    }
+
+                });
+            });
         });
 
         function show_response_message(message = '', type = 0) {

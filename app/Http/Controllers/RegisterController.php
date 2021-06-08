@@ -78,6 +78,8 @@ class RegisterController extends Controller
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
                 $stock->verified_string = $request->own_verify;
+                $stock->image = $imageName ?? "Image";
+
                 $stock->save();
             } else {
                 $user = new User();
@@ -95,7 +97,6 @@ class RegisterController extends Controller
                     $user->phone_no_verify = 1;
                 }
                 $user->phone_no = $request->phone_no;
-                $user->image = $imageName ?? "Image";
                 $user->save();
 
                 $stock = new Stock();
@@ -106,12 +107,13 @@ class RegisterController extends Controller
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
                 $stock->verified_string = $request->own_verify;
+                $stock->image = $imageName ?? "Image";
 
                 $stock->save();
 
             }
             $session_id = Session::getId();
-            $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->get();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->get();
             foreach ($emailVerify as $c) {
                 $c->delete();
             }

@@ -23,6 +23,7 @@ class CreateStocksTable extends Migration
             $table->date('date_purchase')->nullable();
             $table->bigInteger('stock_verified')->default(0);
             $table->text('verified_string')->nullable();
+            $table->text('image');
             $table->timestamps();
         });
     }
