@@ -27,6 +27,4 @@ class TwilioConstant
     const TWILIO_VERIFY_NUMBER = "+92 323 4812995";
     const TWILIO_ACCOUNT_STATUS = false;
 
-
-
 }
