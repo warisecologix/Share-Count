@@ -42,14 +42,13 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-
         $rules = [
             'phone_no' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
-            'verify_email_code' => 'required',
             'no_shares_own' => 'required|integer',
+            'own_verify' => 'required',
             'brokage_name' => 'required',
             'company_id' => 'required',
             'country_list' => 'required',
@@ -57,30 +56,10 @@ class RegisterController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
-            if ($request->verify_phone_number_code) {
-                if (!$this->verify($request->phone_no, $request->verify_phone_number_code)) {
-                    $validator->errors()->add('verify_phone_number_code', 'SMS code is invalid');
-                }
-            }
-
-            if (empty($request->verify_email_code)) {
-                $validator->errors()->add('verify_email_code', 'Email verification code field required');
-            } else {
-                $session_id = Session::getId();
-                $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 0)->where('otp_code', $request->verify_email_code)->get()->first();
-                if (!$emailVerify) {
-                    $validator->errors()->add('verify_email_code', 'Invalid code');
-                }
-            }
-
-            if (empty($request->own_verify)) {
-                $validator->errors()->add('own_verify', 'Verification share code field required');
-            } else {
-                $session_id = Session::getId();
-                $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->own_verify)->where('type', 1)->get()->first();
-                if (!$ownVerify) {
-                    $validator->errors()->add('own_verify', 'Invalid verify shared own code');
-                }
+            $session_id = Session::getId();
+            $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->own_verify)->where('type', 1)->get()->first();
+            if (!$ownVerify) {
+                $validator->errors()->add('own_verify', 'Invalid verify shared own code');
             }
         });
 
@@ -132,12 +111,7 @@ class RegisterController extends Controller
 
             }
             $session_id = Session::getId();
-            $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 0)->where('otp_code', $request->verify_email_code)->get();
-            foreach ($emailVerify as $c) {
-                $c->delete();
-            }
-
-            $emailVerify = EmailVerify::where('session_id', $session_id)->where('type', 1)->where('otp_code', $request->own_verify)->get();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->verify_email_code)->get();
             foreach ($emailVerify as $c) {
                 $c->delete();
             }

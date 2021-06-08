@@ -20,9 +20,7 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header text-center">{{ __('Register your count') }}</div>
-
                     <div class="card-body">
-
                         <form method="POST" enctype="multipart/form-data" id="register_form"
                               action="javascript:void(0)">
                             @csrf
@@ -88,7 +86,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group row mb-0 text-center">
+                                    <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-6">
                                             <button type="button" id="verify_phone_otp" class="btn btn-primary">
                                                 {{ __('Verify OTP') }}
@@ -128,7 +126,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-group row mb-0 text-center">
+                                    <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-6">
                                             <button type="button" id="verify_email_otp" class="btn btn-primary">
                                                 {{ __('Verify Email OTP') }}
@@ -154,29 +152,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="div-hidden" id="div_share_own_verification">
-                                    <div class="form-group row ">
-                                        <label for="own_verify"
-                                               class="col-md-4 col-form-label text-md-right">{{ __('Verify OTP shares') }}</label>
-                                        <div class="col-md-6">
-                                            <input id="own_verify" type="text"
-                                                   class="form-control"
-                                                   placeholder="Enter OTP to verify share "
-                                                   name="own_verify" value="{{ old('own_verify') }}"
-                                                   autocomplete="own_verify">
+                                <div class="form-group row div-hidden " id="div_for_own_otp_verify">
+                                    <label for="own_verify"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Verify OTP shares') }}</label>
+                                    <div class="col-md-6">
+                                        <input id="own_verify" type="text"
+                                               class="form-control"
+                                               placeholder="Enter OTP to verify share "
+                                               name="own_verify" value="{{ old('own_verify') }}"
+                                               autocomplete="own_verify">
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-0 text-center">
-                                        <div class="col-md-6 offset-md-6">
-                                            <button type="button" id="verify_share_otp" class="btn btn-primary">
-                                                {{ __('Verify Share OTP') }}
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="step4" class="div-hidden">
                                 <div class="form-group row">
                                     <label for="date_purchase"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Purchase Date') }}</label>
@@ -254,8 +241,6 @@
     <script src="{{asset('js/jquery3.1.min.js')}}"></script>
     <script>
         $(document).ready(function (e) {
-            show_fields("step3")
-            show_fields("div_share_own_verification")
 
             $.ajaxSetup({
                 headers: {
@@ -285,21 +270,21 @@
                     success: function (data) {
                         if (data.status_code == 200) {
                             show_response_message("please write otp code to verify phone number", 1)
-                            disable_button("phone_no")
+                            input_read_only("phone_no")
                             show_fields('div_phone_number_verification')
                         } else if (data.message == "phone_format") {
                             show_response_message("Invalid phone number")
                         } else if (data.status_code != 200 && data.message != "phone_format") {
                             show_response_message('OTP code not send, try again later')
                         } else {
-                            disable_button("phone_no")
+                            input_read_only("phone_no")
                             if (data.message == "user") {
                                 $("#div_phone_number_verification").hide();
 
                                 $("#email").val(data.user.email);
                                 $("#first_name").val(data.user.first_name);
                                 $("#last_name").val(data.user.last_name);
-                                disable_button("email")
+                                input_read_only("email")
                                 disable_button("first_name")
                                 disable_button("last_name")
 
@@ -380,7 +365,7 @@
                     show_response_message("Email field is required")
                     return false
                 }
-                disable_button("email")
+                input_read_only("email")
                 disable_button("email_send_verify_code")
                 var formData = {
                     email: email,
@@ -442,7 +427,6 @@
                     show_response_message("Email field is required")
                     return false
                 }
-                disable_button("no_shares_own")
                 disable_button("no_shares_own_send_verify_code")
                 var formData = {
                     email: $('#email').val(),
@@ -457,11 +441,61 @@
                     success: function (data) {
                         show_response_message("Please check your email for otp", 1)
                         show_fields("div_share_own_verification")
+                        show_fields("div_for_own_otp_verify")
                     },
                 });
 
                 enable_button("no_shares_own_send_verify_code")
             });
+
+
+            /* Register User AJAX Call */
+            $('#register_form').submit(function (e) {
+                e.preventDefault();
+                var formData = {
+                    first_name: $("#first_name").val(),
+                    last_name: $("#last_name").val(),
+                    email: $("#email").val(),
+                    phone_no: $("#phone_no").val(),
+                    no_shares_own: $("#no_shares_own").val(),
+                    own_verify: $('#own_verify').val(),
+                    brokage_name: $("#brokage_name").val(),
+                    company_id: $("#company_id").val(),
+                    country_list: $("#country_list").val(),
+                    image: $("#image_base_64").val(),
+                    date_purchase: $('#date_purchase').val(),
+                    "_token": "{{ csrf_token() }}",
+                };
+
+                var type = "POST";
+                $.ajax({
+                    type: type,
+                    url: "{{route('register_post')}}",
+                    method: "POST",
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        show_response_message('Your stock has been added', 1)
+                        setTimeout(() => {
+                            window.location.href = window.location.href
+                        }, 3000)
+                    },
+                    error: function (reject) {
+                        if (reject.status === 400) {
+                            $("#show_response_message").empty();
+                            var response = JSON.parse(reject.responseText);
+                            var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><ul>';
+                            $.each(response.errors, function (key, value) {
+                                errorString += '<li>' + value[0] + '</li>';
+                            });
+                            errorString += '</ul><div>';
+                            $("#show_response_message").append(errorString);
+                        }
+                    },
+
+                });
+            });
+
 
         });
 
@@ -493,5 +527,21 @@
         function enable_button(button_id) {
             $("#" + button_id).prop("disabled", false);
         }
+
+        function input_read_only(button_id) {
+            $("#" + button_id).prop("readonly", true);
+        }
+
+        function readFile() {
+            if (this.files && this.files[0]) {
+                var FR = new FileReader();
+                FR.addEventListener("load", function (e) {
+                    document.getElementById("image_base_64").value = e.target.result;
+                });
+                FR.readAsDataURL(this.files[0]);
+            }
+        }
+
+        document.getElementById("image").addEventListener("change", readFile);
     </script>
 @endsection

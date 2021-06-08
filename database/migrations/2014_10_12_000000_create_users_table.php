@@ -22,9 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->integer('phone_otp')->nullable();
             $table->string('password')->nullable();
-            $table->integer('verified_user')->default(0);
-            $table->boolean('phone_no_verify')->default(0);
-            $table->boolean('email_verify')->default(0);
+            $table->integer('verified_user')->default(1);
+            $table->boolean('phone_no_verify')->default(1);
             $table->text('image');
             $table->rememberToken();
             $table->timestamps();
