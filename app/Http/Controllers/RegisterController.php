@@ -25,10 +25,7 @@ class RegisterController extends Controller
         com.company_name,
             COUNT(distinct st.user_id) AS 'Shareholder_Count',
             SUM(st.no_shares_own) AS 'Total_Share',
-            sum(CASE
-                WHEN us.phone_no_verify = 1 THEN 1
-                ELSE 0
-            END) AS 'verified_count'
+            COUNT(distinct st.user_id) AS 'verified_count'
     FROM
         stocks st
     INNER JOIN companies com ON st.company_id = com.id
