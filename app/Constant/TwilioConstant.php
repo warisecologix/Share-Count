@@ -4,36 +4,18 @@ namespace App\Constant;
 
 class TwilioConstant
 {
-//    const TWILIO_SID = "ACa8e6aaba33c51bd58cb99f1e94f87be5";
-//    const TWILIO_AUTH_TOKEN = "45cf98fc6c00e905f664de1fa59c6820";
-//    const TWILIO_VERIFY_SID = "VA20a69ca2c56d1a80d444ec284b5810f0";
+// Working Credentials
+//    const TWILIO_SID = "ACde144299595b546541908482a16794e2";
+//    const TWILIO_AUTH_TOKEN = "515e4b4dc6954b6989dcf0dda5599e14";
+//    const TWILIO_VERIFY_SID = "VA4d69d724df58c5b8de719f57937b1e61";
 //    const TWILIO_NUMBER = "+15102964187";
-//    const TWILIO_VERIFY_NUMBER = "+923436550958";
+//    const TWILIO_VERIFY_NUMBER = "+92 323 4812995";
 //    const TWILIO_ACCOUNT_STATUS = false;
 
-
-//    const TWILIO_SID = "AC0ee57d9c5e9eac84271446bb77e63e03";
-//    const TWILIO_AUTH_TOKEN = "10cb7ab6f10f1c8c4df93fb92c827f7c";
-//    const TWILIO_VERIFY_SID = "VA8e362e80b35b18e7a0428b6c12669ab1";
-//    const TWILIO_NUMBER = "+15102964187";
-//    const TWILIO_VERIFY_NUMBER = "+923436550958";
-//    const TWILIO_ACCOUNT_STATUS = false;
-
-//    const TWILIO_SID = "AC7dce57ac55651604da8ddbfc0a7617c0";
-//    const TWILIO_AUTH_TOKEN = "d103ec2d6894786f4220072fd2bea611";
-//    const TWILIO_VERIFY_SID = "VA145ae70162996835aec021354305e7bd";
-//    const TWILIO_NUMBER = "+15102964187";
-//    const TWILIO_VERIFY_NUMBER = "+923436550958";
-//    const TWILIO_ACCOUNT_STATUS = false;
-
-
-    const TWILIO_SID = "AC8624338811204bf15b5a3bb44a7ec63c";
-    const TWILIO_AUTH_TOKEN = "69b38a43650d18ea1bb904f3660068b6";
-    const TWILIO_VERIFY_SID = "69b38a43650d18ea1bb904f3660068b6";
+    const TWILIO_SID = "ACe1a8d38c382c1d74697166d2d9708ae1";
+    const TWILIO_AUTH_TOKEN = "4747df2c305d655c1f9524229ce0aea7";
+    const TWILIO_VERIFY_SID = "VA9ea2a5b0934ee1d29d2a2c11efc64d1e";
     const TWILIO_NUMBER = "+15102964187";
     const TWILIO_VERIFY_NUMBER = "+92 323 4812995";
     const TWILIO_ACCOUNT_STATUS = false;
-
-
-
 }
