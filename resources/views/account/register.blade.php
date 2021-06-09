@@ -254,7 +254,7 @@
                                 </div>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-6">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" id="button_submit" class="btn btn-primary">
                                             {{ __('Save') }}
                                         </button>
                                     </div>
@@ -286,6 +286,8 @@
                     show_response_message("Phone number field is required")
                     return false
                 }
+
+                disable_button("phone_number_send_verify_code")
                 let te = $('.iti__selected-flag').attr('title');
                 var res = te.split("+");
                 var cell_number = '+' + res[1] + phone_number;
@@ -325,10 +327,12 @@
                                 hide_fields('div_phone_number_verification')
                                 user_found(data.data)
                                 input_field_set_value('user_exists')
+                                enable_button("phone_number_send_verify_code")
                             }
                             if (data.optional_status == "user_not_found_code_not_send") {
                                 hide_fields('div_phone_number_verification')
                                 input_field_set_value('user_exists')
+                                enable_button("phone_number_send_verify_code")
                             }
                         }
                     }
@@ -352,6 +356,7 @@
                     show_response_message("OTP field is required")
                     return false
                 }
+                disable_button("verify_phone_otp")
                 // let recaptcha = $('#g-recaptcha-response').val()
                 // if (recaptcha == "") {
                 //     show_response_message("Please fill reCAPTCHA");
@@ -385,6 +390,7 @@
                         else {
                             show_response_message(data.message, 1)
                             input_field_set_value("phone_no_verify")
+                            enable_button("verify_phone_otp")
                         }
                     }
                 });
@@ -398,6 +404,7 @@
                     show_response_message("Email field is required")
                     return false
                 }
+                disable_button("email_send_verify_code")
                 var formData = {
                     email: email,
                     "_token": "{{ csrf_token() }}",
@@ -521,6 +528,7 @@
                     show_response_message("Please fill reCAPTCHA");
                     return false;
                 }
+                disable_button("button_submit")
                 let phone_number = $('#phone_no').val()
                 let te = $('.iti__selected-flag').attr('title');
                 var res = te.split("+");
@@ -547,9 +555,10 @@
                         show_response_message(data.message, 1)
                         setTimeout(() => {
                             window.location.href = window.location.href
-                        }, 3000)
+                        }, 10000)
                     },
                     error: function (reject) {
+                        enable_button("button_submit")
                         if (reject.status === 400) {
                             $("#show_response_message").empty();
                             var response = JSON.parse(reject.responseText);
@@ -569,6 +578,7 @@
 
             $('#register-button').click(function (e) {
                 e.preventDefault();
+                disable_button("register-button")
                 let phone_number = $('#phone_no').val()
                 let te = $('.iti__selected-flag').attr('title');
                 var res = te.split("+");
@@ -596,6 +606,7 @@
                         show_fields("step2")
                     },
                     error: function (reject) {
+                        enable_button("register-button")
                         if (reject.status === 400) {
                             $("#show_response_message").empty();
                             var response = JSON.parse(reject.responseText);

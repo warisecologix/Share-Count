@@ -60,7 +60,7 @@ class RegisterController extends Controller
                 'errors' => $validator->getMessageBag()->toArray()
             ], 400);
         } else {
-            $user = User::where('email', $request->email)->orWhere('phone_no',$request->phone_no)->get()->first();
+            $user = User::where('email', $request->email)->orWhere('phone_no', $request->phone_no)->get()->first();
 
             $stock = new Stock();
             $stock->company_id = $request->company_id;
@@ -76,7 +76,8 @@ class RegisterController extends Controller
             foreach ($emailVerify as $c) {
                 $c->delete();
             }
-            return $this->successResponse('Your stock has been added');
+            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account " . $user->email . " you have provided. Send Email to trackshortage@gmail.com";
+            return $this->successResponse($message);
         }
     }
 
@@ -90,8 +91,8 @@ class RegisterController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
-            $users_count = User::where('email',$request->email)->orWhere("phone_no",$request->phone_no)->get()->count();
-            if($users_count != 0){
+            $users_count = User::where('email', $request->email)->orWhere("phone_no", $request->phone_no)->get()->count();
+            if ($users_count != 0) {
                 $validator->errors()->add('Email_Phone_No', 'Email or Phone no already exists');
             }
         });
@@ -105,10 +106,11 @@ class RegisterController extends Controller
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->phone_no = $request->phone_no;
-            $user->phone_no_verify	 = 1;
-            $user->verified_user	 = 1;
-            $user->email_verify	 = 1;
+            $user->phone_no_verify = 1;
+            $user->verified_user = 1;
+            $user->email_verify = 1;
             $user->save();
+
             return $this->successResponse('Account created');
         }
     }
