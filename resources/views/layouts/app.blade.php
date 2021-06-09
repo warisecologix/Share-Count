@@ -18,6 +18,20 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .g-recaptcha{
+            margin-left: 40% !important;
+            width: auto !important;
+            height: auto !important;
+            text-align: -webkit-center;
+            text-align: -moz-center;
+            text-align: -o-center;
+            text-align: -ms-center;
+        }
+        .div-hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div id="app">

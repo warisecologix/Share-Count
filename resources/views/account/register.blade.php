@@ -27,6 +27,7 @@
 
                             <div id="show_response_message">
                             </div>
+
                             <div id="step1">
 
                                 <div class="form-group row" id="div_phone_number">
