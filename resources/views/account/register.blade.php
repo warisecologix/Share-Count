@@ -404,6 +404,10 @@
                     show_response_message("Email field is required")
                     return false
                 }
+                if(!validateEmail(email)){
+                    show_response_message("Email format is invalid")
+                    return false
+                }
                 disable_button("email_send_verify_code")
                 var formData = {
                     email: email,
@@ -680,6 +684,11 @@
             $("#"+id).css("background-color", "green");
             $("#"+id).css("color", "white");
 
+        }
+
+        function validateEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
         }
     </script>
 
