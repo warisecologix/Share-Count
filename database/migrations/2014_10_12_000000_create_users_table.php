@@ -20,9 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('phone_no');
             $table->string('email');
-            $table->integer('phone_otp')->nullable();
             $table->string('password')->nullable();
-            $table->integer('verified_user')->default(1);
+            $table->integer('verified_user')->default(0);
             $table->boolean('phone_no_verify')->default(0);
             $table->boolean('email_verify')->default(0);
             $table->rememberToken();
