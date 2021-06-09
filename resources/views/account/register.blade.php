@@ -19,7 +19,7 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card">
-                    <div class="card-header text-center">{{ __('Register your count') }}</div>
+                    <div class="card-header text-center">{{ __('User Information') }}</div>
                     <div class="card-body">
                         <form method="POST" enctype="multipart/form-data" id="register_form"
                               action="javascript:void(0)">
@@ -72,7 +72,7 @@
                                                    placeholder="Enter valid phone no"
                                                    value="{{ old('phone_no') }}" autocomplete="phone_no" autofocus>
 
-                                            <div class="input-group-append">
+                                            <div class="input-group-append" id="phone_number_send_verify_code_verify">
                                                 <button type="button" id="phone_number_send_verify_code"
                                                         class="btn btn-primary input-group-text">Verify number
                                                 </button>
@@ -309,9 +309,12 @@
                                 input_field_set_value('user_exists', 1)
                             } else if (data.optional_status == "user_found_cell_verified") {
                                 hide_fields('div_phone_number_verification')
-                                hide_fields('phone_number_send_verify_code')
                                 user_found(data.data)
                                 input_field_set_value('user_exists', 1)
+                                change_text("phone_number_send_verify_code", "Verified <span>&#10003;</span>")
+                                disable_button("phone_number_send_verify_code")
+                                change_background_color("phone_number_send_verify_code")
+                                $("#phone_no").css("padding-right","125px")
                             } else if (data.optional_status == "user_not_found_code_send") {
                                 show_fields('div_phone_number_verification')
                                 input_field_set_value('user_exists')
@@ -369,7 +372,10 @@
                         if (data.status_code == 200) {
                             show_response_message(data.message, 1)
                             hide_fields('div_phone_number_verification')
-                            hide_fields('phone_number_send_verify_code')
+                            change_text("phone_number_send_verify_code", "Verified <span>&#10003;</span>")
+                            disable_button("phone_number_send_verify_code")
+                            change_background_color("phone_number_send_verify_code")
+                            $("#phone_no").css("padding-right","125px")
                             input_field_set_value("phone_no_verify", 1)
                         }
                         else if(data.optional_status == "phone_number_not_verify"){
@@ -411,7 +417,9 @@
                             input_field_set_value("email_verify", 1)
                             input_field_set_value("user_exists", 1)
                             hide_fields("div_email_verification")
-                            hide_fields("email_send_verify_code")
+                            change_text("email_send_verify_code", "Verified <span>&#10003;</span>")
+                            disable_button("email_send_verify_code")
+                            change_background_color("email_send_verify_code")
                             if ($("#user_exists").val() == 0) {
                                 show_fields("register_button_div")
                                 hide_fields("next_button_div")
@@ -453,7 +461,9 @@
                             show_response_message("OTP verify", 1)
                             hide_fields('div_email_verification')
                             input_field_set_value('email_verify', 1)
-                            hide_fields("email_send_verify_code")
+                            change_text("email_send_verify_code", "Verified <span>&#10003;</span>")
+                            disable_button("email_send_verify_code")
+                            change_background_color("email_send_verify_code")
                             if ($("#user_exists").val() == 0) {
                                 show_fields("register_button_div")
                                 hide_fields("next_button_div")
@@ -650,6 +660,16 @@
             show_fields("step2")
         });
 
+        function change_text(id, text){
+            $("#"+id).empty()
+            $("#"+id).append(text)
+        }
+
+        function change_background_color(id){
+            $("#"+id).css("background-color", "green");
+            $("#"+id).css("color", "white");
+
+        }
     </script>
 
 @endsection

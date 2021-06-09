@@ -34,8 +34,8 @@
             display: none;
         }
 
-        .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
-            padding-right: 93px !important;
+        #phone_no{
+            padding-right: 93px;
 
         }
     </style>
