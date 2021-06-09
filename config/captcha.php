@@ -1,8 +1,10 @@
 <?php
 
+use App\Constant\TwilioConstant;
+
 return [
-    'secret' => env('NOCAPTCHA_SECRET'),
-    'sitekey' => env('NOCAPTCHA_SITEKEY'),
+    'secret' => TwilioConstant::NOCAPTCHA_SECRET,
+    'sitekey' => TwilioConstant::NOCAPTCHA_SITEKEY,
     'options' => [
         'timeout' => 30,
     ],
