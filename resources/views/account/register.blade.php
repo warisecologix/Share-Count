@@ -164,10 +164,59 @@
 
                             </div>
 
-                            <div id="step2" class="div-hidden">
+                            <div id="step2"  class="div-hidden">
+                                <div class="form-group row">
+                                    <label for="company_id"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Stock') }}</label>
+
+                                    <div class="col-md-6">
+                                        <select class="form-control" id="company_id" name="company_id">
+                                            <option value="">Select Stock</option>
+                                            @foreach($companies as $company)
+                                                <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="brokage_name"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}<span class="">*</span></label>
+
+                                    <div class="col-md-6">
+                                        <input id="brokage_name" type="text"
+                                               class="form-control "
+                                               placeholder="Enter brokage name (Optional)"
+                                               name="brokage_name" value="{{ old('brokage_name') }}">
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="date_purchase"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Purchased Date') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="date_purchase" type="date"
+                                               class="form-control "
+                                               name="date_purchase" value="{{ old('date_purchase') }}">
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="country_list"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Country of Residence') }}</label>
+
+                                    <div class="col-md-6">
+                                        <select class="form-control" id="country_list" name="country_list">
+                                            <option value="">Select Country</option>
+                                            @foreach($countries as $country)
+                                                <option value="{{$country->name}}">{{$country->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label for="no_shares_own"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('No of Share Purchased') }}</label>
                                     <div class="col-md-6 input-group mb-3">
                                         <input id="no_shares_own" type="number"
                                                class="form-control "
@@ -193,59 +242,15 @@
 
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="date_purchase"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Purchase Date') }}</label>
 
-                                    <div class="col-md-6">
-                                        <input id="date_purchase" type="date"
-                                               class="form-control "
-                                               name="date_purchase" value="{{ old('date_purchase') }}">
-
-                                    </div>
+                                <div class="form-group row mt-5  container">
+                                    {!! NoCaptcha::renderJs() !!}
+                                    {!! NoCaptcha::display() !!}
                                 </div>
-                                <div class="form-group row">
-                                    <label for="brokage_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="brokage_name" type="text"
-                                               class="form-control "
-                                               placeholder="Enter brokage name"
-                                               name="brokage_name" value="{{ old('brokage_name') }}">
-
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="company_id"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Select Stock') }}</label>
-
-                                    <div class="col-md-6">
-                                        <select class="form-control" id="company_id" name="company_id">
-                                            @foreach($companies as $company)
-                                                <option value="{{$company->id}}">{{$company->company_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="country_list"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Select Country') }}</label>
-
-                                    <div class="col-md-6">
-                                        <select class="form-control" id="country_list" name="country_list">
-                                            @foreach($countries as $country)
-                                                <option value="{{$country->name}}">{{$country->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-6">
                                         <button type="submit" class="btn btn-primary">
-                                            {{ __('Register') }}
+                                            {{ __('Save') }}
                                         </button>
                                     </div>
                                 </div>
