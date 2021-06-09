@@ -39,15 +39,13 @@ trait Twilio
             $verification = $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
                 ->verificationChecks
                 ->create($verfication_code, array('to' => $phone_number));
-            if($verification->status == "pending"){
+            if ($verification->status == "pending") {
                 return 199;
-            }
-            else{
+            } else {
                 return 200;
             }
         } catch (TwilioException $e) {
             return $e->getCode();
         }
-
     }
 }
