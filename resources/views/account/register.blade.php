@@ -31,6 +31,7 @@
                             <div id="step1">
                                 <input type="hidden" value="0" name="phone_no_verify" id="phone_no_verify">
                                 <input type="hidden" value="0" name="email_verify" id="email_verify">
+                                <input type="hidden" value="0" name="user_exists" id="user_exists">
 
                                 <div class="form-group row">
                                     <label for="first_name"
@@ -99,7 +100,7 @@
                                     </div>
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-6 mb-3">
-                                            <button id="verify_phone_otp" class="btn btn-primary">
+                                                <button id="verify_phone_otp" class="btn btn-primary">
                                                 {{ __('Verify OTP') }}
                                             </button>
                                         </div>
@@ -135,26 +136,27 @@
                                                    name="verify_email_code" value="{{ old('verify_email_code') }}"
                                                    autocomplete="verify_email_code">
 
-                                            <div class="form-group row mt-5  container">
-                                                {!! NoCaptcha::renderJs() !!}
-                                                {!! NoCaptcha::display() !!}
-                                            </div>
-                                            <div class="form-group row mb-0">
-                                                <div class="col-md-6 offset-md-6 mb-3">
-                                                    <button id="verify_email_otp" class="btn btn-primary">
-                                                        {{ __('Verify OTP') }}
-                                                    </button>
-                                                </div>
+                                            <div class="col-md-6 offset-md-4 mt-3 mb-3">
+                                                <button id="verify_email_otp" class="btn btn-primary">
+                                                    {{ __('Verify OTP') }}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-
-                                <div class="form-group row mb-0 div-hidden">
+                                <div class="form-group row mb-0 div-hidden" id="register_button_div">
                                     <div class="col-md-6 offset-md-6">
-                                        <button id="register-button" class="btn btn-primary">
+                                        <button type="button" id="register-button" class="btn btn-primary">
                                             {{ __('Register') }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0 div-hidden" id="next_button_div">
+                                    <div class="col-md-6 offset-md-6">
+                                        <button type="button" id="next_button" class="btn btn-primary">
+                                            {{ __('Next') }}
                                         </button>
                                     </div>
                                 </div>
@@ -162,7 +164,7 @@
 
                             </div>
 
-                            <div id="step3" class="div-hidden">
+                            <div id="step2" class="div-hidden">
                                 <div class="form-group row">
                                     <label for="no_shares_own"
                                            class="col-md-4 col-form-label text-md-right">{{ __('No of Share Own') }}</label>
@@ -272,7 +274,7 @@
                 let phone_number = $('#phone_no').val()
                 let te = $('.iti__selected-flag').attr('title');
                 var res = te.split("+");
-                var cell_number = '+'+res[1]+phone_number;
+                var cell_number = '+' + res[1] + phone_number;
                 if (cell_number == "") {
                     show_response_message("Phone number field is required")
                     return false
@@ -288,28 +290,31 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data)
-                        console.log(data.data)
                         if (data.status_code == 200) {
                             show_response_message(data.message, 1)
                             if (data.optional_status == "user_found_code_send") {
                                 show_fields('div_phone_number_verification')
                                 user_found(data.data)
+                                input_field_set_value('user_exists', 1)
                             } else if (data.optional_status == "user_found_cell_verified") {
                                 hide_fields('div_phone_number_verification')
                                 hide_fields('phone_number_send_verify_code')
                                 user_found(data.data)
+                                input_field_set_value('user_exists', 1)
                             } else if (data.optional_status == "user_not_found_code_send") {
                                 show_fields('div_phone_number_verification')
+                                input_field_set_value('user_exists')
                             }
                         } else {
                             show_response_message(data.message)
                             if (data.optional_status == "user_found_code_not_send") {
                                 hide_fields('div_phone_number_verification')
                                 user_found(data.data)
+                                input_field_set_value('user_exists')
                             }
                             if (data.optional_status == "user_not_found_code_not_send") {
                                 hide_fields('div_phone_number_verification')
+                                input_field_set_value('user_exists')
                             }
                         }
                     }
@@ -322,9 +327,9 @@
                 let phone_number = $('#phone_no').val()
                 let te = $('.iti__selected-flag').attr('title');
                 var res = te.split("+");
-                var cell_number = '+'+res[1]+phone_number;
+                var cell_number = '+' + res[1] + phone_number;
                 let otp = $('#verify_phone_number_code').val()
-                let recaptcha =  $('#g-recaptcha-response').val()
+                let recaptcha = $('#g-recaptcha-response').val()
 
                 if (cell_number == "") {
                     show_response_message("Phone number field is required")
@@ -383,13 +388,20 @@
                     dataType: 'json',
                     success: function (data) {
                         show_response_message(data.message, 1)
-                        if(data.optional_status == "user_found_code_send" || data.optional_status){
+                        if (data.optional_status == "user_found_code_send" || data.optional_status) {
                             show_fields("div_email_verification")
                         }
-                        if(data.optional_status == "user_found_email_verified"){
-                            input_field_set_value("email_verify",1)
+                        if (data.optional_status == "user_found_email_verified") {
+                            input_field_set_value("email_verify", 1)
+                            input_field_set_value("user_exists", 1)
                             hide_fields("div_email_verification")
-
+                            if ($("#user_exists").val() == 0) {
+                                show_fields("register_button_div")
+                                hide_fields("next_button_div")
+                            } else {
+                                hide_fields("register_button_div")
+                                show_fields("next_button_div")
+                            }
                         }
                     },
                 });
@@ -418,10 +430,16 @@
                         if (data.status_code == 200) {
                             show_response_message("OTP verify", 1)
                             hide_fields('div_email_verification')
-                            show_fields("step3")
+                            input_field_set_value('email_verify', 1)
+                            if ($("#user_exists").val() ==0) {
+                                show_fields("register_button_div")
+                                hide_fields("next_button_div")
+                            } else {
+                                hide_fields("register_button_div")
+                                show_fields("next_button_div")
+                            }
                         } else {
                             show_response_message("OTP not valid")
-                            hide_fields("step3")
                         }
                     }
                 });
@@ -461,7 +479,7 @@
             let phone_number = $('#phone_no').val()
             let te = $('.iti__selected-flag').attr('title');
             var res = te.split("+");
-            var cell_number = '+'+res[1]+phone_number;
+            var cell_number = '+' + res[1] + phone_number;
             /* Register User AJAX Call */
             $('#register_form').submit(function (e) {
                 e.preventDefault();
@@ -510,27 +528,22 @@
             });
 
             /* Register Button AJAX Call */
+
             $('#register-button').click(function (e) {
                 e.preventDefault();
                 let phone_number = $('#phone_no').val()
                 let te = $('.iti__selected-flag').attr('title');
                 var res = te.split("+");
-                var cell_number = '+'+res[1]+phone_number;
+                var cell_number = '+' + res[1] + phone_number;
                 var formData = {
                     first_name: $("#first_name").val(),
                     last_name: $("#last_name").val(),
                     email: $("#email").val(),
                     phone_no: cell_number,
-                    no_shares_own: $("#no_shares_own").val(),
-                    Verify_Share: $('#Verify_Share').val(),
-                    brokage_name: $("#brokage_name").val(),
-                    company_id: $("#company_id").val(),
-                    country_list: $("#country_list").val(),
-                    date_purchase: $('#date_purchase').val(),
-                    g_recaptcha_response: $('#g-recaptcha-response').val(),
+                    phone_no_verify: $("#phone_no_verify").val(),
+                    email_verify: $("#email_verify").val(),
                     "_token": "{{ csrf_token() }}",
                 };
-
                 var type = "POST";
                 $.ajax({
                     type: type,
@@ -539,10 +552,10 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        show_response_message('Your stock has been added', 1)
-                        setTimeout(() => {
-                            window.location.href = window.location.href
-                        }, 3000)
+                        show_response_message(data.message, 1)
+                        hide_fields("register_button_div")
+                        hide_fields("next_button_div")
+                        show_fields("step2")
                     },
                     error: function (reject) {
                         if (reject.status === 400) {
@@ -603,6 +616,11 @@
             $("#first_name").val(user.first_name);
             $("#last_name").val(user.last_name);
         }
+
+        $('#next_button').click(function (e) {
+            hide_fields("next_button_div")
+            show_fields("step2")
+        });
 
     </script>
 
