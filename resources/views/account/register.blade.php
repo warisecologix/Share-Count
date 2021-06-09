@@ -100,7 +100,7 @@
                                     </div>
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-6 mb-3">
-                                                <button id="verify_phone_otp" class="btn btn-primary">
+                                            <button id="verify_phone_otp" class="btn btn-primary">
                                                 {{ __('Verify OTP') }}
                                             </button>
                                         </div>
@@ -136,6 +136,10 @@
                                                    name="verify_email_code" value="{{ old('verify_email_code') }}"
                                                    autocomplete="verify_email_code">
 
+                                            <div class="form-group row mt-5  container">
+                                                {!! NoCaptcha::renderJs() !!}
+                                                {!! NoCaptcha::display() !!}
+                                            </div>
                                             <div class="col-md-6 offset-md-4 mt-3 mb-3">
                                                 <button id="verify_email_otp" class="btn btn-primary">
                                                     {{ __('Verify OTP') }}
@@ -164,7 +168,7 @@
 
                             </div>
 
-                            <div id="step2"  class="div-hidden">
+                            <div id="step2" class="div-hidden">
                                 <div class="form-group row">
                                     <label for="company_id"
                                            class="col-md-4 col-form-label text-md-right">{{ __('Stock') }}</label>
@@ -180,7 +184,8 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="brokage_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}<span class="">*</span></label>
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}<span
+                                            class="">*</span></label>
 
                                     <div class="col-md-6">
                                         <input id="brokage_name" type="text"
@@ -334,7 +339,6 @@
                 var res = te.split("+");
                 var cell_number = '+' + res[1] + phone_number;
                 let otp = $('#verify_phone_number_code').val()
-                let recaptcha = $('#g-recaptcha-response').val()
 
                 if (cell_number == "") {
                     show_response_message("Phone number field is required")
@@ -344,7 +348,7 @@
                     show_response_message("OTP field is required")
                     return false
                 }
-
+                let recaptcha = $('#g-recaptcha-response').val()
                 if (recaptcha == "") {
                     show_response_message("Please fill reCAPTCHA");
                     return false;
@@ -364,6 +368,7 @@
                         if (data.status_code == 200) {
                             show_response_message(data.message, 1)
                             hide_fields('div_phone_number_verification')
+                            hide_fields('phone_number_send_verify_code')
                             input_field_set_value("phone_no_verify", 1)
                         } else {
                             show_response_message(data.message, 1)
@@ -416,6 +421,11 @@
             // AJAX call for Email OTP Verification
             $("#verify_email_otp").click(function (e) {
                 e.preventDefault();
+                let recaptcha = $('#g-recaptcha-response').val()
+                if (recaptcha == "") {
+                    show_response_message("Please fill reCAPTCHA");
+                    return false;
+                }
                 let otp = $('#verify_email_code').val()
                 if (otp == "") {
                     show_response_message("OTP field is required")
@@ -438,7 +448,7 @@
                             hide_fields('div_email_verification')
                             input_field_set_value('email_verify', 1)
                             hide_fields("email_send_verify_code")
-                            if ($("#user_exists").val() ==0) {
+                            if ($("#user_exists").val() == 0) {
                                 show_fields("register_button_div")
                                 hide_fields("next_button_div")
                             } else {
@@ -490,21 +500,21 @@
             /* Register User AJAX Call */
             $('#register_form').submit(function (e) {
                 e.preventDefault();
+                let recaptcha = $('#g-recaptcha-response').val()
+                if (recaptcha == "") {
+                    show_response_message("Please fill reCAPTCHA");
+                    return false;
+                }
                 var formData = {
-                    first_name: $("#first_name").val(),
-                    last_name: $("#last_name").val(),
                     email: $("#email").val(),
-                    phone_no: cell_number,
                     no_shares_own: $("#no_shares_own").val(),
                     Verify_Share: $('#Verify_Share').val(),
                     brokage_name: $("#brokage_name").val(),
                     company_id: $("#company_id").val(),
                     country_list: $("#country_list").val(),
                     date_purchase: $('#date_purchase').val(),
-                    g_recaptcha_response: $('#g-recaptcha-response').val(),
                     "_token": "{{ csrf_token() }}",
                 };
-
                 var type = "POST";
                 $.ajax({
                     type: type,
@@ -513,7 +523,7 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        show_response_message('Your stock has been added', 1)
+                        show_response_message(data.message, 1)
                         setTimeout(() => {
                             window.location.href = window.location.href
                         }, 3000)
