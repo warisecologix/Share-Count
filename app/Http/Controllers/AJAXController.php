@@ -138,7 +138,11 @@ class AJAXController extends Controller
         $code = $this->verify($request->phone_no, $request->otp);
         if ($code == 200) {
             return $this->successResponse("OTP verify");
-        } else {
+        }
+        else if($code == 199){
+            return $this->errorResponse("OTP is invalid", $code,'', 'phone_number_not_verify');
+        }
+        else {
             return $this->errorResponse("OTP is invalid", $code);
         }
     }

@@ -60,7 +60,8 @@ class RegisterController extends Controller
                 'errors' => $validator->getMessageBag()->toArray()
             ], 400);
         } else {
-            $user = User::where('phone_no', $request->email)->get()->first();
+            $user = User::where('email', $request->email)->orWhere('phone_no',$request->phone_no)->get()->first();
+
             $stock = new Stock();
             $stock->company_id = $request->company_id;
             $stock->user_id = $user->id ?? 0;
@@ -88,6 +89,12 @@ class RegisterController extends Controller
             'email' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
+        $validator->after(function () use ($request, $validator) {
+            $users_count = User::where('email',$request->email)->orWhere("phone_no",$request->phone_no)->get()->count();
+            if($users_count != 0){
+                $validator->errors()->add('Email_Phone_No', 'Email or Phone no already exists');
+            }
+        });
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->getMessageBag()->toArray()
@@ -97,9 +104,6 @@ class RegisterController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
-            if ($request->verify_phone_number_code != null) {
-                $user->phone_no_verify = 1;
-            }
             $user->phone_no = $request->phone_no;
             $user->phone_no_verify	 = 1;
             $user->verified_user	 = 1;
