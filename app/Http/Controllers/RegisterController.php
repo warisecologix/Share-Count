@@ -22,20 +22,11 @@ class RegisterController extends Controller
     public function register()
     {
 
-        $data = DB::select("SELECT
-        com.company_name,
-            COUNT(distinct st.user_id) AS 'Shareholder_Count',
-            SUM(st.no_shares_own) AS 'Total_Share',
-            COUNT(distinct st.user_id) AS 'verified_count'
-    FROM
-        stocks st
-    INNER JOIN companies com ON st.company_id = com.id
-    INNER JOIN users us ON st.user_id = us.id
-    GROUP BY com.company_name");
-
+        $gme_total_verify = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =1 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 1 ) vc )");
+        $amc_total_verify = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =2 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 2 ) vc )");
         $companies = Company::all();
         $countries = Country::all();
-        return view('account.register', compact('companies', 'countries', 'data'));
+        return view('account.register', compact('companies', 'countries', 'amc_total_verify',  'gme_total_verify' ));
     }
 
     public function store(Request $request)
