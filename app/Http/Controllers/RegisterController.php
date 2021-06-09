@@ -46,10 +46,8 @@ class RegisterController extends Controller
             'email' => 'required',
             'no_shares_own' => 'required|integer',
             'Verify_Share' => 'required',
-            'brokage_name' => 'required',
             'company_id' => 'required',
             'country_list' => 'required',
-            'image' => 'required',
             'g_recaptcha_response' => 'required|captcha'
 
         ];
@@ -77,18 +75,10 @@ class RegisterController extends Controller
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
                 $stock->verified_string = $request->Verify_Share;
-                $stock->image = $imageName ?? "Image";
 
                 $stock->save();
             } else {
                 $user = new User();
-                $image_64 = $request->image;
-                $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
-                $replace = substr($image_64, 0, strpos($image_64, ',') + 1);
-                $image = str_replace($replace, '', $image_64);
-                $image = str_replace(' ', '+', $image);
-                $imageName = Str::random(10) . '.' . $extension;
-                Storage::disk('public')->put($imageName, base64_decode($image));
                 $user->first_name = $request->first_name;
                 $user->last_name = $request->last_name;
                 $user->email = $request->email;
@@ -106,8 +96,6 @@ class RegisterController extends Controller
                 $stock->brokage_name = $request->brokage_name;
                 $stock->date_purchase = $request->date_purchase;
                 $stock->verified_string = $request->Verify_Share;
-                $stock->image = $imageName ?? "Image";
-
                 $stock->save();
 
             }

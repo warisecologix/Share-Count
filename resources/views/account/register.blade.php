@@ -219,17 +219,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="image"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Image of Your Brokage App ') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="image" type="file"
-                                               class="form-control "
-                                               name="image" value="{{ old('image') }}">
-                                        <input id="image_base_64" type="hidden">
-                                    </div>
-                                </div>
 
                                 <div class="form-group row mt-5  container">
                                     {!! NoCaptcha::renderJs() !!}
@@ -474,7 +463,6 @@
                     brokage_name: $("#brokage_name").val(),
                     company_id: $("#company_id").val(),
                     country_list: $("#country_list").val(),
-                    image: $("#image_base_64").val(),
                     date_purchase: $('#date_purchase').val(),
                     g_recaptcha_response: $('#g-recaptcha-response').val(),
                     "_token": "{{ csrf_token() }}",
@@ -582,16 +570,5 @@
             $("#" + button_id).prop("readonly", true);
         }
 
-        function readFile() {
-            if (this.files && this.files[0]) {
-                var FR = new FileReader();
-                FR.addEventListener("load", function (e) {
-                    document.getElementById("image_base_64").value = e.target.result;
-                });
-                FR.readAsDataURL(this.files[0]);
-            }
-        }
-
-        document.getElementById("image").addEventListener("change", readFile);
     </script>
 @endsection

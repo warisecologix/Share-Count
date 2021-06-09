@@ -19,11 +19,10 @@ class CreateStocksTable extends Migration
             $table->bigInteger('user_id');
             $table->text('no_shares_own');
             $table->string('country_list');
-            $table->string('brokage_name');
+            $table->string('brokage_name')->nullable();
             $table->date('date_purchase')->nullable();
             $table->bigInteger('stock_verified')->default(0);
             $table->text('verified_string')->nullable();
-            $table->text('image');
             $table->timestamps();
         });
     }
