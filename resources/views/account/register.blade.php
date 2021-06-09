@@ -24,6 +24,7 @@
                         <form method="POST" enctype="multipart/form-data" id="register_form"
                               action="javascript:void(0)">
                             @csrf
+
                             <div id="show_response_message">
                             </div>
                             <div id="step1">
@@ -227,6 +228,11 @@
                                                name="image" value="{{ old('image') }}">
                                         <input id="image_base_64" type="hidden">
                                     </div>
+                                </div>
+
+                                <div class="form-group row mt-5  container">
+                                    {!! NoCaptcha::renderJs() !!}
+                                    {!! NoCaptcha::display() !!}
                                 </div>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-6">
@@ -469,6 +475,7 @@
                     country_list: $("#country_list").val(),
                     image: $("#image_base_64").val(),
                     date_purchase: $('#date_purchase').val(),
+                    g_recaptcha_response: $('#g-recaptcha-response').val(),
                     "_token": "{{ csrf_token() }}",
                 };
 
@@ -531,7 +538,7 @@
                             }
                             hide_fields('phone_number_send_verify_code')
                             hide_fields('email_send_verify_code')
-                            show_response_message('User found',1)
+                            show_response_message('User found', 1)
                             show_fields("step2")
                             show_fields("step3")
                         }

@@ -50,6 +50,8 @@ class RegisterController extends Controller
             'company_id' => 'required',
             'country_list' => 'required',
             'image' => 'required',
+            'g_recaptcha_response' => 'required|captcha'
+
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {
