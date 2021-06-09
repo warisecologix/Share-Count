@@ -8,6 +8,7 @@ use App\EmailVerify;
 use App\Mail\VerifyUser;
 use App\Stock;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -50,6 +51,74 @@ class RegisterController extends Controller
             'country_list' => 'required',
             'g_recaptcha_response' => 'required|captcha'
 
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        $validator->after(function () use ($request, $validator) {
+            $session_id = Session::getId();
+            $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->Verify_Share)->where('type', 1)->get()->first();
+            if (!$ownVerify) {
+                $validator->errors()->add('Verify_Share', 'Invalid verify shared own code');
+            }
+        });
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->getMessageBag()->toArray()
+            ], 400);
+        } else {
+            $user = User::where('phone_no', $request->phone_no)->get()->first();
+            if ($user) {
+                $stock = new Stock();
+                $stock->company_id = $request->company_id;
+                $stock->user_id = $user->id;
+                $stock->no_shares_own = $request->no_shares_own;
+                $stock->country_list = $request->country_list;
+                $stock->brokage_name = $request->brokage_name;
+                $stock->date_purchase = $request->date_purchase;
+                $stock->verified_string = $request->Verify_Share;
+
+                $stock->save();
+            } else {
+                $user = new User();
+                $user->first_name = $request->first_name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                if ($request->verify_phone_number_code != null) {
+                    $user->phone_no_verify = 1;
+                }
+                $user->phone_no = $request->phone_no;
+                $user->save();
+
+                $stock = new Stock();
+                $stock->company_id = $request->company_id;
+                $stock->user_id = $user->id;
+                $stock->no_shares_own = $request->no_shares_own;
+                $stock->country_list = $request->country_list;
+                $stock->brokage_name = $request->brokage_name;
+                $stock->date_purchase = $request->date_purchase;
+                $stock->verified_string = $request->Verify_Share;
+                $stock->save();
+
+            }
+            $session_id = Session::getId();
+            $emailVerify = EmailVerify::where('session_id', $session_id)->get();
+            foreach ($emailVerify as $c) {
+                $c->delete();
+            }
+            return response()->json([
+                'success' => 'Stock Added'
+            ], 200);
+        }
+    }
+
+    public function register_user(Request $request)
+    {
+        $rules = [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_no' => 'required',
+            'email' => 'required',
+            'g_recaptcha_response' => 'required|captcha'
         ];
         $validator = Validator::make($request->all(), $rules);
         $validator->after(function () use ($request, $validator) {

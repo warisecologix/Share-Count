@@ -29,6 +29,36 @@
                             </div>
 
                             <div id="step1">
+                                <input type="hidden" value="0" name="phone_no_verify" id="phone_no_verify">
+                                <input type="hidden" value="0" name="email_verify" id="email_verify">
+
+                                <div class="form-group row">
+                                    <label for="first_name"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="first_name" type="text"
+                                               class="form-control "
+                                               placeholder="Enter first name"
+                                               name="first_name" value="{{ old('first_name') }}"
+                                               autocomplete="first_name">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="last_name"
+                                           class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="last_name" type="text"
+                                               class="form-control"
+                                               placeholder="Enter last name"
+                                               name="last_name" value="{{ old('last_name') }}"
+                                               autocomplete="last_name">
+
+                                    </div>
+                                </div>
 
                                 <div class="form-group row" id="div_phone_number">
                                     <label for="email"
@@ -49,7 +79,6 @@
                                         </div>
                                     </div>
                                 </div>
-
 
                                 <div id="div_phone_number_verification" class="div-hidden">
 
@@ -76,34 +105,7 @@
                                     </div>
 
                                 </div>
-                                <div class="form-group row">
-                                    <label for="first_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
-                                    <div class="col-md-6">
-                                        <input id="first_name" type="text"
-                                               class="form-control "
-                                               placeholder="Enter first name"
-                                               name="first_name" value="{{ old('first_name') }}"
-                                               autocomplete="first_name">
-
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="last_name"
-                                           class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="last_name" type="text"
-                                               class="form-control"
-                                               placeholder="Enter last name"
-                                               name="last_name" value="{{ old('last_name') }}"
-                                               autocomplete="last_name">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="step2" class="div-hidden">
                                 <div class="form-group row">
                                     <label for="email"
                                            class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -121,8 +123,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="div-hidden" id="div_email_verification">
 
+                                <div class="div-hidden" id="div_email_verification">
                                     <div class="form-group row">
                                         <label for="verify_email_code"
                                                class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
@@ -142,7 +144,23 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group row mt-5  container">
+                                    {!! NoCaptcha::renderJs() !!}
+                                    {!! NoCaptcha::display() !!}
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-6">
+                                        <button id="register-button" class="btn btn-primary">
+                                            {{ __('Register') }}
+                                        </button>
+                                    </div>
+                                </div>
+
+
                             </div>
+
                             <div id="step3" class="div-hidden">
                                 <div class="form-group row">
                                     <label for="no_shares_own"
@@ -344,17 +362,12 @@
                         if (data.status_code == 200) {
                             show_response_message("OTP verify", 1)
                             hide_fields('div_phone_number_verification')
-                            show_fields("step2")
+                            input_field_set_value("phone_no_verify",1)
                         } else {
                             show_response_message("OTP not valid", 1)
-                            hide_fields("step2")
+                            input_field_set_value("phone_no_verify")
                         }
 
-                    },
-                    error: function (reject) {
-                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
-                        $("#show_response_message").empty();
-                        $("#show_response_message").append(errorString);
                     }
                 });
             });
@@ -497,44 +510,53 @@
                 });
             });
 
-            /* Phone No On Change AJAX Call */
-            $('#phone_no').change(function () {
+            /* Register Button AJAX Call */
+            $('#register-button').click(function (e) {
+                e.preventDefault();
                 var formData = {
-                    phone_no: $('#phone_no').val(),
+                    first_name: $("#first_name").val(),
+                    last_name: $("#last_name").val(),
+                    email: $("#email").val(),
+                    phone_no: $("#phone_no").val(),
+                    no_shares_own: $("#no_shares_own").val(),
+                    Verify_Share: $('#Verify_Share').val(),
+                    brokage_name: $("#brokage_name").val(),
+                    company_id: $("#company_id").val(),
+                    country_list: $("#country_list").val(),
+                    date_purchase: $('#date_purchase').val(),
+                    g_recaptcha_response: $('#g-recaptcha-response').val(),
                     "_token": "{{ csrf_token() }}",
                 };
+
                 var type = "POST";
                 $.ajax({
                     type: type,
-                    url: "{{route('check_phone_number')}}",
+                    url: "{{route('register_user')}}",
+                    method: "POST",
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        if (data.message == "user_exists") {
-                            $("#div_phone_number_verification").hide();
-                            $("#email").val(data.user.email);
-                            $("#first_name").val(data.user.first_name);
-                            $("#last_name").val(data.user.last_name);
-                            input_read_only("email")
-                            input_read_only("first_name")
-                            input_read_only("last_name")
-                            input_read_only("phone_no")
-
-                            if (data.user.phone_no_verify == "0") {
-                                hide_fields('div_phone_number_verification')
-                            } else {
-                                show_fields('phone_number_send_verify_code')
-                            }
-                            hide_fields('phone_number_send_verify_code')
-                            hide_fields('email_send_verify_code')
-                            show_response_message('User found', 1)
-                            show_fields("step2")
-                            show_fields("step3")
+                        show_response_message('Your stock has been added', 1)
+                        setTimeout(() => {
+                            window.location.href = window.location.href
+                        }, 3000)
+                    },
+                    error: function (reject) {
+                        if (reject.status === 400) {
+                            $("#show_response_message").empty();
+                            var response = JSON.parse(reject.responseText);
+                            var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><ul>';
+                            $.each(response.errors, function (key, value) {
+                                errorString += '<li>' + value[0] + '</li>';
+                            });
+                            errorString += '</ul><div>';
+                            $("#show_response_message").append(errorString);
                         }
-                    }
+                    },
 
                 });
             });
+
         });
 
         function show_response_message(message = '', type = 0) {
@@ -568,6 +590,10 @@
 
         function input_read_only(button_id) {
             $("#" + button_id).prop("readonly", true);
+        }
+
+        function input_field_set_value(input_field, value=0) {
+            $("#" + input_field).val(value);
         }
 
     </script>
