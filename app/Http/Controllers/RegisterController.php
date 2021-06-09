@@ -42,7 +42,7 @@ class RegisterController extends Controller
             $session_id = Session::getId();
             $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->Verify_Share)->where('type', 1)->get()->first();
             if (!$ownVerify) {
-                $validator->errors()->add('Verify_Share', 'Invalid verify shared own code');
+                $validator->errors()->add('Verify_Share', 'Error! Invalid One Time Password');
             }
         });
 

@@ -20,7 +20,7 @@ class AJAXController extends Controller
             if ($user->phone_no_verify == 0) {
                 $code = $this->sendTwilioSMS($request->phone_no);
                 if ($code == 200) {
-                    return $this->successResponse('Please write otp code to verify phone number', $user, 200, 'user_found_code_send');
+                    return $this->successResponse('Please check your phone for One Time Password & enter it in Below field to verify phone no', $user, 200, 'user_found_code_send');
                 } else {
                     return $this->errorResponse('OTP code not send, invalid phone number', $code, $user, "user_found_code_not_send");
                 }
@@ -30,7 +30,7 @@ class AJAXController extends Controller
         } else {
             $code = $this->sendTwilioSMS($request->phone_no);
             if ($code == 200) {
-                return $this->successResponse('Please write otp code to verify phone number', '', 200, "user_not_found_code_send");
+                return $this->successResponse('Please check your phone for One Time Password & enter it in Below field to verify phone no', '', 200, "user_not_found_code_send");
             } else {
                 return $this->errorResponse('OTP code not send, invalid phone number', $code, '', 'user_not_found_code_not_send');
             }
@@ -43,13 +43,13 @@ class AJAXController extends Controller
         if ($user) {
             if ($user->email_verify == 0) {
                 $this->code_send($request->email);
-                return $this->successResponse('Please write otp code to verify email address', '', 200, 'user_found_code_send');
+                return $this->successResponse('Please check email for One Time Password & enter it in Below field to verify email', '', 200, 'user_found_code_send');
             } else {
                 return $this->successResponse('User found', '', 200, "user_found_email_verified");
             }
         } else {
             $this->code_send($request->email);
-            return $this->successResponse('Please write otp code to verify email address', '', 200, 'user_not_found_code_send');
+            return $this->successResponse('Please check email for One Time Password & enter it in Below field to verify email', '', 200, 'user_not_found_code_send');
         }
     }
 
@@ -137,13 +137,13 @@ class AJAXController extends Controller
     {
         $code = $this->verify($request->phone_no, $request->otp);
         if ($code == 200) {
-            return $this->successResponse("OTP verify");
+            return $this->successResponse("Success! Thanks for verifying your Phone");
         }
         else if($code == 199){
-            return $this->errorResponse("OTP is invalid", $code,'', 'phone_number_not_verify');
+            return $this->errorResponse("Error! Invalid One Time Password", $code,'', 'phone_number_not_verify');
         }
         else {
-            return $this->errorResponse("OTP is invalid", $code);
+            return $this->errorResponse("Error! Invalid One Time Password", $code);
         }
     }
 
@@ -154,7 +154,7 @@ class AJAXController extends Controller
         if (!$emailVerify) {
             return $this->errorResponse('Invalid OTP code');
         } else {
-            return $this->successResponse('OTP verify');
+            return $this->successResponse('Success! Thanks for verifying your Email');
         }
     }
 
