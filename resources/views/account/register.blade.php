@@ -395,6 +395,7 @@
                             input_field_set_value("email_verify", 1)
                             input_field_set_value("user_exists", 1)
                             hide_fields("div_email_verification")
+                            hide_fields("email_send_verify_code")
                             if ($("#user_exists").val() == 0) {
                                 show_fields("register_button_div")
                                 hide_fields("next_button_div")
@@ -431,6 +432,7 @@
                             show_response_message("OTP verify", 1)
                             hide_fields('div_email_verification')
                             input_field_set_value('email_verify', 1)
+                            hide_fields("email_send_verify_code")
                             if ($("#user_exists").val() ==0) {
                                 show_fields("register_button_div")
                                 hide_fields("next_button_div")
