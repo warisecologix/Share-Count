@@ -65,7 +65,7 @@
                                            class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
                                     <div class="col-md-6">
                                         <div class="input-group mb-3">
-                                            <input id="phone_no" type="text"
+                                            <input id="phone_no" type="number"
                                                    class="form-control "
                                                    name="phone_no"
                                                    placeholder="Enter valid phone no"
@@ -81,29 +81,29 @@
                                 </div>
 
                                 <div id="div_phone_number_verification" class="div-hidden">
-
-
                                     <div class="form-group row" id="div_phone_number">
                                         <label for="verify_phone_number_code"
                                                class="col-md-4 col-form-label text-md-right">{{ __('Verification Code') }}</label>
                                         <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <input id="verify_phone_number_code" type="number"
-                                                       class="form-control bg-info "
-                                                       name="verify_phone_number_code"
-                                                       placeholder="Enter verification code"
-                                                       value="{{ old('verify_phone_number_code') }}"
-                                                       autocomplete="verify_phone_number_code">
-
-                                                <div class="input-group-append">
-                                                    <button type="button" id="verify_phone_otp"
-                                                            class="btn btn-primary input-group-text">Verify OTP
-                                                    </button>
-                                                </div>
-                                            </div>
+                                            <input id="verify_phone_number_code" type="number"
+                                                   class="form-control bg-info "
+                                                   name="verify_phone_number_code"
+                                                   placeholder="Enter verification code"
+                                                   value="{{ old('verify_phone_number_code') }}"
+                                                   autocomplete="verify_phone_number_code">
                                         </div>
                                     </div>
-
+                                    <div class="form-group row mt-5  container">
+                                        {!! NoCaptcha::renderJs() !!}
+                                        {!! NoCaptcha::display() !!}
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-6 mb-3">
+                                            <button id="verify_phone_otp" class="btn btn-primary">
+                                                {{ __('Verify OTP') }}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group row">
@@ -129,15 +129,20 @@
                                         <label for="verify_email_code"
                                                class="col-md-4 col-form-label text-md-right">{{ __('Email Verification Code') }}</label>
                                         <div class="col-md-6">
-                                            <div class="input-group mb-3">
-                                                <input id="verify_email_code" type="number"
-                                                       class="form-control  bg-info"
-                                                       placeholder="Enter verification code"
-                                                       name="verify_email_code" value="{{ old('verify_email_code') }}"
-                                                       autocomplete="verify_email_code">
-                                                <div class="input-group-append">
-                                                    <button type="button" id="verify_email_otp"
-                                                            class="btn btn-primary input-group-text">Verify OTP
+                                            <input id="verify_email_code" type="number"
+                                                   class="form-control  bg-info"
+                                                   placeholder="Enter verification code"
+                                                   name="verify_email_code" value="{{ old('verify_email_code') }}"
+                                                   autocomplete="verify_email_code">
+
+                                            <div class="form-group row mt-5  container">
+                                                {!! NoCaptcha::renderJs() !!}
+                                                {!! NoCaptcha::display() !!}
+                                            </div>
+                                            <div class="form-group row mb-0">
+                                                <div class="col-md-6 offset-md-6 mb-3">
+                                                    <button id="verify_email_otp" class="btn btn-primary">
+                                                        {{ __('Verify OTP') }}
                                                     </button>
                                                 </div>
                                             </div>
@@ -145,12 +150,8 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mt-5  container">
-                                    {!! NoCaptcha::renderJs() !!}
-                                    {!! NoCaptcha::display() !!}
-                                </div>
 
-                                <div class="form-group row mb-0">
+                                <div class="form-group row mb-0 div-hidden">
                                     <div class="col-md-6 offset-md-6">
                                         <button id="register-button" class="btn btn-primary">
                                             {{ __('Register') }}
@@ -238,10 +239,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mt-5  container">
-                                    {!! NoCaptcha::renderJs() !!}
-                                    {!! NoCaptcha::display() !!}
-                                </div>
+
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-6">
                                         <button type="submit" class="btn btn-primary">
@@ -271,12 +269,14 @@
             // AJAX call for Send Verification OTP
             $("#phone_number_send_verify_code").click(function (e) {
                 e.preventDefault();
-                let cell_number = $('#phone_no').val()
+                let phone_number = $('#phone_no').val()
+                let te = $('.iti__selected-flag').attr('title');
+                var res = te.split("+");
+                var cell_number = '+'+res[1]+phone_number;
                 if (cell_number == "") {
                     show_response_message("Phone number field is required")
                     return false
                 }
-                disable_button("phone_number_send_verify_code")
                 var formData = {
                     phone_no: cell_number,
                     "_token": "{{ csrf_token() }}",
@@ -284,51 +284,34 @@
                 var type = "POST";
                 $.ajax({
                     type: type,
-                    url: "{{route('phone_number_verification_code')}}",
+                    url: "{{route('check_verification')}}",
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
+                        console.log(data)
+                        console.log(data.data)
                         if (data.status_code == 200) {
-                            show_response_message("please write otp code to verify phone number", 1)
-                            input_read_only("phone_no")
-                            show_fields('div_phone_number_verification')
-                        } else if (data.message == "phone_format") {
-                            show_response_message("Invalid phone number")
-                        } else if (data.status_code != 200 && data.message != "phone_format") {
-                            show_response_message('OTP code not send, try again later')
+                            show_response_message(data.message, 1)
+                            if (data.optional_status == "user_found_code_send") {
+                                show_fields('div_phone_number_verification')
+                                user_found(data.data)
+                            } else if (data.optional_status == "user_found_cell_verified") {
+                                hide_fields('div_phone_number_verification')
+                                hide_fields('phone_number_send_verify_code')
+                                user_found(data.data)
+                            } else if (data.optional_status == "user_not_found_code_send") {
+                                show_fields('div_phone_number_verification')
+                            }
                         } else {
-                            input_read_only("phone_no")
-                            if (data.message == "user") {
-                                $("#div_phone_number_verification").hide();
-
-                                $("#email").val(data.user.email);
-                                $("#first_name").val(data.user.first_name);
-                                $("#last_name").val(data.user.last_name);
-                                input_read_only("email")
-                                disable_button("first_name")
-                                disable_button("last_name")
-
-                                if (data.user.phone_no_verify == 0) {
-                                    $("#div_phone_number_verification").removeClass('div-hidden');
-                                    var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
-                                    $("#show_response_message").empty();
-                                    $("#show_response_message").append(errorString);
-                                } else {
-                                    $("#phone_number_send_verify_code").addClass('div-hidden');
-                                }
-                            } else if (data.message == "code") {
-                                $("#div_phone_number_verification").removeClass('div-hidden');
-                                var errorString = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Please write OTP code to verify phone number <div>';
-                                $("#show_response_message").empty();
-                                $("#show_response_message").append(errorString);
+                            show_response_message(data.message)
+                            if (data.optional_status == "user_found_code_not_send") {
+                                hide_fields('div_phone_number_verification')
+                                user_found(data.data)
+                            }
+                            if (data.optional_status == "user_not_found_code_not_send") {
+                                hide_fields('div_phone_number_verification')
                             }
                         }
-                        enable_button("phone_number_send_verify_code")
-                    },
-                    error: function (reject) {
-                        var errorString = '<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>Phone no format is invalid <div>';
-                        $("#show_response_message").empty();
-                        $("#show_response_message").append(errorString);
                     }
                 });
             });
@@ -336,8 +319,13 @@
             // AJAX call for Phone no OTP Verification
             $("#verify_phone_otp").click(function (e) {
                 e.preventDefault();
-                let cell_number = $('#phone_no').val()
+                let phone_number = $('#phone_no').val()
+                let te = $('.iti__selected-flag').attr('title');
+                var res = te.split("+");
+                var cell_number = '+'+res[1]+phone_number;
                 let otp = $('#verify_phone_number_code').val()
+                let recaptcha =  $('#g-recaptcha-response').val()
+
                 if (cell_number == "") {
                     show_response_message("Phone number field is required")
                     return false
@@ -346,7 +334,11 @@
                     show_response_message("OTP field is required")
                     return false
                 }
-                disable_button("phone_number_send_verify_code")
+
+                if (recaptcha == "") {
+                    show_response_message("Please fill reCAPTCHA");
+                    return false;
+                }
                 var formData = {
                     phone_no: cell_number,
                     otp: otp,
@@ -360,14 +352,13 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.status_code == 200) {
-                            show_response_message("OTP verify", 1)
+                            show_response_message(data.message, 1)
                             hide_fields('div_phone_number_verification')
-                            input_field_set_value("phone_no_verify",1)
+                            input_field_set_value("phone_no_verify", 1)
                         } else {
-                            show_response_message("OTP not valid", 1)
+                            show_response_message(data.message, 1)
                             input_field_set_value("phone_no_verify")
                         }
-
                     }
                 });
             });
@@ -380,8 +371,6 @@
                     show_response_message("Email field is required")
                     return false
                 }
-                input_read_only("email")
-                disable_button("email_send_verify_code")
                 var formData = {
                     email: email,
                     "_token": "{{ csrf_token() }}",
@@ -393,11 +382,17 @@
                     data: formData,
                     dataType: 'json',
                     success: function (data) {
-                        show_response_message("Please check your email for otp", 1)
-                        show_fields("div_email_verification")
+                        show_response_message(data.message, 1)
+                        if(data.optional_status == "user_found_code_send" || data.optional_status){
+                            show_fields("div_email_verification")
+                        }
+                        if(data.optional_status == "user_found_email_verified"){
+                            input_field_set_value("email_verify",1)
+                            hide_fields("div_email_verification")
+
+                        }
                     },
                 });
-                enable_button("email_send_verify_code")
             });
 
             // AJAX call for Email OTP Verification
@@ -463,6 +458,10 @@
                 enable_button("no_shares_own_send_verify_code")
             });
 
+            let phone_number = $('#phone_no').val()
+            let te = $('.iti__selected-flag').attr('title');
+            var res = te.split("+");
+            var cell_number = '+'+res[1]+phone_number;
             /* Register User AJAX Call */
             $('#register_form').submit(function (e) {
                 e.preventDefault();
@@ -470,7 +469,7 @@
                     first_name: $("#first_name").val(),
                     last_name: $("#last_name").val(),
                     email: $("#email").val(),
-                    phone_no: $("#phone_no").val(),
+                    phone_no: cell_number,
                     no_shares_own: $("#no_shares_own").val(),
                     Verify_Share: $('#Verify_Share').val(),
                     brokage_name: $("#brokage_name").val(),
@@ -513,11 +512,15 @@
             /* Register Button AJAX Call */
             $('#register-button').click(function (e) {
                 e.preventDefault();
+                let phone_number = $('#phone_no').val()
+                let te = $('.iti__selected-flag').attr('title');
+                var res = te.split("+");
+                var cell_number = '+'+res[1]+phone_number;
                 var formData = {
                     first_name: $("#first_name").val(),
                     last_name: $("#last_name").val(),
                     email: $("#email").val(),
-                    phone_no: $("#phone_no").val(),
+                    phone_no: cell_number,
                     no_shares_own: $("#no_shares_own").val(),
                     Verify_Share: $('#Verify_Share').val(),
                     brokage_name: $("#brokage_name").val(),
@@ -592,9 +595,15 @@
             $("#" + button_id).prop("readonly", true);
         }
 
-        function input_field_set_value(input_field, value=0) {
+        function input_field_set_value(input_field, value = 0) {
             $("#" + input_field).val(value);
         }
 
+        function user_found(user) {
+            $("#first_name").val(user.first_name);
+            $("#last_name").val(user.last_name);
+        }
+
     </script>
+
 @endsection

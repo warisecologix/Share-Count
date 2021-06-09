@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\EmailVerify;
 use App\Mail\VerifyUser;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -12,46 +13,52 @@ use Illuminate\Support\Str;
 
 class AJAXController extends Controller
 {
-    public function phone_number_verification_code(Request $request)
+    public function check_verification(Request $request)
     {
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
-            if (!$user->phone_no_verify) {
+            if ($user->phone_no_verify == 0) {
                 $code = $this->sendTwilioSMS($request->phone_no);
-                if ($code == 20429 || $code == 60200) {
-                    return response()->json([
-                        'message' => "phone_format"
-                    ], 200);
-                } else if ($code == 200) {
-                    return response()->json([
-                        'message' => "sms_code_send"
-                    ], 200);
+                if ($code == 200) {
+                    return $this->successResponse('Please write otp code to verify phone number', $user, 200, 'user_found_code_send');
+                } else {
+                    return $this->errorResponse('OTP code not send, invalid phone number', $code, $user, "user_found_code_not_send");
                 }
+            } else {
+                return $this->successResponse('User found', $user, 200, "user_found_cell_verified");
             }
-            return response()->json([
-                'user' => $user,
-                'message' => "user"
-            ], 200);
         } else {
             $code = $this->sendTwilioSMS($request->phone_no);
             if ($code == 200) {
-                return $this->successResponse('OTP code send successfully');
+                return $this->successResponse('Please write otp code to verify phone number', '', 200, "user_not_found_code_send");
             } else {
-                return $this->errorResponse('OTP code not send successfully', $code);
+                return $this->errorResponse('OTP code not send, invalid phone number', $code, '', 'user_not_found_code_not_send');
             }
         }
     }
 
     public function email_verification_code(Request $request)
     {
+        $user = User::where('email', $request->email)->get()->first();
+        if ($user) {
+            if ($user->email_verify == 0) {
+                $this->code_send($request->email);
+                return $this->successResponse('Please write otp code to verify email address', '', 200, 'user_found_code_send');
+            } else {
+                return $this->successResponse('User found', '', 200, "user_found_email_verified");
+            }
+        } else {
+            $this->code_send($request->email);
+            return $this->successResponse('Please write otp code to verify email address', '', 200, 'user_not_found_code_send');
+        }
+    }
 
+    private function code_send($email)
+    {
         $session_id = Session::getId();
         $random_number = mt_rand(1000, 9999);
-
-
-        //Mail::to($request->email)->send(new VerifyUser($random_number));
         $from = "verification@trackshortage.com";
-        $to = $request->email;
+        $to = $email;
         $subject = "Verification mail";
         $message = "Your OTP code is " . $random_number;
         $headers = "Reply-To: Count <verification@trackshortage.com>\r\n";
@@ -63,8 +70,6 @@ class AJAXController extends Controller
         $headers .= "X-Priority: 3\r\n";
         $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
         mail($to, $subject, $message, $headers);
-
-
         $collection = EmailVerify::where('session_id', $session_id)->where('type', 0)->get();
         foreach ($collection as $c) {
             $c->delete();
@@ -74,10 +79,6 @@ class AJAXController extends Controller
         $emailVerify->session_id = $session_id;
         $emailVerify->type = 0;
         $emailVerify->save();
-        return response()->json([
-            'message' => "ok"
-        ], 200);
-
     }
 
     public function shares_own_verification_code(Request $request)
@@ -125,8 +126,7 @@ class AJAXController extends Controller
                 'user' => $user,
                 'message' => "user_exists"
             ], 200);
-        }
-        else{
+        } else {
             return response()->json([
                 'message' => "User not found"
             ], 404);
@@ -153,5 +153,6 @@ class AJAXController extends Controller
             return $this->successResponse('OTP verify');
         }
     }
+
 
 }

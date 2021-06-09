@@ -14,12 +14,13 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-{{--    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">--}}
-
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
-        .g-recaptcha{
+        .g-recaptcha {
             margin-left: 40% !important;
             width: auto !important;
             height: auto !important;
@@ -28,8 +29,14 @@
             text-align: -o-center;
             text-align: -ms-center;
         }
+
         .div-hidden {
             display: none;
+        }
+
+        .iti--allow-dropdown input, .iti--allow-dropdown input[type=text], .iti--allow-dropdown input[type=tel], .iti--separate-dial-code input, .iti--separate-dial-code input[type=text], .iti--separate-dial-code input[type=tel] {
+            padding-right: 93px !important;
+
         }
     </style>
 </head>
@@ -98,6 +105,13 @@
 </div>
 
 <script src="{{asset('js/jquery1.1.min.js')}}"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone_no");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
 @section('js')
 @show
 </body>
