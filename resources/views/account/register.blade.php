@@ -6,24 +6,22 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <p><b>Company Name: </b> <span> {{$gme_total_verify[0]->company_name ?? "GME"}} </span></p>
-                        <p><b>Shareholder Count: </b> <span> {{$gme_total_verify[0]->Shareholder_Count ?? "-"}} </span>
-                        </p>
-                        <p><b>Verified Members: </b> <span> {{$gme_total_verify[0]->verified_count ?? "-"}} </span></p>
-                        <p><b>Total Shares: </b> <span> {{$gme_total_verify[0]->Total_Share ?? "-"}} </span></p>
-                        <p><b>Verified Shares: </b> <span> {{$gme_total_verify[0]->total_verify ?? "-"}} </span></p>
+                        <p><b>Company Name: </b> <span id="gme_company_name"> GME </span></p>
+                        <p><b>Shareholder Count: </b> <span id="gme_share_holder_count"> - </span></p>
+                        <p><b>Verified Members: </b> <span id="gme_verified_members"> - </span></p>
+                        <p><b>Total Shares: </b> <span id="gme_total_shares"> - </span></p>
+                        <p><b>Verified Shares: </b> <span id="gme_verified_shares"> - </span></p>
                     </div>
                 </div>
             </div>
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <p><b>Company Name: </b> <span> {{$amc_total_verify[0]->company_name ?? "AMC"}} </span></p>
-                        <p><b>Shareholder Count: </b> <span> {{$amc_total_verify[0]->Shareholder_Count ?? "-"}} </span>
-                        </p>
-                        <p><b>Verified Members: </b> <span> {{$amc_total_verify[0]->verified_count ?? "-"}} </span></p>
-                        <p><b>Total Shares: </b> <span> {{$amc_total_verify[0]->Total_Share ?? "-"}} </span></p>
-                        <p><b>Verified Shares: </b> <span> {{$amc_total_verify[0]->total_verify??"-"}} </span></p>
+                        <p><b>Company Name: </b> <span id="amc_company_name"> AMC </span></p>
+                        <p><b>Shareholder Count: </b> <span id="amc_share_holder_count"> - </span></p>
+                        <p><b>Verified Members: </b> <span id="amc_verified_members"> - </span></p>
+                        <p><b>Total Shares: </b> <span id="amc_total_shares"> - </span></p>
+                        <p><b>Verified Shares: </b> <span id="amc_verified_shares"> - </span></p>
                     </div>
                 </div>
             </div>
@@ -508,7 +506,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mt-5 " id="step3">
+                    <div class="card mt-5 div-hidden" id="step3">
                         <div class="card-header text-center">{{ __('Verify Stock') }}</div>
                         <div class="card-body ">
                             <div id="show_response_message_verify_stock">
@@ -524,6 +522,7 @@
             <script>
                 $(document).ready(function (e) {
                     enabled_or_disabled()
+                    load_stats()
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -674,13 +673,13 @@
                             dataType: 'json',
                             success: function (data) {
                                 show_response_message(data.message, 1)
-                                if(data.optional_status == "user_found_code_send" || data.optional_status == "user_found_email_verified" ){
+                                if (data.optional_status == "user_found_code_send" || data.optional_status == "user_found_email_verified") {
                                     let phone_number = $('#phone_no').val()
                                     let te = $('.iti__selected-flag').attr('title');
                                     var res = te.split("+");
                                     $('#country_list').val(res[1]);
                                     var cell_number = '+' + res[1] + phone_number;
-                                    if(data.data.phone_no == cell_number){
+                                    if (data.data.phone_no == cell_number) {
                                         user_found(data.data)
                                     }
                                     $('#country_list').val(data.data.phone_code);
@@ -822,6 +821,7 @@
                             success: function (data) {
                                 show_fields("step3")
                                 show_response_message_verify_stock(data.message)
+                                load_stats()
                             },
                             error: function (reject) {
                                 enable_button("button_submit")
@@ -872,7 +872,7 @@
                                 hide_fields("register_button_div")
                                 hide_fields("next_button_div")
                                 show_fields("step2")
-                                enabled_or_disabled("step2",1)
+                                enabled_or_disabled("step2", 1)
                             },
                             error: function (reject) {
                                 enable_button("register-button")
@@ -918,6 +918,7 @@
                     $("#show_response_message_stock").append(errorString);
 
                 }
+
                 function show_response_message_verify_stock(message = '') {
                     $("#show_response_message_verify_stock").empty();
                     message = '<div class="alert alert-success">' + message + '<div>';
@@ -976,12 +977,30 @@
                     return re.test(email);
                 }
 
-                function enabled_or_disabled(id="step2",status = 0 ){
-                    if(status == 0){
+                function enabled_or_disabled(id = "step2", status = 0) {
+                    if (status == 0) {
                         $("#" + id).css("pointer-events", "none");
-                    }else {
+                    } else {
                         $("#" + id).css("pointer-events", "all");
                     }
+                }
+
+                function load_stats() {
+                    var formData = {
+                        "_token": "{{ csrf_token() }}",
+                    };
+                    var type = "POST";
+                    $.ajax({
+                        type: type,
+                        url: "{{route('load_stat')}}",
+                        data: formData,
+                        dataType: 'json',
+                        success: function (data) {
+                            for (var i in data) {
+                                $("#" + i).text(data[i])
+                            }
+                        },
+                    });
                 }
             </script>
 

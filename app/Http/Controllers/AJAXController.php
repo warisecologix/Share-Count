@@ -7,6 +7,7 @@ use App\Mail\VerifyUser;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -138,12 +139,18 @@ class AJAXController extends Controller
     {
         $code = $this->verify($request->phone_no, $request->otp);
         if ($code == 200) {
+            $user = User::where('phone_no', $request->phone_no)->get()->first();
+            if($user){
+                $user->phone_no_verify = 1;
+                if($user->phone_no_verify == 1 && $user->email_verify == 1){
+                    $user->verified_user = 1;
+                }
+                $user->save();
+            }
             return $this->successResponse("Success! Thanks for verifying your Phone");
-        }
-        else if($code == 199){
-            return $this->errorResponse("Error! Invalid One Time Password", $code,'', 'phone_number_not_verify');
-        }
-        else {
+        } else if ($code == 199) {
+            return $this->errorResponse("Error! Invalid One Time Password", $code, '', 'phone_number_not_verify');
+        } else {
             return $this->errorResponse("Error! Invalid One Time Password", $code);
         }
     }
@@ -159,5 +166,23 @@ class AJAXController extends Controller
         }
     }
 
-
+    public function load_stat()
+    {
+        $gme_data = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =1 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 1 ) vc )");
+        $amc_data = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =2 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 2 ) vc )");
+        $gme_data = $gme_data[0];
+        $amc_data = $amc_data[0];
+        return response()->json([
+            "gme_company_name" => $gme_data->company_name,
+            "gme_share_holder_count" => $gme_data->Shareholder_Count,
+            "gme_verified_members" => $gme_data->verified_count,
+            "gme_total_shares" => $gme_data->Total_Share,
+            "gme_verified_shares" => $gme_data->total_verify,
+            "amc_company_name" => $amc_data->company_name,
+            "amc_share_holder_count" => $amc_data->Shareholder_Count,
+            "amc_verified_members" => $amc_data->verified_count,
+            "amc_total_shares" => $amc_data->Total_Share,
+            "amc_verified_shares" => $amc_data->total_verify,
+        ]);
+    }
 }

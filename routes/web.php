@@ -32,3 +32,4 @@ Route::post('/shares_own_verification_code', 'AJAXController@shares_own_verifica
 Route::post('/verify/phone/otp', 'AJAXController@verify_phone_otp')->name('verify_phone_otp');
 Route::post('/verify/email/otp', 'AJAXController@verify_email_otp')->name('verify_email_otp');
 
+Route::post('/load/stats', 'AJAXController@load_stat')->name('load_stat');

@@ -21,11 +21,8 @@ class RegisterController extends Controller
 {
     public function register()
     {
-        $gme_total_verify = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =1 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 1 ) vc )");
-        $amc_total_verify = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =2 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 2 ) vc )");
         $companies = Company::all();
-        $countries = Country::all();
-        return view('account.register', compact('companies', 'countries', 'amc_total_verify',  'gme_total_verify' ));
+        return view('account.register', compact('companies' ));
     }
 
     public function store(Request $request)
@@ -66,7 +63,7 @@ class RegisterController extends Controller
             foreach ($emailVerify as $c) {
                 $c->delete();
             }
-            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account " . $user->email . " you have provided. Send Email to trackshortage@gmail.com";
+            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account <b><a href='mailto:$user->email'>$user->email</a></b> you have provided. Send Email to trackshortage@gmail.com";
             return $this->successResponse($message);
         }
     }
