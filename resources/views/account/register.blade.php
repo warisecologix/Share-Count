@@ -822,7 +822,6 @@
                             success: function (data) {
                                 show_fields("step3")
                                 show_response_message_verify_stock(data.message)
-                                enabled_or_disabled("step1",1)
                             },
                             error: function (reject) {
                                 enable_button("button_submit")
@@ -873,7 +872,6 @@
                                 hide_fields("register_button_div")
                                 hide_fields("next_button_div")
                                 show_fields("step2")
-                                enabled_or_disabled("step1")
                                 enabled_or_disabled("step2",1)
                             },
                             error: function (reject) {
@@ -959,7 +957,6 @@
                 $('#next_button').click(function (e) {
                     hide_fields("next_button_div")
                     show_fields("step2")
-                    enabled_or_disabled("step1")
                     enabled_or_disabled("step2", 1)
                 });
 
