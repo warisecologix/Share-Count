@@ -33,7 +33,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-10">
                     <div class="card">
-                        <div class="card-header text-center">{{ __('User Information') }}</div>
+                        <div class="card-header text-center">{{ __('Step 1: User Information') }}</div>
                         <div class="card-body">
 
                             <div id="show_response_message">
@@ -104,10 +104,6 @@
                                                    autocomplete="verify_phone_number_code">
                                         </div>
                                     </div>
-                                    {{--                                    <div class="form-group row mt-5  container">--}}
-                                    {{--                                        {!! NoCaptcha::renderJs() !!}--}}
-                                    {{--                                        {!! NoCaptcha::display() !!}--}}
-                                    {{--                                    </div>--}}
                                     <div class="form-group row mb-0 text-right">
                                         <div class="col-md-10 mb-3">
                                             <button id="verify_phone_otp" class="btn btn-primary">
@@ -147,11 +143,6 @@
                                                    autocomplete="verify_email_code">
                                         </div>
                                     </div>
-                                    {{--                                            <div class="form-group row mt-5  container">--}}
-                                    {{--                                                {!! NoCaptcha::renderJs() !!}--}}
-                                    {{--                                                {!! NoCaptcha::display() !!}--}}
-                                    {{--                                            </div>--}}
-
                                     <div class="form-group row mb-0 text-right">
                                         <div class="col-md-10 mb-3">
                                             <button id="verify_email_otp" class="btn btn-primary">
@@ -185,7 +176,7 @@
                     </div>
 
                     <div class="card mt-5" id="step2">
-                        <div class="card-header text-center">{{ __('Stock Information') }}</div>
+                        <div class="card-header text-center">{{ __('Step 2: Stock Information') }}</div>
                         <div class="card-body ">
 
                             <div id="show_response_message_stock">
@@ -494,8 +485,11 @@
                                 </div>
                             </div>
                             <div class="form-group row mt-5  container">
-                                {!! NoCaptcha::renderJs() !!}
-                                {!! NoCaptcha::display() !!}
+                                @if(App\Constant\RecaptchaConstant::NOCAPTCHA_SITEKEY)
+                                    <div class="g-recaptcha"
+                                         data-sitekey="{{App\Constant\RecaptchaConstant::NOCAPTCHA_SITEKEY}}">
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-6">
@@ -507,7 +501,7 @@
                         </div>
                     </div>
                     <div class="card mt-5 div-hidden" id="step3">
-                        <div class="card-header text-center">{{ __('Verify Stock') }}</div>
+                        <div class="card-header text-center">{{ __('Step 3: Verify Stock') }}</div>
                         <div class="card-body ">
                             <div id="show_response_message_verify_stock">
                             </div>
@@ -518,7 +512,10 @@
         </form>
         @endsection
         @section('js')
+
             <script src="{{asset('js/jquery3.1.min.js')}}"></script>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+
             <script>
                 $(document).ready(function (e) {
                     enabled_or_disabled()

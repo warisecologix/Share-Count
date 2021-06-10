@@ -38,6 +38,12 @@
             padding-right: 93px;
 
         }
+        #show_response_message_verify_stock{
+            font-size: 20px !important;
+        }
+        #working_email{
+            font-size: 24px !important;
+        }
     </style>
 </head>
 <body>

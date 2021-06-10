@@ -33,7 +33,10 @@ class RegisterController extends Controller
             'company_id' => 'required',
             'country_list' => 'required',
         ];
-        $validator = Validator::make($request->all(), $rules);
+        $customMessages = [
+            'no_shares_own.required' => 'The no of share purchased field is required.'
+        ];
+        $validator = Validator::make($request->all(), $rules, $customMessages);
         $validator->after(function () use ($request, $validator) {
             $session_id = Session::getId();
             $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->Verify_Share)->where('type', 1)->get()->first();
@@ -63,7 +66,7 @@ class RegisterController extends Controller
             foreach ($emailVerify as $c) {
                 $c->delete();
             }
-            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account <b><a href='mailto:$user->email'>$user->email</a></b> you have provided. Send Email to trackshortage@gmail.com";
+            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account <b><a href='mailto:$user->email'>$user->email</a></b> you have provided. Send Email to <b id='working_email'>trackshortage@gmail.com</b>";
             return $this->successResponse($message);
         }
     }
