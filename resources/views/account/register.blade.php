@@ -194,7 +194,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div>sss
                             <div class="form-group row">
                                 <label for="brokage_name"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name (Optional)') }}</label>
@@ -477,7 +477,7 @@
                                 <div class="col-md-6">
                                     <input id="Verify_Share" type="number"
                                            class="form-control bg-info"
-                                           placeholder="Enter OTP to verify share "
+                                           placeholder="Enter One Time Passcode"
                                            name="Verify_Share" value="{{ old('Verify_Share') }}"
                                            autocomplete="Verify_Share">
 
@@ -602,7 +602,7 @@
                             return false
                         }
                         if (otp == "") {
-                            show_response_message("OTP field is required")
+                            show_response_message("One Time Passcode is required")
                             return false
                         }
                         disable_button("verify_phone_otp")
@@ -712,7 +712,7 @@
                         // }
                         let otp = $('#verify_email_code').val()
                         if (otp == "") {
-                            show_response_message("OTP field is required")
+                            show_response_message("One Time Passcode is required")
                             return false
                         }
                         disable_button("email_send_verify_code")
