@@ -555,18 +555,15 @@
                                     if (data.optional_status == "user_found_code_send") {
                                         show_response_message(data.message, 1)
                                         show_fields('div_phone_number_verification')
-                                        user_found(data.data)
                                         input_field_set_value('user_exists', 1)
                                     } else if (data.optional_status == "user_found_cell_verified") {
-
                                         show_response_message(data.message, 1)
                                         hide_fields('div_phone_number_verification')
-                                        user_found(data.data)
                                         input_field_set_value('user_exists', 1)
                                         change_text("phone_number_send_verify_code", "Verified <span>&#10003;</span>")
                                         disable_button("phone_number_send_verify_code")
                                         change_background_color("phone_number_send_verify_code")
-                                        $("#phone_no").css("padding-right", "125px")
+                                        $("#phone_no").css("padding-right", "122px")
                                     } else if (data.optional_status == "user_not_found_code_send") {
                                         show_response_message(data.message, 1)
                                         show_fields('div_phone_number_verification')
@@ -575,16 +572,12 @@
                                 } else {
                                     show_response_message(data.message)
                                     if (data.optional_status == "user_found_code_not_send") {
-
                                         show_response_message(data.message)
-
                                         hide_fields('div_phone_number_verification')
-                                        user_found(data.data)
                                         input_field_set_value('user_exists')
                                         enable_button("phone_number_send_verify_code")
                                     }
                                     if (data.optional_status == "user_not_found_code_not_send") {
-
                                         show_response_message(data.message)
                                         hide_fields('div_phone_number_verification')
                                         input_field_set_value('user_exists')
@@ -842,6 +835,7 @@
                         let te = $('.iti__selected-flag').attr('title');
                         var res = te.split("+");
                         var cell_number = '+' + res[1] + phone_number;
+                        var phone_code = '+' + res[1];
                         var formData = {
                             first_name: $("#first_name").val(),
                             last_name: $("#last_name").val(),
@@ -849,6 +843,7 @@
                             phone_no: cell_number,
                             phone_no_verify: $("#phone_no_verify").val(),
                             email_verify: $("#email_verify").val(),
+                            phone_code: phone_code,
                             "_token": "{{ csrf_token() }}",
                         };
                         var type = "POST";

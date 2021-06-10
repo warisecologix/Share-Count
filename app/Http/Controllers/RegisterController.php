@@ -21,7 +21,6 @@ class RegisterController extends Controller
 {
     public function register()
     {
-
         $gme_total_verify = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =1 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 1 ) vc )");
         $amc_total_verify = DB::select("select * from ((SELECT com.company_name, COUNT(distinct st.user_id) AS 'Shareholder_Count', SUM(st.no_shares_own) AS 'Total_Share', COUNT(distinct st.user_id) AS 'verified_count' FROM stocks st , companies com where st.company_id = com.id and st.company_id =2 group by st.company_id ) ab,(SELECT COUNT(id) AS 'total_verify' from stocks WHERE admin_verify = 1 and company_id = 2 ) vc )");
         $companies = Company::all();
@@ -93,13 +92,18 @@ class RegisterController extends Controller
             ], 400);
         } else {
             $user = new User();
+            $verify_user = 0;
+            if($request->phone_no_verify == 1 && $request->email_verify == 1){
+                $verify_user = 1 ;
+            }
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             $user->phone_no = $request->phone_no;
-            $user->phone_no_verify = 1;
-            $user->verified_user = 1;
-            $user->email_verify = 1;
+            $user->phone_code = $request->phone_code;
+            $user->phone_no_verify = $request->phone_no_verify;
+            $user->email_verify = $request->email_verify;
+            $user->verified_user = $verify_user;
             $user->save();
 
             return $this->successResponse('Account created');
