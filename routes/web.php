@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/registration', 'RegisterController@register')->name('register');
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'RegisterController@register')->name('register');
 Route::post('/registration/user', 'RegisterController@store')->name('register_post');
 Route::post('/registration/user/first/step', 'RegisterController@register_user')->name('register_user');
 
@@ -30,5 +31,4 @@ Route::post('/check_phone_number', 'AJAXController@check_phone_number')->name('c
 Route::post('/shares_own_verification_code', 'AJAXController@shares_own_verification_code')->name('shares_own_verification_code');
 Route::post('/verify/phone/otp', 'AJAXController@verify_phone_otp')->name('verify_phone_otp');
 Route::post('/verify/email/otp', 'AJAXController@verify_email_otp')->name('verify_email_otp');
-
 
