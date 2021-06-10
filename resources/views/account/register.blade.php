@@ -197,8 +197,7 @@
                             </div>
                             <div class="form-group row">
                                 <label for="brokage_name"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name') }}<span
-                                        class="">*</span></label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name (Optional)') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="brokage_name" type="text"
@@ -210,7 +209,7 @@
                             </div>
                             <div class="form-group row">
                                 <label for="date_purchase"
-                                       class="col-md-4 col-form-label text-md-right">{{ __('Purchased Date') }}</label>
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Purchased Date (Optional)') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="date_purchase" type="date"

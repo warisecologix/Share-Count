@@ -66,7 +66,7 @@ class RegisterController extends Controller
             foreach ($emailVerify as $c) {
                 $c->delete();
             }
-            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account <b><a href='mailto:$user->email'>$user->email</a></b> you have provided. Send Email to <b id='working_email'>trackshortage@gmail.com</b>";
+            $message = "Thanks for Submitting your Share Count. To Ensure Data integrity please Email screenshot of your Brokage app or Webpage or Statement where we clearly read Share quantity. You can hide the account #. See below the acceptable formats.You must send Email from the above Email account <b>$user->email</b> you have provided. Send Email to <b id='working_email'><a href='mailto:trackshortage@gmail.com'>trackshortage@gmail.com</a></b>";
             return $this->successResponse($message);
         }
     }
