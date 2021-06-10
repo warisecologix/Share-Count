@@ -493,7 +493,7 @@
                                 <label for="Verify_Share"
                                        class="col-md-4 col-form-label  text-md-right">{{ __('Verify Shares') }}</label>
                                 <div class="col-md-6">
-                                    <input id="Verify_Share" type="text"
+                                    <input id="Verify_Share" type="number"
                                            class="form-control bg-info"
                                            placeholder="Enter OTP to verify share "
                                            name="Verify_Share" value="{{ old('Verify_Share') }}"
@@ -633,7 +633,7 @@
                                     change_text("phone_number_send_verify_code", "Verified <span>&#10003;</span>")
                                     disable_button("phone_number_send_verify_code")
                                     change_background_color("phone_number_send_verify_code")
-                                    $("#phone_no").css("padding-right", "125px")
+                                    $("#phone_no").css("padding-right", "122px")
                                     input_field_set_value("phone_no_verify", 1)
                                 } else if (data.optional_status == "phone_number_not_verify") {
                                     show_response_message(data.message)

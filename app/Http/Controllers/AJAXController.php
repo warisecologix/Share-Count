@@ -57,7 +57,7 @@ class AJAXController extends Controller
     private function code_send($email)
     {
         $session_id = Session::getId();
-        $random_number = mt_rand(1000, 9999);
+        $random_number = mt_rand(100000, 999999);
         $from = "verification@trackshortage.com";
         $to = $email;
         $subject = "Verification mail";
@@ -85,7 +85,7 @@ class AJAXController extends Controller
     public function shares_own_verification_code(Request $request)
     {
         $session_id = Session::getId();
-        $random_number = Str::random(10);
+        $random_number = mt_rand(100000, 999999);
 
         //Mail::to($request->email)->send(new VerifyUser($random_number));
 
