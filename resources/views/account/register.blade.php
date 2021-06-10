@@ -873,6 +873,10 @@
                                 hide_fields("next_button_div")
                                 show_fields("step2")
                                 enabled_or_disabled("step2", 1)
+                                let phone_number = $('#phone_no').val()
+                                let te = $('.iti__selected-flag').attr('title');
+                                var res = te.split("+");
+                                $('#country_list').val(res[1]);
                             },
                             error: function (reject) {
                                 enable_button("register-button")
@@ -959,6 +963,10 @@
                     hide_fields("next_button_div")
                     show_fields("step2")
                     enabled_or_disabled("step2", 1)
+                    let phone_number = $('#phone_no').val()
+                    let te = $('.iti__selected-flag').attr('title');
+                    var res = te.split("+");
+                    $('#country_list').val(res[1]);
                 });
 
                 function change_text(id, text) {
