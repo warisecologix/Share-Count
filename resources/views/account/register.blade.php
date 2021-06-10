@@ -185,7 +185,8 @@
 
                         </div>
                     </div>
-                    <div class="card mt-5 div-hidden" id="step2">
+
+                    <div class="card mt-5" id="step2">
                         <div class="card-header text-center">{{ __('Stock Information') }}</div>
                         <div class="card-body ">
 
@@ -464,13 +465,6 @@
                                         <option data-countryCode="ZM" value="260">Zambia (+260)</option>
                                         <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                                     </select>
-                                    {{--                                        <select class="form-control" id="country_list" name="country_list">--}}
-                                    {{--                                            <option value="">Select Country</option>--}}
-                                    {{--                                            --}}
-                                    {{--                                            @foreach($countries as $country)--}}
-                                    {{--                                                <option value="{{$country->name}}">{{$country->name}}</option>--}}
-                                    {{--                                            @endforeach--}}
-                                    {{--                                        </select>--}}
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -514,6 +508,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card mt-5 " id="step3">
+                        <div class="card-header text-center">{{ __('Verify Stock') }}</div>
+                        <div class="card-body ">
+                            <div id="show_response_message_verify_stock">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -522,7 +523,7 @@
             <script src="{{asset('js/jquery3.1.min.js')}}"></script>
             <script>
                 $(document).ready(function (e) {
-
+                    enabled_or_disabled()
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -682,6 +683,7 @@
                                     if(data.data.phone_no == cell_number){
                                         user_found(data.data)
                                     }
+                                    $('#country_list').val(data.data.phone_code);
                                 }
                                 if (data.optional_status == "user_found_code_send" || data.optional_status == "user_not_found_code_send") {
                                     show_fields("div_email_verification")
@@ -773,7 +775,7 @@
                             data: formData,
                             dataType: 'json',
                             success: function (data) {
-                                show_response_message("Please check email for One Time Password & enter it in Below field to verify share", 1)
+                                show_response_message_stock("Please Check your email for One Time Passcode to verify share", 1)
                                 show_fields("div_share_own_verification")
                                 show_fields("div_for_own_otp_verify")
                             },
@@ -818,10 +820,9 @@
                             data: formData,
                             dataType: 'json',
                             success: function (data) {
-                                show_response_message_stock(data.message, 1)
-                                setTimeout(() => {
-                                    window.location.href = window.location.href
-                                }, 10000)
+                                show_fields("step3")
+                                show_response_message_verify_stock(data.message)
+                                enabled_or_disabled("step1",1)
                             },
                             error: function (reject) {
                                 enable_button("button_submit")
@@ -849,7 +850,7 @@
                         let te = $('.iti__selected-flag').attr('title');
                         var res = te.split("+");
                         var cell_number = '+' + res[1] + phone_number;
-                        var phone_code = '+' + res[1];
+                        var phone_code = res[1];
                         var formData = {
                             first_name: $("#first_name").val(),
                             last_name: $("#last_name").val(),
@@ -872,6 +873,8 @@
                                 hide_fields("register_button_div")
                                 hide_fields("next_button_div")
                                 show_fields("step2")
+                                enabled_or_disabled("step1")
+                                enabled_or_disabled("step2",1)
                             },
                             error: function (reject) {
                                 enable_button("register-button")
@@ -917,6 +920,12 @@
                     $("#show_response_message_stock").append(errorString);
 
                 }
+                function show_response_message_verify_stock(message = '') {
+                    $("#show_response_message_verify_stock").empty();
+                    message = '<div class="alert alert-success">' + message + '<div>';
+                    $("#show_response_message_verify_stock").append(message);
+
+                }
 
                 function show_fields(element) {
                     $("#" + element).removeClass('div-hidden')
@@ -950,6 +959,8 @@
                 $('#next_button').click(function (e) {
                     hide_fields("next_button_div")
                     show_fields("step2")
+                    enabled_or_disabled("step1")
+                    enabled_or_disabled("step2", 1)
                 });
 
                 function change_text(id, text) {
@@ -966,6 +977,14 @@
                 function validateEmail(email) {
                     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return re.test(email);
+                }
+
+                function enabled_or_disabled(id="step2",status = 0 ){
+                    if(status == 0){
+                        $("#" + id).css("pointer-events", "none");
+                    }else {
+                        $("#" + id).css("pointer-events", "all");
+                    }
                 }
             </script>
 

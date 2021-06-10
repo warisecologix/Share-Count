@@ -20,7 +20,7 @@ class AJAXController extends Controller
             if ($user->phone_no_verify == 0) {
                 $code = $this->sendTwilioSMS($request->phone_no);
                 if ($code == 200) {
-                    return $this->successResponse('Please check your phone for One Time Password & enter it in Below field to verify phone no', $user, 200, 'user_found_code_send');
+                    return $this->successResponse('Please Check your phone for One Time Passcode to verify your phone', $user, 200, 'user_found_code_send');
                 } else {
                     return $this->errorResponse('OTP code not send, invalid phone number', $code, $user, "user_found_code_not_send");
                 }
@@ -30,7 +30,7 @@ class AJAXController extends Controller
         } else {
             $code = $this->sendTwilioSMS($request->phone_no);
             if ($code == 200) {
-                return $this->successResponse('Please check your phone for One Time Password & enter it in Below field to verify phone no', '', 200, "user_not_found_code_send");
+                return $this->successResponse('Please Check your phone for One Time Passcode to verify your phone', '', 200, "user_not_found_code_send");
             } else {
                 return $this->errorResponse('OTP code not send, invalid phone number', $code, '', 'user_not_found_code_not_send');
             }
@@ -44,13 +44,13 @@ class AJAXController extends Controller
         if ($user) {
             if ($user->email_verify == 0) {
                 $this->code_send($request->email);
-                return $this->successResponse('Please check email for One Time Password & enter it in Below field to verify email', $user, 200, 'user_found_code_send');
+                return $this->successResponse('Please Check your email for One Time Passcode to verify your email', $user, 200, 'user_found_code_send');
             } else {
                 return $this->successResponse('User found', $user, 200, "user_found_email_verified");
             }
         } else {
             $this->code_send($request->email);
-            return $this->successResponse('Please check email for One Time Password & enter it in Below field to verify email', '', 200, 'user_not_found_code_send');
+            return $this->successResponse('Please Check your email for One Time Passcode to verify your email', '', 200, 'user_not_found_code_send');
         }
     }
 
