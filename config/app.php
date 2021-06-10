@@ -229,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'TwilioConstant' => \App\Constant\TwilioConstant::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
+        'RecaptchaConstant' => \App\Constant\RecaptchaConstant::class,
 
     ],
 

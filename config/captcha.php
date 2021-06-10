@@ -1,10 +1,10 @@
 <?php
 
-use App\Constant\TwilioConstant;
+use App\Constant\RecaptchaConstant;
 
 return [
-    'secret' => TwilioConstant::NOCAPTCHA_SECRET,
-    'sitekey' => TwilioConstant::NOCAPTCHA_SITEKEY,
+    'secret' => RecaptchaConstant::NOCAPTCHA_SECRET,
+    'sitekey' => RecaptchaConstant::NOCAPTCHA_SITEKEY,
     'options' => [
         'timeout' => 30,
     ],
