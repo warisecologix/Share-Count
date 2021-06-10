@@ -110,10 +110,10 @@
                                     {{--                                        {!! NoCaptcha::renderJs() !!}--}}
                                     {{--                                        {!! NoCaptcha::display() !!}--}}
                                     {{--                                    </div>--}}
-                                    <div class="form-group row mb-0">
-                                        <div class="col-md-6 offset-md-6 mb-3">
+                                    <div class="form-group row mb-0 text-right">
+                                        <div class="col-md-10 mb-3">
                                             <button id="verify_phone_otp" class="btn btn-primary">
-                                                {{ __('Verify OTP') }}
+                                                {{ __('Verify One Time Password') }}
                                             </button>
                                         </div>
                                     </div>
@@ -147,18 +147,21 @@
                                                    placeholder="Enter verification code"
                                                    name="verify_email_code" value="{{ old('verify_email_code') }}"
                                                    autocomplete="verify_email_code">
-
-                                            {{--                                            <div class="form-group row mt-5  container">--}}
-                                            {{--                                                {!! NoCaptcha::renderJs() !!}--}}
-                                            {{--                                                {!! NoCaptcha::display() !!}--}}
-                                            {{--                                            </div>--}}
-                                            <div class="col-md-6 offset-md-4 mt-3 mb-3">
-                                                <button id="verify_email_otp" class="btn btn-primary">
-                                                    {{ __('Verify OTP') }}
-                                                </button>
-                                            </div>
                                         </div>
                                     </div>
+                                    {{--                                            <div class="form-group row mt-5  container">--}}
+                                    {{--                                                {!! NoCaptcha::renderJs() !!}--}}
+                                    {{--                                                {!! NoCaptcha::display() !!}--}}
+                                    {{--                                            </div>--}}
+
+                                    <div class="form-group row mb-0 text-right">
+                                        <div class="col-md-10 mb-3">
+                                            <button id="verify_email_otp" class="btn btn-primary">
+                                                {{ __('Verify One Time Password') }}
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group row mb-0 div-hidden" id="register_button_div">
@@ -890,6 +893,7 @@
                     $("#show_response_message").append(errorString);
 
                 }
+
                 function show_response_message_stock(message = '', type = 0) {
                     // type 0 for error & 1 for success
                     $("#show_response_message_stock").empty();
