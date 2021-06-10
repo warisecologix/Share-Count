@@ -113,7 +113,7 @@
                                     <div class="form-group row mb-0 text-right">
                                         <div class="col-md-10 mb-3">
                                             <button id="verify_phone_otp" class="btn btn-primary">
-                                                {{ __('Verify One Time Password') }}
+                                                {{ __('Verify One Time Passcode') }}
                                             </button>
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@
                                     <div class="form-group row mb-0 text-right">
                                         <div class="col-md-10 mb-3">
                                             <button id="verify_email_otp" class="btn btn-primary">
-                                                {{ __('Verify One Time Password') }}
+                                                {{ __('Verify One Time Passcode') }}
                                             </button>
                                         </div>
                                     </div>
@@ -167,7 +167,7 @@
                                 <div class="form-group row mb-0 div-hidden" id="register_button_div">
                                     <div class="col-md-6 offset-md-6">
                                         <button type="button" id="register-button" class="btn btn-primary">
-                                            {{ __('Register') }}
+                                            {{ __('Register User') }}
                                         </button>
                                     </div>
                                 </div>
@@ -659,6 +659,7 @@
                             show_response_message("Email format is invalid")
                             return false
                         }
+
                         disable_button("email_send_verify_code")
                         var formData = {
                             email: email,
@@ -672,7 +673,17 @@
                             dataType: 'json',
                             success: function (data) {
                                 show_response_message(data.message, 1)
-                                if (data.optional_status == "user_found_code_send" || data.optional_status) {
+                                if(data.optional_status == "user_found_code_send" || data.optional_status == "user_found_email_verified" ){
+                                    let phone_number = $('#phone_no').val()
+                                    let te = $('.iti__selected-flag').attr('title');
+                                    var res = te.split("+");
+                                    $('#country_list').val(res[1]);
+                                    var cell_number = '+' + res[1] + phone_number;
+                                    if(data.data.phone_no == cell_number){
+                                        user_found(data.data)
+                                    }
+                                }
+                                if (data.optional_status == "user_found_code_send" || data.optional_status == "user_not_found_code_send") {
                                     show_fields("div_email_verification")
                                 }
                                 if (data.optional_status == "user_found_email_verified") {

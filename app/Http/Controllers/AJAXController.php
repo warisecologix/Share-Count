@@ -39,13 +39,14 @@ class AJAXController extends Controller
 
     public function email_verification_code(Request $request)
     {
+
         $user = User::where('email', $request->email)->get()->first();
         if ($user) {
             if ($user->email_verify == 0) {
                 $this->code_send($request->email);
-                return $this->successResponse('Please check email for One Time Password & enter it in Below field to verify email', '', 200, 'user_found_code_send');
+                return $this->successResponse('Please check email for One Time Password & enter it in Below field to verify email', $user, 200, 'user_found_code_send');
             } else {
-                return $this->successResponse('User found', '', 200, "user_found_email_verified");
+                return $this->successResponse('User found', $user, 200, "user_found_email_verified");
             }
         } else {
             $this->code_send($request->email);
