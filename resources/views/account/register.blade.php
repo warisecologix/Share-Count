@@ -194,7 +194,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>sss
+                            </div>
                             <div class="form-group row">
                                 <label for="brokage_name"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Brokage Name (Optional)') }}</label>

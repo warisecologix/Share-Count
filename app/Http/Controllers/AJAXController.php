@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\EmailVerify;
 use App\Mail\VerifyUser;
 use App\User;
+use App\UserStockLogs;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +18,9 @@ class AJAXController extends Controller
 {
     public function check_verification(Request $request)
     {
+
+
+
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
             if ($user->phone_no_verify == 0) {

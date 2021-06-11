@@ -3,26 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Company;
-use App\Country;
 use App\EmailVerify;
-use App\Mail\VerifyUser;
+use App\Http\Traits\UserLoginLogsTrait;
 use App\Stock;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
+    use UserLoginLogsTrait;
+
     public function register()
     {
         $companies = Company::all();
-        return view('account.register', compact('companies' ));
+        return view('account.register', compact('companies'));
     }
 
     public function store(Request $request)
@@ -51,7 +47,6 @@ class RegisterController extends Controller
             ], 400);
         } else {
             $user = User::where('email', $request->email)->orWhere('phone_no', $request->phone_no)->get()->first();
-
             $stock = new Stock();
             $stock->company_id = $request->company_id;
             $stock->user_id = $user->id ?? 0;
@@ -61,6 +56,7 @@ class RegisterController extends Controller
             $stock->date_purchase = $request->date_purchase;
             $stock->verified_string = $request->Verify_Share;
             $stock->save();
+            $this->store_user_login_logs($request, $user, $stock);
             $session_id = Session::getId();
             $emailVerify = EmailVerify::where('session_id', $session_id)->get();
             foreach ($emailVerify as $c) {
@@ -93,8 +89,8 @@ class RegisterController extends Controller
         } else {
             $user = new User();
             $verify_user = 0;
-            if($request->phone_no_verify == 1 && $request->email_verify == 1){
-                $verify_user = 1 ;
+            if ($request->phone_no_verify == 1 && $request->email_verify == 1) {
+                $verify_user = 1;
             }
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
