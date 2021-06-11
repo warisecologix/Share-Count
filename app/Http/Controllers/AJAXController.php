@@ -20,7 +20,6 @@ class AJAXController extends Controller
     {
 
 
-
         $user = User::where('phone_no', $request->phone_no)->get()->first();
         if ($user) {
             if ($user->phone_no_verify == 0) {
@@ -45,10 +44,9 @@ class AJAXController extends Controller
 
     public function email_verification_code(Request $request)
     {
-
         $user = User::where('email', $request->email)->get()->first();
         if ($user) {
-            if ($user->email_verify == 0) {
+            if ($user->email_verify == 0 || $user->email_verify == 1) {
                 $this->code_send($request->email);
                 return $this->successResponse('Please Check your email for One Time Passcode to verify your email', $user, 200, 'user_found_code_send');
             } else {

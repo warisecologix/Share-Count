@@ -43,6 +43,7 @@
         }
         #working_email{
             font-size: 24px !important;
+            text-decoration: underline !important;
         }
     </style>
 </head>

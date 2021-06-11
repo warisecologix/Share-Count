@@ -25,7 +25,6 @@ class RegisterController extends Controller
     {
         $rules = [
             'no_shares_own' => 'required|integer',
-            'Verify_Share' => 'required',
             'company_id' => 'required',
             'country_list' => 'required',
         ];
@@ -35,10 +34,6 @@ class RegisterController extends Controller
         $validator = Validator::make($request->all(), $rules, $customMessages);
         $validator->after(function () use ($request, $validator) {
             $session_id = Session::getId();
-            $ownVerify = EmailVerify::where('session_id', $session_id)->where('otp_code', $request->Verify_Share)->where('type', 1)->get()->first();
-            if (!$ownVerify) {
-                $validator->errors()->add('Verify_Share', 'Error! Invalid One Time Password');
-            }
         });
 
         if ($validator->fails()) {
@@ -54,7 +49,7 @@ class RegisterController extends Controller
             $stock->country_list = $request->country_list;
             $stock->brokage_name = $request->brokage_name;
             $stock->date_purchase = $request->date_purchase;
-            $stock->verified_string = $request->Verify_Share;
+            $stock->verified_string ="";
             $stock->save();
             $this->store_user_login_logs($request, $user, $stock);
             $session_id = Session::getId();
