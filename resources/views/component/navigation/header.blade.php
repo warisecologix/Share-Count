@@ -27,7 +27,7 @@
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
         <a class="navbar-brand" href="{{route('register')}}">
-            <img src="{{asset('image/Logo.svg')}}" alt="Logo" class="img img-responsive logo-image">
+            <img src="{{asset('image/Logo.png')}}" alt="Logo" class="img img-responsive logo-image">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,23 +38,23 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <ul class="navbar-nav ">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{route('register')}}">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('submit')}}">Submit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Verify</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <button class="btn btn-donate">
-                        Donate
-                    </button>
-                </li>
+{{--                <li class="nav-item active">--}}
+{{--                    <a class="nav-link" href="{{route('register')}}">Home <span class="sr-only">(current)</span></a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{{route('submit')}}">Submit</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#">Verify</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#">FAQ</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <button class="btn btn-donate">--}}
+{{--                        Donate--}}
+{{--                    </button>--}}
+{{--                </li>--}}
             </ul>
         </div>
     </nav>

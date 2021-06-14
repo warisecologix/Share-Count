@@ -166,6 +166,18 @@ input[type="text"], input[type="email"], input[type="number"] , input[type="date
     background-color: #F3F4F6;
     color: #6B7280;
 }
+select {
+    font-family: "Roboto" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-size: 20px !important;
+    line-height: 23px !important;
+    display: flex !important;
+    align-items: center !important;
+    letter-spacing: 0.01em !important;
+    background-color: #F3F4F6 !important;
+    color: #6B7280 !important;
+}
 
 select {
     background-color: #F3F4F6;
@@ -234,4 +246,8 @@ option {
     letter-spacing: 0.01em;
     background-color: #F3F4F6;
     color: #6B7280;
+}
+
+.verify-input-field{
+    background-color: #e5ffbd!important;
 }

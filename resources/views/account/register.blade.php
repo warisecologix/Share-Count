@@ -148,7 +148,7 @@
                                     <div class="form-group row div-hidden" id="div_phone_number_verification">
                                         <div class="col-sm-7">
                                             <label for="verification_code">Verification Code</label>
-                                            <input id="verify_phone_number_code" type="number" class="form-control "
+                                            <input id="verify_phone_number_code" type="number" class="form-control verify-input-field"
                                                    name="verify_phone_number_code" placeholder="Enter verification code"
                                                    value="{{ old('verify_phone_number_code') }}"
                                                    autocomplete="verify_phone_number_code">
@@ -177,7 +177,7 @@
                                     <div class="form-group row div-hidden" id="div_email_verification">
                                         <div class="col-sm-7">
                                             <label for="verification_phone_code">Verification Code</label>
-                                            <input id="verify_email_code" type="number" class="form-control "
+                                            <input id="verify_email_code" type="number" class="form-control verify-input-field "
                                                    placeholder="Enter verification code" name="verify_email_code"
                                                    value="{{ old('verify_email_code') }}"
                                                    autocomplete="verify_email_code">
