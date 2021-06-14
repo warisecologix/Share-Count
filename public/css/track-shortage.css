@@ -1,0 +1,222 @@
+/* Home Page Setting */
+
+body {
+    background-color: white;
+    font-family: 'Montserrat';
+    color: #000000;
+}
+.logo-image{
+    height: 80px;
+}
+.nav-link {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.company-name {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 78px;
+    text-align: center;
+}
+
+.company-description {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    color: #6B7280;
+}
+
+.company-hr {
+    border: 1px solid #E5E7EB;
+}
+
+.company-label {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+
+    color: #000000;
+}
+
+.company-value {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: right;
+}
+
+.company-green-color {
+    color: #A7E052;
+}
+
+.company-gray-color {
+    color: #6B7280;
+}
+
+.company-red-color {
+    color: #F87171;
+}
+
+.company-submit-button {
+    background: #A7E052;
+    border-radius: 6px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.footer-text {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    color: #6B7280;
+}
+
+.social-media-text {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 28px;
+    color: #6B7280;
+}
+
+.btn-donate {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #A7E052;
+    margin-left: 15px;
+
+}
+
+.nav-item {
+    margin-left: 15px;
+}
+
+/* Submit Page Setting */
+
+.submit-heading {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 59px;
+
+    color: #000000;
+}
+
+.submit-image {
+    width: 100%;
+}
+
+.btn-top-margin {
+    margin-top: 35%;
+}
+
+.custom-button {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    align-items: center;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #A7E052;
+}
+
+.text-top-margin {
+    margin-top: 9%;
+}
+
+input[type="text"], input[type="email"], input[type="number"] {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.01em;
+    background-color: #F3F4F6;
+    color: #6B7280;
+}
+
+select {
+    background-color: #F3F4F6;
+}
+
+label {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+
+    color: #374151;
+}
+
+.question-color {
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: #000000;
+}
+
+.question-color-green {
+    color: #A7E052;
+}
+
+
+
+
+
+.g-recaptcha {
+    margin-left: 40% !important;
+    width: auto !important;
+    height: auto !important;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+.div-hidden {
+    display: none;
+}
+
+#phone_no{
+    padding-right: 93px;
+
+}
+#show_response_message_verify_stock{
+    font-size: 20px !important;
+}
+#working_email{
+    font-size: 24px !important;
+    text-decoration: underline !important;
+}
