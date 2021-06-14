@@ -193,10 +193,6 @@ label {
     color: #A7E052;
 }
 
-
-
-
-
 .g-recaptcha {
     margin-left: 40% !important;
     width: auto !important;
@@ -219,4 +215,8 @@ label {
 #working_email{
     font-size: 24px !important;
     text-decoration: underline !important;
+}
+
+#div_phone_number_field .iti--allow-dropdown{
+    width: 100% !important;
 }
