@@ -133,9 +133,12 @@ body {
 }
 
 .btn-top-margin {
-    margin-top: 35%;
+    margin-top: 32%;
 }
+.verify-btn-top-margin{
+    margin-top: 11%;
 
+}
 .custom-button {
     font-style: normal;
     font-weight: 500;
@@ -151,7 +154,7 @@ body {
     margin-top: 9%;
 }
 
-input[type="text"], input[type="email"], input[type="number"] {
+input[type="text"], input[type="email"], input[type="number"] , input[type="date"] {
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -219,4 +222,16 @@ label {
 
 #div_phone_number_field .iti--allow-dropdown{
     width: 100% !important;
+}
+option {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.01em;
+    background-color: #F3F4F6;
+    color: #6B7280;
 }
