@@ -100,5 +100,4 @@ class RegisterController extends Controller
             return $this->successResponse('Account created');
         }
     }
-
 }

@@ -42,7 +42,7 @@
                     <a class="nav-link" href="{{route('register')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Submit</a>
+                    <a class="nav-link" href="{{route('submit')}}">Submit</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify</a>

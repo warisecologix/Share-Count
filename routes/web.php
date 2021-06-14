@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'RegisterController@register')->name('register');
+Route::get('/submit', 'RegisterController@submit')->name('submit');
+
+
 Route::post('/registration/user', 'RegisterController@store')->name('register_post');
 Route::post('/registration/user/first/step', 'RegisterController@register_user')->name('register_user');
 Route::post('/email_verification_code', 'AJAXController@email_verification_code')->name('email_verification_code');

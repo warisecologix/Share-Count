@@ -182,12 +182,10 @@ class AJAXController extends Controller
             $amc_data = $amc_data[0];
         }
         return response()->json([
-            "gme_company_name" => $gme_data->company_name ?? "GME",
             "gme_share_holder_count" => $gme_data->Shareholder_Count ?? "-",
             "gme_verified_members" => $gme_data->verified_count ?? "-",
             "gme_total_shares" => $gme_data->Total_Share ?? "-",
             "gme_verified_shares" => $gme_data->total_verify ?? "-",
-            "amc_company_name" => $amc_data->company_name ?? "AMC",
             "amc_share_holder_count" => $amc_data->Shareholder_Count ?? "-",
             "amc_verified_members" => $amc_data->verified_count ?? "-",
             "amc_total_shares" => $amc_data->Total_Share ?? "-",
