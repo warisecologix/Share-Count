@@ -5,11 +5,11 @@
                 <hr class="company-hr"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-4 footer-text">For educational purposes only</div>
-            <div class="col-5 offset-3">
+        <div class="row text-center">
+            <div class="col-lg-4 col-md-12  col-sm-12 col-xs-12  footer-text">For educational purposes only</div>
+            <div class="col-lg-5 offset-lg-3 col-md-12  col-sm-12 col-xs-12">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12 icon-div">
                         <a href="https://www.patreon.com/TrackShortage" class="href-icons">
                             <svg width="30" height="30" viewBox="0 0 30 30" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@
                             <span class="social-media-text">Cash App</span>
                         </a>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12 icon-div">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -32,7 +32,7 @@
                         </svg>
                         <span class="social-media-text">YouTube</span>
                     </div>
-                    <div class="col-4">
+                    <div class="col-lg-4 col-sm-12 col-md-12 col-xs-12 icon-div">
                         <a href="https://twitter.com/TrackShortage" class="href-icons">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">

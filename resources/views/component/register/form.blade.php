@@ -379,11 +379,13 @@
                                 </div>
                             </div>
                             <div class="form-group row mt-5  container">
-                                @if(App\Constant\RecaptchaConstant::NOCAPTCHA_SITEKEY)
-                                    <div class="g-recaptcha"
-                                         data-sitekey="{{App\Constant\RecaptchaConstant::NOCAPTCHA_SITEKEY}}">
-                                    </div>
-                                @endif
+                                <div class="col-12">
+                                    @if(App\Constant\RecaptchaConstant::NOCAPTCHA_SITEKEY)
+                                        <div class="g-recaptcha"
+                                             data-sitekey="{{App\Constant\RecaptchaConstant::NOCAPTCHA_SITEKEY}}">
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-group row mb-0 text-center">
                                 <div class="col-12">
