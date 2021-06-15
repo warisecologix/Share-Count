@@ -269,10 +269,14 @@ option {
     font-family: 'FontAwesome';
     content: "\f068";
     float: right;
+    color: #A7E052;
+    font-size: 25px;
 }
 
 .accordion .card-header.collapsed:after {
     content: "\f067";
+    color: #A7E052;
+    font-size: 25px;
 }
 .card-title{
     font-family: "Montserrat";
