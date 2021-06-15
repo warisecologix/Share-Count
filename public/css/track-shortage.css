@@ -101,7 +101,8 @@ body {
     position: relative;
     left: 10px;
 }
-.social-media-text-1{
+
+.social-media-text-1 {
     top: 3px;
 }
 
@@ -286,12 +287,16 @@ option {
     float: right;
     color: #A7E052;
     font-size: 25px;
+
+    cursor: pointer;
 }
 
 .accordion .card-header.collapsed:after {
     content: "\f067";
     color: #A7E052;
     font-size: 25px;
+
+    cursor: pointer;
 }
 
 .card-title {
@@ -300,8 +305,8 @@ option {
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
-
     color: #374151;
+    cursor: pointer;
 }
 
 .collapse-text {
@@ -337,11 +342,13 @@ option {
     animation: blinker 2s linear infinite;
 }
 
+
 @keyframes blinker {
     50% {
         opacity: .5;
     }
 }
+
 @media screen and (max-width: 767px) {
     .company-label, .company-value {
         margin-top: 25px;

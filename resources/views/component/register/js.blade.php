@@ -3,7 +3,7 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
         $(document).ready(function (e) {
-            // enabled_or_disabled()
+            enabled_or_disabled()
             load_stats()
             $.ajaxSetup({
                 headers: {
@@ -493,8 +493,10 @@
         function enabled_or_disabled(id = "step2", status = 0) {
             if (status == 0) {
                 $("#" + id).css("pointer-events", "none");
+                disable_button("no_shares_own")
             } else {
                 $("#" + id).css("pointer-events", "all");
+                enable_button("no_shares_own")
             }
         }
 
