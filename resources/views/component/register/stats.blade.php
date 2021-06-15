@@ -1,7 +1,7 @@
 <div class="container" id="home">
     <div class="row">
         <div class="col-12 mb-5">
-            <h1 class="text-center main-heading blink_me">
+            <h1 class="text-center main-heading ">
                 <b>First Share Counting website from APE community for $AMC & $GME more coming</b>
             </h1>
             <hr style="background-color: #F87171;"/>
