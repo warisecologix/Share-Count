@@ -98,6 +98,11 @@ body {
     font-size: 20px;
     line-height: 28px;
     color: #6B7280;
+    position: relative;
+    left: 10px;
+}
+.social-media-text-1{
+    top: 3px;
 }
 
 .btn-donate {
@@ -313,7 +318,7 @@ option {
     color: #6B7280;
 }
 
-.label-hide{
+.label-hide {
     visibility: hidden;
 }
 
@@ -323,32 +328,50 @@ option {
     height: auto !important;
 }
 
+.active-menu {
+    font-weight: 900;
+
+}
+
+.blink_me {
+    animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: .5;
+    }
+}
 @media screen and (max-width: 767px) {
     .company-label, .company-value {
         margin-top: 25px;
     }
-    .amc-company-name{
+
+    .amc-company-name {
         margin-top: 40%;
     }
-    #home{
+
+    #home {
         margin-bottom: 15%;
     }
-    .verify-otp{
+
+    .verify-otp {
         margin-top: 5%;
     }
-    #image{
+
+    #image {
         display: none;
     }
-    #phone_number_send_verify_code, #email_send_verify_code{
+
+    #phone_number_send_verify_code, #email_send_verify_code {
         margin-top: 10px !important;
     }
 
     .g-recaptcha {
         transform: scale(0.77);
-        transform-origin: 0 0;
     }
 
-    .icon-div{
+    .icon-div {
         margin-top: 25px;
     }
 }

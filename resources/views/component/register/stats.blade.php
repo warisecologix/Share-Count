@@ -1,8 +1,9 @@
 <div class="container" id="home">
     <div class="row">
         <div class="col-12 mb-5">
-            <h1 class="text-center main-heading">First Share Counting website from APE community for $AMC & $GME
-                more coming</h1>
+            <h1 class="text-center main-heading blink_me">
+                <b>First Share Counting website from APE community for $AMC & $GME more coming</b>
+            </h1>
             <hr style="background-color: #F87171;"/>
         </div>
         <div class="col-lg-5 col-md-6 col-sm-12">
