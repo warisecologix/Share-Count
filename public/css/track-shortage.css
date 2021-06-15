@@ -215,7 +215,7 @@ label {
 }
 
 .g-recaptcha {
-    margin-left: 40% !important;
+    margin-left: 25% !important;
     width: auto !important;
     height: auto !important;
     text-align: -webkit-center;
@@ -315,6 +315,9 @@ option {
     color: #6B7280;
 }
 
+.label-hide{
+    visibility: hidden;
+}
 @media screen and (max-width: 767px) {
     .company-label, .company-value {
         margin-top: 25px;
@@ -324,5 +327,17 @@ option {
     }
     #home{
         margin-bottom: 15%;
+    }
+    .verify-otp{
+        margin-top: 5%;
+    }
+    .g-recaptcha{
+        margin-left: 0%;
+    }
+    #image{
+        display: none;
+    }
+    #phone_number_send_verify_code, #email_send_verify_code{
+        margin-top: 10px !important;
     }
 }

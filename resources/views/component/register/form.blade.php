@@ -4,8 +4,8 @@
               action="javascript:void(0)">
             @csrf
 
-            <div class="row justify-content-center">
-                <div class="col-md-10">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
                     <div id="step1">
                         <div class="card">
                             <div class="card-header text-center">{{ __('Step 1: User Information') }}</div>
@@ -34,77 +34,77 @@
                                 </div>
 
                                 <div class="form-group row" id="div_phone_number">
-                                    <div class="col-sm-10" id="div_phone_number_field">
+                                    <div class="col-sm-9" id="div_phone_number_field">
                                         <label for="phone_no">Phone Number</label>
                                         <br/>
                                         <input type="number" class="form-control" id="phone_no" name="phone_no"
                                                placeholder="Enter valid phone no" value="{{ old('phone_no') }}">
                                     </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" id="phone_number_send_verify_code"
-                                                class="btn btn-top-margin custom-button">Verify
+                                    <div class="col-sm-3 text-right">
+                                        <label class="label-hide">Text</label>
+                                        <button type="button" id="phone_number_send_verify_code" class="btn custom-button">Verify
                                         </button>
                                     </div>
                                 </div>
 
                                 <div class="form-group row div-hidden" id="div_phone_number_verification">
-                                    <div class="col-sm-7">
+                                    <div class="col-md-12 col-lg-5 col-sm-12">
                                         <label for="verification_code">Verification Code</label>
                                         <input id="verify_phone_number_code" type="number"
                                                class="form-control verify-input-field"
-                                               name="verify_phone_number_code" placeholder="Enter verification code"
+                                               name="verify_phone_number_code" placeholder="Verification code"
                                                value="{{ old('verify_phone_number_code') }}"
                                                autocomplete="verify_phone_number_code">
                                     </div>
-                                    <div class="col-md-5 text-right">
-                                        <button id="verify_phone_otp"
-                                                class="btn custom-button verify-btn-top-margin">
+                                    <div class="col-md-12 col-lg-7 col-sm-12 text-right">
+                                        <label class="label-hide">Text</label>
+                                        <button id="verify_phone_otp" class="btn custom-button verify-otp">
                                             {{ __('Verify One Time Passcode') }}
                                         </button>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-9">
                                         <label for="email">Email</label>
                                         <input id="email" type="email" class="form-control" name="email"
                                                placeholder="Enter valid email address" value="{{ old('email') }}"
                                                autocomplete="email">
                                     </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" id="email_send_verify_code"
-                                                class="btn btn-top-margin custom-button">Verify
+                                    <div class="col-sm-3 text-right">
+                                        <label class="label-hide">Text</label>
+                                        <button type="button" id="email_send_verify_code" class="btn  custom-button">Verify
                                         </button>
                                     </div>
                                 </div>
 
                                 <div class="form-group row div-hidden" id="div_email_verification">
-                                    <div class="col-sm-7">
+                                    <div class="col-md-12 col-lg-5 col-sm-12">
                                         <label for="verification_phone_code">Verification Code</label>
                                         <input id="verify_email_code" type="number"
                                                class="form-control verify-input-field "
-                                               placeholder="Enter verification code" name="verify_email_code"
+                                               placeholder="Verification code" name="verify_email_code"
                                                value="{{ old('verify_email_code') }}"
                                                autocomplete="verify_email_code">
                                     </div>
-                                    <div class="col-sm-5 text-right">
-                                        <button id="verify_email_otp"
-                                                class="btn custom-button verify-btn-top-margin">
+                                    <div class="col-md-12 col-lg-7 col-sm-12 text-right">
+                                        <label class="label-hide">Text</label>
+                                        <button id="verify_email_otp" class="btn custom-button verify-otp">
                                             {{ __('Verify One Time Passcode') }}
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="form-group row mb-0 div-hidden" id="register_button_div">
-                                    <div class="col-md-6 offset-md-6">
+                                <div class="form-group text-center row mb-0 div-hidden" id="register_button_div">
+                                    <div class="col-12">
                                         <button type="button" id="register-button" class="btn custom-button">
                                             {{ __('Register User') }}
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="form-group row mb-0 div-hidden" id="next_button_div">
-                                    <div class="col-md-6 offset-md-6">
+                                <div class="form-group text-center row mb-0 div-hidden" id="next_button_div">
+                                    <div class="col-12">
                                         <button type="button" id="next_button" class="btn custom-button">
                                             {{ __('Next') }}
                                         </button>
@@ -113,7 +113,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card mt-5" id="step2">
                         <div class="card-header text-center">{{ __('Step 2: Stock Information') }}</div>
                         <div class="card-body ">
@@ -386,8 +385,8 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-6">
+                            <div class="form-group row mb-0 text-center">
+                                <div class="col-12">
                                     <button type="submit" id="button_submit" class="btn custom-button">
                                         {{ __('Save') }}
                                     </button>
@@ -402,6 +401,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12" id="image">
+                    <img src="{{asset('image/undraw_To_the_stars_qhyy%201.png')}}" class="img img-responsive submit-image" alt="">
                 </div>
             </div>
         </form>

@@ -22,10 +22,10 @@ trait Twilio
     public function sendTwilioSMS($cell_number)
     {
         try {
-            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN);
-            $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
-                ->verifications
-                ->create($cell_number, "sms");
+//            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN);
+//            $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
+//                ->verifications
+//                ->create($cell_number, "sms");
             return 200;
         } catch (TwilioException $e) {
             return $e->getCode();
@@ -35,15 +35,15 @@ trait Twilio
     public function verify($phone_number, $verfication_code)
     {
         try {
-            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN, $this->TWILIO_VERIFY_SID);
-            $verification = $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
-                ->verificationChecks
-                ->create($verfication_code, array('to' => $phone_number));
-            if ($verification->status == "pending") {
-                return 199;
-            } else {
+//            $twilio = new Client($this->TWILIO_SID, $this->TWILIO_AUTH_TOKEN, $this->TWILIO_VERIFY_SID);
+//            $verification = $twilio->verify->v2->services($this->TWILIO_VERIFY_SID)
+//                ->verificationChecks
+//                ->create($verfication_code, array('to' => $phone_number));
+//            if ($verification->status == "pending") {
+//                return 199;
+//            } else {
                 return 200;
-            }
+//            }
         } catch (TwilioException $e) {
             return $e->getCode();
         }
