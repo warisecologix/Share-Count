@@ -165,7 +165,7 @@ body {
     margin-top: 9%;
 }
 
-input[type="text"], input[type="email"], input[type="number"], input[type="date"] {
+input[type="text"], input[type="email"], input[type="number"], input[type="date"], input[type="password"] {
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
