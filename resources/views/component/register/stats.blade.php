@@ -5,7 +5,7 @@
                 more coming</h1>
             <hr style="background-color: #F87171;"/>
         </div>
-        <div class="col-5">
+        <div class="col-lg-5 col-md-6 col-sm-12">
             <div class="row">
                 <div class="col-4">
                     <h1 class="company-name">$GME</h1>
@@ -48,11 +48,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-2"></div>
-        <div class="col-5">
+        <div class="col-lg-2 col-md-12 col-sm-12"></div>
+        <div class="col-lg-5 col-md-6 col-sm-12">
             <div class="row">
                 <div class="col-4">
-                    <h1 class="company-name">$AMC</h1>
+                    <h1 class="company-name amc-company-name">$AMC</h1>
                 </div>
                 <div class="col-12">
                     <h4 class="company-description">AMC Entertainment</h4>
@@ -60,7 +60,6 @@
                 <div class="col-8"></div>
             </div>
             <hr class="company-hr"/>
-
             <div class="row">
                 <div class="col-8">
                     <p class="company-label">Verified Shares</p>

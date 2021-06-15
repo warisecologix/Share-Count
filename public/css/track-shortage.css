@@ -5,9 +5,11 @@ body {
     font-family: 'Montserrat';
     color: #000000;
 }
-.logo-image{
+
+.logo-image {
     height: 80px;
 }
+
 .nav-link {
     font-style: normal;
     font-weight: 500;
@@ -42,8 +44,8 @@ body {
     font-weight: normal;
     font-size: 24px;
     line-height: 28px;
-
     color: #000000;
+    margin-top: 5px;
 }
 
 .company-value {
@@ -53,6 +55,7 @@ body {
     font-size: 24px;
     line-height: 28px;
     text-align: right;
+    margin-top: 5px;
 }
 
 .company-green-color {
@@ -109,7 +112,7 @@ body {
     color: #FFFFFF;
     background-color: #A7E052;
     margin-left: 15px;
-
+    justify-content: center;
 }
 
 .nav-item {
@@ -135,10 +138,12 @@ body {
 .btn-top-margin {
     margin-top: 32%;
 }
-.verify-btn-top-margin{
+
+.verify-btn-top-margin {
     margin-top: 11%;
 
 }
+
 .custom-button {
     font-style: normal;
     font-weight: 500;
@@ -154,7 +159,7 @@ body {
     margin-top: 9%;
 }
 
-input[type="text"], input[type="email"], input[type="number"] , input[type="date"] {
+input[type="text"], input[type="email"], input[type="number"], input[type="date"] {
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -166,6 +171,7 @@ input[type="text"], input[type="email"], input[type="number"] , input[type="date
     background-color: #F3F4F6;
     color: #6B7280;
 }
+
 select {
     font-family: "Roboto" !important;
     font-style: normal !important;
@@ -220,21 +226,24 @@ label {
     display: none;
 }
 
-#phone_no{
+#phone_no {
     padding-right: 93px;
 
 }
-#show_response_message_verify_stock{
+
+#show_response_message_verify_stock {
     font-size: 20px !important;
 }
-#working_email{
+
+#working_email {
     font-size: 24px !important;
     text-decoration: underline !important;
 }
 
-#div_phone_number_field .iti--allow-dropdown{
+#div_phone_number_field .iti--allow-dropdown {
     width: 100% !important;
 }
+
 option {
     font-family: "Roboto";
     font-style: normal;
@@ -248,23 +257,26 @@ option {
     color: #6B7280;
 }
 
-.verify-input-field{
-    background-color: #e5ffbd!important;
+.verify-input-field {
+    background-color: #e5ffbd !important;
 }
 
-.heading-hr{
+.heading-hr {
     background-color: #F87171;
 }
-.main-heading{
+
+.main-heading {
     color: #F87171;
     font-style: normal;
     font-weight: 500;
     font-size: 26px;
     line-height: 27px;
 }
-.card-title:hover, .href-icons:hover{
+
+.card-title:hover, .href-icons:hover {
     text-decoration: none;
 }
+
 .accordion .card-header:after {
     font-family: 'FontAwesome';
     content: "\f068";
@@ -278,7 +290,8 @@ option {
     color: #A7E052;
     font-size: 25px;
 }
-.card-title{
+
+.card-title {
     font-family: "Montserrat";
     font-style: normal;
     font-weight: 500;
@@ -287,7 +300,8 @@ option {
 
     color: #374151;
 }
-.collapse-text{
+
+.collapse-text {
 
     font-family: "Roboto";
     font-style: normal;
@@ -299,4 +313,16 @@ option {
     letter-spacing: 0.01em;
 
     color: #6B7280;
+}
+
+@media screen and (max-width: 767px) {
+    .company-label, .company-value {
+        margin-top: 25px;
+    }
+    .amc-company-name{
+        margin-top: 40%;
+    }
+    #home{
+        margin-bottom: 15%;
+    }
 }
