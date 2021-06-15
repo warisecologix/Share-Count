@@ -21,6 +21,11 @@ class RegisterController extends Controller
         return view('account.register', compact('companies'));
     }
 
+    public function faq()
+    {
+        return view('account.faq');
+    }
+
     public function store(Request $request)
     {
         $rules = [

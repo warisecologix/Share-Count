@@ -251,3 +251,48 @@ option {
 .verify-input-field{
     background-color: #e5ffbd!important;
 }
+
+.heading-hr{
+    background-color: #F87171;
+}
+.main-heading{
+    color: #F87171;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 27px;
+}
+.card-title:hover, .href-icons:hover{
+    text-decoration: none;
+}
+.accordion .card-header:after {
+    font-family: 'FontAwesome';
+    content: "\f068";
+    float: right;
+}
+
+.accordion .card-header.collapsed:after {
+    content: "\f067";
+}
+.card-title{
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #374151;
+}
+.collapse-text{
+
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.01em;
+
+    color: #6B7280;
+}

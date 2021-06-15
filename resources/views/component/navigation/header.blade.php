@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <link rel="icon" href="{{asset('image/Logo.gif')}}" type="image/gif" sizes="16x16">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,6 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/track-shortage.css') }}" rel="stylesheet">
@@ -38,23 +40,23 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <ul class="navbar-nav ">
-{{--                <li class="nav-item active">--}}
-{{--                    <a class="nav-link" href="{{route('register')}}">Home <span class="sr-only">(current)</span></a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link" href="{{route('submit')}}">Submit</a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link" href="#">Verify</a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link" href="#">FAQ</a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <button class="btn btn-donate">--}}
-{{--                        Donate--}}
-{{--                    </button>--}}
-{{--                </li>--}}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{route('register')}}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                {{--                <li class="nav-item">--}}
+                {{--                    <a class="nav-link" href="{{route('submit')}}">Submit</a>--}}
+                {{--                </li>--}}
+                {{--                <li class="nav-item">--}}
+                {{--                    <a class="nav-link" href="#">Verify</a>--}}
+                {{--                </li>--}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('faq')}}">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://www.patreon.com/TrackShortage" target="_blank" class="btn btn-donate">
+                        Donate
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

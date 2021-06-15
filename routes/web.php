@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'RegisterController@register')->name('register');
-Route::get('/submit', 'RegisterController@submit')->name('submit');
+Route::get('/faq', 'RegisterController@faq')->name('faq');
 
 
 Route::post('/registration/user', 'RegisterController@store')->name('register_post');
