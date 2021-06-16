@@ -11,4 +11,3 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/
-app/Constant/TwilioConstant.php
