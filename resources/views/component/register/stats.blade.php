@@ -63,25 +63,25 @@
             <hr class="company-hr"/>
             <div class="row">
                 <div class="col-8">
-                    <p class="company-label">Verified Shares</p>
+                    <p class="company-label">Shareholder Count</p>
                 </div>
                 <div class="col-4">
                     <p class="company-value company-green-color" id="amc_share_holder_count">-</p>
                 </div>
                 <div class="col-8">
-                    <p class="company-label">Verified Shareholders</p>
+                    <p class="company-label">Verified Members</p>
                 </div>
                 <div class="col-4">
                     <p class="company-value company-green-color" id="amc_verified_members">-</p>
                 </div>
                 <div class="col-8">
-                    <p class="company-label">Pending Shares</p>
+                    <p class="company-label">Total Shares</p>
                 </div>
                 <div class="col-4">
                     <p class="company-value company-gray-color" id="amc_total_shares">-</p>
                 </div>
                 <div class="col-8">
-                    <p class="company-label">Pending Shareholders</p>
+                    <p class="company-label">Verified Shares</p>
                 </div>
                 <div class="col-4">
                     <p class="company-value company-gray-color" id="amc_verified_shares">-</p>
