@@ -24,7 +24,9 @@ class UserSeeder extends Seeder
                 'phone_code' => $faker->countryCode,
                 'email_verify' => rand(0,1),
                 'phone_no_verify' => rand(0,1),
-                'verified_user' => rand(0,1)
+                'verified_user' => rand(0,1),
+                'created_at' => $faker->dateTimeBetween('-5 years', now()),
+                'updated_at' => $faker->dateTimeBetween('-5 years', now()),
             ]);
         }
     }

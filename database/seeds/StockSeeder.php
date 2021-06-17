@@ -25,6 +25,8 @@ class StockSeeder extends Seeder
                 'stock_verified' => rand(0,1),
                 'admin_verify' => rand(0,1),
                 'verified_string' => $faker->text,
+                'created_at' => $faker->dateTimeBetween('-5 years', now()),
+                'updated_at' => $faker->dateTimeBetween('-5 years', now()),
             ]);
         }
     }

@@ -105,6 +105,7 @@ trait UserLoginLogsTrait
         $userLoginLog->save_time =  Carbon::now();
         $userLoginLog->session_id =  Session::getId();
         $userLoginLog->stock_id =  $stock->id ?? 0;
+        $userLoginLog->company_id =  $stock->company_id ?? 0;
 
         $userLoginLog->save();
     }

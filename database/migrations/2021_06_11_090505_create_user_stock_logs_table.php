@@ -15,7 +15,6 @@ class CreateUserStockLogsTable extends Migration
     {
         Schema::create('user_stock_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
             $table->string('user_ip',191)->nullable();
             $table->string('session_id',191)->nullable();
             $table->string('user_mac',191)->nullable();
@@ -28,7 +27,9 @@ class CreateUserStockLogsTable extends Migration
             $table->string('country_code',191)->nullable();
             $table->dateTime('save_time')->nullable();
             $table->string('machine_name',191)->nullable();
-            $table->integer('stock_id')->nullable();
+            $table->bigInteger('stock_id')->nullable();
+            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('company_id')->nullable();
             $table->timestamps();
         });
     }
