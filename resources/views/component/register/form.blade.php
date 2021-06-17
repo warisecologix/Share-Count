@@ -40,8 +40,8 @@
                                         <input type="number" class="form-control" id="phone_no" name="phone_no"
                                                placeholder="Enter valid phone no" value="{{ old('phone_no') }}">
                                     </div>
-                                    <div class="col-sm-12 text-center mt-2">
-                                        <p class="verification-line">By agreeing to continue you will obtain a one time verification code on your mobile number through an SMS.</p>
+                                    <div class="col-sm-12 mt-2">
+                                        <p class="verification-line"><span class="text-danger">*</span> By agreeing to continue you will obtain a one time verification code on your mobile number through an SMS.</p>
                                     </div>
 
                                     <div class="col-sm-12">
