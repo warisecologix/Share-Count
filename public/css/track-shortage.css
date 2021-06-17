@@ -342,6 +342,14 @@ option {
     animation: blinker 2s linear infinite;
 }
 
+.verification-line{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 27px;
+    color: #374151;
+}
 
 @keyframes blinker {
     50% {

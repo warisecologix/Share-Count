@@ -26,6 +26,11 @@ class RegisterController extends Controller
         return view('account.faq');
     }
 
+    public function privacy_policy()
+    {
+        return view('account.privacy_policy');
+    }
+
     public function store(Request $request)
     {
         $rules = [

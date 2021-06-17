@@ -41,16 +41,19 @@
             </ul>
             <ul class="navbar-nav ">
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('/')) ? 'active-menu' : '' }}" href="{{route('register')}}">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link {{ (request()->is('/')) ? 'active-menu' : '' }}" href="{{route('register')}}">Home
+                        <span class="sr-only">(current)</span></a>
                 </li>
                 {{--                <li class="nav-item">--}}
                 {{--                    <a class="nav-link" href="{{route('submit')}}">Submit</a>--}}
                 {{--                </li>--}}
-                {{--                <li class="nav-item">--}}
-                {{--                    <a class="nav-link" href="#">Verify</a>--}}
-                {{--                </li>--}}
+
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('faq')) ? 'active-menu' : '' }}" href="{{route('faq')}}">FAQ</a>
+                    <a class="nav-link {{ (request()->is('faq')) ? 'active-menu' : '' }}"
+                       href="{{route('faq')}}">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('privacy_policy')}}" target="_blank">Privacy Policy</a>
                 </li>
                 <li class="nav-item">
                     <a href="https://www.patreon.com/TrackShortage" target="_blank" class="btn btn-donate">

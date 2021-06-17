@@ -3,11 +3,20 @@
     <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
         $(document).ready(function (e) {
+            disable_button("phone_number_send_verify_code")
             enabled_or_disabled()
             load_stats()
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#verify_policy').click(function(){
+                if($(this).is(':checked')){
+                    enable_button("phone_number_send_verify_code")
+                } else {
+                    disable_button("phone_number_send_verify_code")
                 }
             });
 

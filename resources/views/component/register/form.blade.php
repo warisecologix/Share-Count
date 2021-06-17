@@ -34,14 +34,23 @@
                                 </div>
 
                                 <div class="form-group row" id="div_phone_number">
-                                    <div class="col-sm-9" id="div_phone_number_field">
+                                    <div class="col-sm-12" id="div_phone_number_field">
                                         <label for="phone_no">Phone Number</label>
                                         <br/>
                                         <input type="number" class="form-control" id="phone_no" name="phone_no"
                                                placeholder="Enter valid phone no" value="{{ old('phone_no') }}">
                                     </div>
-                                    <div class="col-sm-3 text-right">
-                                        <label class="label-hide">Text</label>
+                                    <div class="col-sm-12 text-center mt-2">
+                                        <p class="verification-line">By agreeing to continue you will obtain a one time verification code on your mobile number through an SMS.</p>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="verify_policy">
+                                            <label class="form-check-label verification-line" for="verify_policy">I agree to the  <a href="{{route('privacy_policy')}}" target="_blank">Privacy Policy </a> </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 text-center mt-2">
                                         <button type="button" id="phone_number_send_verify_code" class="btn custom-button">Verify
                                         </button>
                                     </div>

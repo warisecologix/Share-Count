@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'RegisterController@register')->name('register');
 Route::get('/faq', 'RegisterController@faq')->name('faq');
+Route::get('/privacy-policy', 'RegisterController@privacy_policy')->name('privacy_policy');
 
 
 Route::post('/registration/user', 'RegisterController@store')->name('register_post');
