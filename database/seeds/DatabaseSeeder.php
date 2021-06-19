@@ -1,7 +1,7 @@
 <?php
 
-use App\Stock;
 use Illuminate\Database\Seeder;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CompanySeeder::class,
             AdminSeeder::class,
-            UserSeeder::class,
+//            UserSeeder::class,
             StockSeeder::class,
             UserStockLogsSeeder::class,
         ]);
