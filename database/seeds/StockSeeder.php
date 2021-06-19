@@ -14,10 +14,10 @@ class StockSeeder extends Seeder
     {
         $faker = Faker\Factory::create();
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             \Illuminate\Support\Facades\DB::table('stocks')->insert([
                 'company_id' => rand(1,2),
-                'user_id' => rand(1 , 100),
+                'user_id' => rand(1 , 20),
                 'no_shares_own' =>rand(1,50),
                 'country_list' => rand(1,50),
                 'brokage_name' => $faker->name,
