@@ -136,6 +136,8 @@
                         }
                     }
                 });
+                enable_button("verify_phone_otp")
+
             });
 
             /* Email Send Verification Code AJAX Call */
