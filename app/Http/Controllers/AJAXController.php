@@ -65,7 +65,7 @@ class AJAXController extends Controller
         $from = "verification@trackshortage.com";
         $to = $email;
         $subject = "Verification mail";
-        $message = "Your OTP code is " . $random_number;
+        $message = "Your One Time Passcode code is " . $random_number;
         $headers = "Reply-To: Count <verification@trackshortage.com>\r\n";
         $headers .= "Return-Path:  Verification Email <verification@trackshortage.com>\r\n";
         $headers .= "From: Verification Email <verification@trackshortage.com>\r\n";
@@ -96,7 +96,7 @@ class AJAXController extends Controller
         $from = "verification@trackshortage.com";
         $to = $request->email;
         $subject = "Verification mail";
-        $message = "Your OTP code is " . $random_number;
+        $message = "Your One Time Passcode code is " . $random_number;
         $headers = "Reply-To: Count <verification@trackshortage.com>\r\n";
         $headers .= "Return-Path:  Verification Email <verification@trackshortage.com>\r\n";
         $headers .= "From: Verification Email <verification@trackshortage.com>\r\n";
